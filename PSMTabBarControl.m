@@ -319,6 +319,7 @@
     [view retain];
     [tabView release];
     tabView = view;
+
 }
 
 - (id<PSMTabStyle>)style
@@ -1266,7 +1267,7 @@
     if ([self lastMouseDownEvent] == nil) {
         return;
     }
-    
+	
 	NSPoint currentPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
 	
 	if (_resizing) { 
@@ -1309,6 +1310,8 @@
 		CGFloat dx = fabs(currentPoint.x - trackingStartPoint.x);
 		CGFloat dy = fabs(currentPoint.y - trackingStartPoint.y);
 		CGFloat distance = sqrt(dx * dx + dy * dy);
+		
+		NSLog(@"[self delegate] %@",[self delegate]);
 		
 		if (distance >= 10 && !_didDrag && ![[PSMTabDragAssistant sharedDragAssistant] isDragging] &&
 				[self delegate] && [[self delegate] respondsToSelector:@selector(tabView:shouldDragTabViewItem:fromTabBar:)] &&
@@ -1391,7 +1394,7 @@
 }
 
 // NSDraggingSource
-- (NSUInteger)draggingSourceOperationMaskForLocal:(BOOL)isLocal
+- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal
 {
     return (isLocal ? NSDragOperationMove : NSDragOperationNone);
 }
