@@ -100,7 +100,16 @@
 		8B3989231184FC6E004462EE /* PSMTabBarControlIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3988E31184F79A004462EE /* PSMTabBarControlIntegration.m */; };
 		8B39893B1184FD6D004462EE /* PSMTabBarControl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 53DF68FD067E5B5A0090B5B0 /* PSMTabBarControl.framework */; };
 		8B6EE3C81184FEEA00BA282D /* PSMTabBarControl.classdescription in Resources */ = {isa = PBXBuildFile; fileRef = 54D33B2806778E3300C9C163 /* PSMTabBarControl.classdescription */; };
+		8B7C937811851AA200983F46 /* demo_main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7C937711851AA200983F46 /* demo_main.m */; };
 		8BD43921118510D200DB4AC3 /* PSMTabBarControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53DF68FD067E5B5A0090B5B0 /* PSMTabBarControl.framework */; };
+		8BD439621185149500DB4AC3 /* PSMTabBarControl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 53DF68FD067E5B5A0090B5B0 /* PSMTabBarControl.framework */; };
+		8BD43965118514A600DB4AC3 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92D38A0106425D02CA0E72 /* Cocoa.framework */; };
+		8BD4397F1185154600DB4AC3 /* DemoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4397C1185154600DB4AC3 /* DemoWindowController.m */; };
+		8BD439801185154600DB4AC3 /* DemoFakeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4397E1185154600DB4AC3 /* DemoFakeModel.m */; };
+		8BD439811185155300DB4AC3 /* PSMTabBarControlDemo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BD4396D118514D800DB4AC3 /* PSMTabBarControlDemo.xib */; };
+		8BD439821185155700DB4AC3 /* DemoAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4396A118514BA00DB4AC3 /* DemoAppController.m */; };
+		8BD4399E118516A900DB4AC3 /* DemoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BD4399D118516A900DB4AC3 /* DemoWindow.xib */; };
+		8BFD0B351185199800F69178 /* PSMTabBarControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53DF68FD067E5B5A0090B5B0 /* PSMTabBarControl.framework */; };
 		8D1AC96C0486D14A00FE50C9 /* PSMTabBarControlInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 0259C577FE90428111CA0C5A /* PSMTabBarControlInspector.m */; settings = {ATTRIBUTES = (); }; };
 		8D1AC9700486D14A00FE50C9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92D38A0106425D02CA0E72 /* Cocoa.framework */; };
 		8D1AC9800486D23B00FE50C9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8D1AC97F0486D23B00FE50C9 /* InfoPlist.strings */; };
@@ -131,6 +140,13 @@
 			remoteGlobalIDString = 53DF68FC067E5B5A0090B5B0;
 			remoteInfo = PSMTabBarControlFramework;
 		};
+		8BD439631185149C00DB4AC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0259C573FE90428111CA0C5A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 53DF68FC067E5B5A0090B5B0;
+			remoteInfo = PSMTabBarControlFramework;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -142,6 +158,17 @@
 			files = (
 				8B39893B1184FD6D004462EE /* PSMTabBarControl.framework in CopyFiles */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8BD4396C118514BA00DB4AC3 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8BD439621185149500DB4AC3 /* PSMTabBarControl.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -232,6 +259,17 @@
 		8B39882E1184F424004462EE /* PSMTabBarControlPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSMTabBarControlPlugin.m; sourceTree = "<group>"; };
 		8B3988CB1184F703004462EE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B3988E31184F79A004462EE /* PSMTabBarControlIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSMTabBarControlIntegration.m; sourceTree = "<group>"; };
+		8B7C937711851AA200983F46 /* demo_main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = demo_main.m; sourceTree = "<group>"; };
+		8BD4395A1185147D00DB4AC3 /* PSMTabBarControlDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PSMTabBarControlDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BD4395C1185147D00DB4AC3 /* PSMTabBarControlDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PSMTabBarControlDemo-Info.plist"; sourceTree = "<group>"; };
+		8BD43969118514BA00DB4AC3 /* DemoAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoAppController.h; sourceTree = "<group>"; };
+		8BD4396A118514BA00DB4AC3 /* DemoAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoAppController.m; sourceTree = "<group>"; };
+		8BD4396D118514D800DB4AC3 /* PSMTabBarControlDemo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PSMTabBarControlDemo.xib; sourceTree = "<group>"; };
+		8BD4397B1185154600DB4AC3 /* DemoWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoWindowController.h; sourceTree = "<group>"; };
+		8BD4397C1185154600DB4AC3 /* DemoWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoWindowController.m; sourceTree = "<group>"; };
+		8BD4397D1185154600DB4AC3 /* DemoFakeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoFakeModel.h; sourceTree = "<group>"; };
+		8BD4397E1185154600DB4AC3 /* DemoFakeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoFakeModel.m; sourceTree = "<group>"; };
+		8BD4399D118516A900DB4AC3 /* DemoWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DemoWindow.xib; sourceTree = "<group>"; };
 		8D1AC9740486D14A00FE50C9 /* PSMTabBarControl.ibplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PSMTabBarControl.ibplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D1AC97B0486D23100FE50C9 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C05B20D80A48CB530099B9E5 /* PSMTabBarControlInspector.xib */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = file.xib; name = PSMTabBarControlInspector.xib; path = English.lproj/PSMTabBarControlInspector.xib; sourceTree = "<group>"; };
@@ -246,6 +284,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				13F8B89007B43554008AE28D /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8BD439581185147D00DB4AC3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BD43965118514A600DB4AC3 /* Cocoa.framework in Frameworks */,
+				8BFD0B351185199800F69178 /* PSMTabBarControl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +312,7 @@
 		0259C574FE90428111CA0C5A /* PSMTabBarControl */ = {
 			isa = PBXGroup;
 			children = (
+				8BD439551185146A00DB4AC3 /* Demo */,
 				32DBCF9E0370C38000C91783 /* Plugin */,
 				54D33B2C06778E4400C9C163 /* Framework */,
 				1ED78706FE9D4A0611CA0C5A /* Products */,
@@ -355,6 +403,7 @@
 			children = (
 				8D1AC9740486D14A00FE50C9 /* PSMTabBarControl.ibplugin */,
 				53DF68FD067E5B5A0090B5B0 /* PSMTabBarControl.framework */,
+				8BD4395A1185147D00DB4AC3 /* PSMTabBarControlDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -414,6 +463,23 @@
 				0259C582FE90428111CA0C5A /* Resources */,
 			);
 			name = Framework;
+			sourceTree = "<group>";
+		};
+		8BD439551185146A00DB4AC3 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				8B7C937711851AA200983F46 /* demo_main.m */,
+				8BD4395C1185147D00DB4AC3 /* PSMTabBarControlDemo-Info.plist */,
+				8BD4396D118514D800DB4AC3 /* PSMTabBarControlDemo.xib */,
+				8BD4399D118516A900DB4AC3 /* DemoWindow.xib */,
+				8BD43969118514BA00DB4AC3 /* DemoAppController.h */,
+				8BD4396A118514BA00DB4AC3 /* DemoAppController.m */,
+				8BD4397B1185154600DB4AC3 /* DemoWindowController.h */,
+				8BD4397C1185154600DB4AC3 /* DemoWindowController.m */,
+				8BD4397D1185154600DB4AC3 /* DemoFakeModel.h */,
+				8BD4397E1185154600DB4AC3 /* DemoFakeModel.m */,
+			);
+			name = Demo;
 			sourceTree = "<group>";
 		};
 		C0894DA40C32F4C100401507 /* Classes */ = {
@@ -504,6 +570,25 @@
 			productReference = 53DF68FD067E5B5A0090B5B0 /* PSMTabBarControl.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		8BD439591185147D00DB4AC3 /* PSMTabBarControlDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8BD4395F1185147E00DB4AC3 /* Build configuration list for PBXNativeTarget "PSMTabBarControlDemo" */;
+			buildPhases = (
+				8BD439561185147D00DB4AC3 /* Resources */,
+				8BD439571185147D00DB4AC3 /* Sources */,
+				8BD439581185147D00DB4AC3 /* Frameworks */,
+				8BD4396C118514BA00DB4AC3 /* Copy Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8BD439641185149C00DB4AC3 /* PBXTargetDependency */,
+			);
+			name = PSMTabBarControlDemo;
+			productName = PSMTabBarControlDemo;
+			productReference = 8BD4395A1185147D00DB4AC3 /* PSMTabBarControlDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
 		8D1AC9600486D14A00FE50C9 /* PSMTabBarControl */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C056398308A954F8003078D8 /* Build configuration list for PBXNativeTarget "PSMTabBarControl" */;
@@ -539,6 +624,7 @@
 				53DF6901067E5B8E0090B5B0 /* All */,
 				8D1AC9600486D14A00FE50C9 /* PSMTabBarControl */,
 				53DF68FC067E5B5A0090B5B0 /* PSMTabBarControlFramework */,
+				8BD439591185147D00DB4AC3 /* PSMTabBarControlDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -590,6 +676,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8BD439561185147D00DB4AC3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BD439811185155300DB4AC3 /* PSMTabBarControlDemo.xib in Resources */,
+				8BD4399E118516A900DB4AC3 /* DemoWindow.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D1AC9660486D14A00FE50C9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -628,6 +723,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8BD439571185147D00DB4AC3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BD4397F1185154600DB4AC3 /* DemoWindowController.m in Sources */,
+				8BD439801185154600DB4AC3 /* DemoFakeModel.m in Sources */,
+				8BD439821185155700DB4AC3 /* DemoAppController.m in Sources */,
+				8B7C937811851AA200983F46 /* demo_main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D1AC96A0486D14A00FE50C9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -656,6 +762,11 @@
 			target = 53DF68FC067E5B5A0090B5B0 /* PSMTabBarControlFramework */;
 			targetProxy = 546DEAEF067F62F70098DCC4 /* PBXContainerItemProxy */;
 		};
+		8BD439641185149C00DB4AC3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 53DF68FC067E5B5A0090B5B0 /* PSMTabBarControlFramework */;
+			targetProxy = 8BD439631185149C00DB4AC3 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -670,6 +781,59 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		8BD4395D1185147E00DB4AC3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "PSMTabBarControlDemo-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = PSMTabBarControlDemo;
+			};
+			name = Debug;
+		};
+		8BD4395E1185147E00DB4AC3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					i386,
+					x86_64,
+				);
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "PSMTabBarControlDemo-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = PSMTabBarControlDemo;
+				VALID_ARCHS = "i386 x86_64";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		C056398008A954F8003078D8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -834,6 +998,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8BD4395F1185147E00DB4AC3 /* Build configuration list for PBXNativeTarget "PSMTabBarControlDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8BD4395D1185147E00DB4AC3 /* Debug */,
+				8BD4395E1185147E00DB4AC3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C056397F08A954F8003078D8 /* Build configuration list for PBXNativeTarget "PSMTabBarControlFramework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
