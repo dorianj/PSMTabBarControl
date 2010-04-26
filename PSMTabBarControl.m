@@ -177,7 +177,20 @@
         [_addTabButton setNeedsDisplay:YES];
     }
 }
-    
+- (id)initWithCoder:(NSCoder *)pDecoder {
+	self = [super initWithCoder:pDecoder];
+	if (self) {
+        // Initialization
+        [self initAddedProperties];
+        [self registerForDraggedTypes:[NSArray arrayWithObjects:@"PSMTabBarControlItemPBType", nil]];
+		
+		// resize
+		[self setPostsFrameChangedNotifications:YES];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(frameDidChange:) name:NSViewFrameDidChangeNotification object:self];
+    }
+    [self setTarget:self];
+    return self;
+}
 - (id)initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];
@@ -593,7 +606,12 @@
 {
     // create cell
     PSMTabBarCell *cell = [[PSMTabBarCell alloc] initWithControlView:self];
-	NSRect cellRect, lastCellFrame = [[_cells lastObject] frame];
+	NSRect cellRect, lastCellFrame;
+	if([_cells lastObject] != nil) {
+		cellRect = lastCellFrame = [[_cells lastObject] frame];
+	} else {
+		cellRect = lastCellFrame = NSZeroRect;
+	}
 	
 	if ([self orientation] == PSMTabBarHorizontalOrientation) {
 		cellRect = [self genericCellRect];
@@ -608,7 +626,7 @@
 	
     [cell setRepresentedObject:item];
 	[cell setFrame:cellRect];
-    
+   
     // bind it up
     [self bindPropertiesForCell:cell andTabViewItem:item];
 	
@@ -1086,7 +1104,7 @@
 			[currentCell setHighlighted:NSMouseInRect(mousePoint, cellFrame, [self isFlipped])];
 			[currentCell setCloseButtonOver:NSMouseInRect(mousePoint, closeRect, [self isFlipped])];
 		}
-        
+		
         if (_showAddTabButton) {
             //animate the add tab button
             NSRect target = [_controller addButtonRect], frame = [_addTabButton frame];
@@ -1310,8 +1328,6 @@
 		CGFloat dx = fabs(currentPoint.x - trackingStartPoint.x);
 		CGFloat dy = fabs(currentPoint.y - trackingStartPoint.y);
 		CGFloat distance = sqrt(dx * dx + dy * dy);
-		
-		NSLog(@"[self delegate] %@",[self delegate]);
 		
 		if (distance >= 10 && !_didDrag && ![[PSMTabDragAssistant sharedDragAssistant] isDragging] &&
 				[self delegate] && [[self delegate] respondsToSelector:@selector(tabView:shouldDragTabViewItem:fromTabBar:)] &&
@@ -1822,78 +1838,6 @@
 		return [[self delegate] tabView:[self tabView] toolTipForTabViewItem:[[self cellForPoint:point cellFrame:nil] representedObject]];
 	}
 	return nil;
-}
-
-#pragma mark -
-#pragma mark Archiving
-
-- (void)encodeWithCoder:(NSCoder *)aCoder 
-{
-    [super encodeWithCoder:aCoder];
-    if ([aCoder allowsKeyedCoding]) {
-        [aCoder encodeObject:_cells forKey:@"PSMcells"];
-        [aCoder encodeObject:tabView forKey:@"PSMtabView"];
-        [aCoder encodeObject:_overflowPopUpButton forKey:@"PSMoverflowPopUpButton"];
-        [aCoder encodeObject:_addTabButton forKey:@"PSMaddTabButton"];
-        [aCoder encodeObject:style forKey:@"PSMstyle"];
-		[aCoder encodeInteger:_orientation forKey:@"PSMorientation"];
-        [aCoder encodeBool:_canCloseOnlyTab forKey:@"PSMcanCloseOnlyTab"];
-		[aCoder encodeBool:_disableTabClose forKey:@"PSMdisableTabClose"];
-        [aCoder encodeBool:_hideForSingleTab forKey:@"PSMhideForSingleTab"];
-		[aCoder encodeBool:_allowsBackgroundTabClosing forKey:@"PSMallowsBackgroundTabClosing"];
-		[aCoder encodeBool:_allowsResizing forKey:@"PSMallowsResizing"];
-		[aCoder encodeBool:_selectsTabsOnMouseDown forKey:@"PSMselectsTabsOnMouseDown"];
-        [aCoder encodeBool:_showAddTabButton forKey:@"PSMshowAddTabButton"];
-        [aCoder encodeBool:_sizeCellsToFit forKey:@"PSMsizeCellsToFit"];
-        [aCoder encodeInteger:_cellMinWidth forKey:@"PSMcellMinWidth"];
-        [aCoder encodeInteger:_cellMaxWidth forKey:@"PSMcellMaxWidth"];
-        [aCoder encodeInteger:_cellOptimumWidth forKey:@"PSMcellOptimumWidth"];
-        [aCoder encodeInteger:_currentStep forKey:@"PSMcurrentStep"];
-        [aCoder encodeBool:_isHidden forKey:@"PSMisHidden"];
-        [aCoder encodeObject:partnerView forKey:@"PSMpartnerView"];
-        [aCoder encodeBool:_awakenedFromNib forKey:@"PSMawakenedFromNib"];
-        [aCoder encodeObject:_lastMouseDownEvent forKey:@"PSMlastMouseDownEvent"];
-        [aCoder encodeObject:delegate forKey:@"PSMdelegate"];
-		[aCoder encodeBool:_useOverflowMenu forKey:@"PSMuseOverflowMenu"];
-		[aCoder encodeBool:_automaticallyAnimates forKey:@"PSMautomaticallyAnimates"];
-		[aCoder encodeBool:_alwaysShowActiveTab forKey:@"PSMalwaysShowActiveTab"];
-    }
-}
-
-- (id)initWithCoder:(NSCoder *)aDecoder 
-{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        if ([aDecoder allowsKeyedCoding]) {
-            _cells = [[aDecoder decodeObjectForKey:@"PSMcells"] retain];
-            tabView = [[aDecoder decodeObjectForKey:@"PSMtabView"] retain];
-            _overflowPopUpButton = [[aDecoder decodeObjectForKey:@"PSMoverflowPopUpButton"] retain];
-            _addTabButton = [[aDecoder decodeObjectForKey:@"PSMaddTabButton"] retain];
-            style = [[aDecoder decodeObjectForKey:@"PSMstyle"] retain];
-			_orientation = (PSMTabBarOrientation)[aDecoder decodeIntegerForKey:@"PSMorientation"];
-            _canCloseOnlyTab = [aDecoder decodeBoolForKey:@"PSMcanCloseOnlyTab"];
-			_disableTabClose = [aDecoder decodeBoolForKey:@"PSMdisableTabClose"];
-            _hideForSingleTab = [aDecoder decodeBoolForKey:@"PSMhideForSingleTab"];
-			_allowsBackgroundTabClosing = [aDecoder decodeBoolForKey:@"PSMallowsBackgroundTabClosing"];
-			_allowsResizing = [aDecoder decodeBoolForKey:@"PSMallowsResizing"];
-			_selectsTabsOnMouseDown = [aDecoder decodeBoolForKey:@"PSMselectsTabsOnMouseDown"];
-            _showAddTabButton = [aDecoder decodeBoolForKey:@"PSMshowAddTabButton"];
-            _sizeCellsToFit = [aDecoder decodeBoolForKey:@"PSMsizeCellsToFit"];
-            _cellMinWidth = [aDecoder decodeIntegerForKey:@"PSMcellMinWidth"];
-            _cellMaxWidth = [aDecoder decodeIntegerForKey:@"PSMcellMaxWidth"];
-            _cellOptimumWidth = [aDecoder decodeIntegerForKey:@"PSMcellOptimumWidth"];
-            _currentStep = [aDecoder decodeIntegerForKey:@"PSMcurrentStep"];
-            _isHidden = [aDecoder decodeBoolForKey:@"PSMisHidden"];
-            partnerView = [[aDecoder decodeObjectForKey:@"PSMpartnerView"] retain];
-            _awakenedFromNib = [aDecoder decodeBoolForKey:@"PSMawakenedFromNib"];
-            _lastMouseDownEvent = [[aDecoder decodeObjectForKey:@"PSMlastMouseDownEvent"] retain];
-			_useOverflowMenu = [aDecoder decodeBoolForKey:@"PSMuseOverflowMenu"];
-			_automaticallyAnimates = [aDecoder decodeBoolForKey:@"PSMautomaticallyAnimates"];
-			_alwaysShowActiveTab = [aDecoder decodeBoolForKey:@"PSMalwaysShowActiveTab"];
-            delegate = [[aDecoder decodeObjectForKey:@"PSMdelegate"] retain];
-        }
-    }
-    return self;
 }
 
 #pragma mark -

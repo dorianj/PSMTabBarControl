@@ -7,17 +7,27 @@
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">460.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
-			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">785</string>
+			<bool key="EncodedWithXMLCoder">YES</bool>
+			<object class="NSArray" key="dict.sortedKeys">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string>com.positivespinmedia.PSMTabBarControlPlugin</string>
+			</object>
+			<object class="NSMutableArray" key="dict.values">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<string>785</string>
+				<string>1</string>
+			</object>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="7"/>
-			<integer value="3"/>
+			<integer value="8"/>
+			<integer value="83"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+			<string>com.positivespinmedia.PSMTabBarControlPlugin</string>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.Metadata">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -58,14 +68,6 @@
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSCustomView" id="744569244">
-							<reference key="NSNextResponder" ref="547639528"/>
-							<int key="NSvFlags">266</int>
-							<string key="NSFrame">{{0, 482}, {477, 22}}</string>
-							<reference key="NSSuperview" ref="547639528"/>
-							<string key="NSClassName">PSMTabBarControl</string>
-							<string key="NSExtension">NSControl</string>
-						</object>
 						<object class="NSTabView" id="982771337">
 							<reference key="NSNextResponder" ref="547639528"/>
 							<int key="NSvFlags">274</int>
@@ -137,6 +139,286 @@
 									</object>
 								</object>
 							</object>
+						</object>
+						<object class="PSMTabBarControl" id="503659476">
+							<reference key="NSNextResponder" ref="547639528"/>
+							<int key="NSvFlags">268</int>
+							<object class="NSMutableArray" key="NSSubviews">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="PSMOverflowPopUpButton" id="76616750">
+									<reference key="NSNextResponder" ref="503659476"/>
+									<int key="NSvFlags">-2147483391</int>
+									<string key="NSFrame">{{454, 0}, {24, 22}}</string>
+									<reference key="NSSuperview" ref="503659476"/>
+									<int key="NSTag">-1</int>
+									<bool key="NSEnabled">YES</bool>
+									<object class="NSPopUpButtonCell" key="NSCell">
+										<int key="NSCellFlags">67239488</int>
+										<int key="NSCellFlags2">2048</int>
+										<object class="NSFont" key="NSSupport">
+											<string key="NSName">LucidaGrande</string>
+											<double key="NSSize">13</double>
+											<int key="NSfFlags">1301</int>
+										</object>
+										<reference key="NSControlView" ref="76616750"/>
+										<int key="NSButtonFlags">-2046672641</int>
+										<int key="NSButtonFlags2">2</int>
+										<object class="NSFont" key="NSAlternateImage">
+											<string key="NSName">LucidaGrande</string>
+											<double key="NSSize">13</double>
+											<int key="NSfFlags">16</int>
+										</object>
+										<string key="NSKeyEquivalent"/>
+										<int key="NSPeriodicDelay">400</int>
+										<int key="NSPeriodicInterval">75</int>
+										<nil key="NSMenuItem"/>
+										<bool key="NSMenuItemRespectAlignment">YES</bool>
+										<nil key="NSMenu"/>
+										<bool key="NSPullDown">YES</bool>
+										<int key="NSPreferredEdge">2</int>
+										<bool key="NSUsesItemFromMenu">YES</bool>
+										<bool key="NSAltersState">YES</bool>
+										<int key="NSArrowPosition">1</int>
+									</object>
+									<object class="NSImage" key="PSMTabBarOverflowPopUpImage">
+										<int key="NSImageFlags">79691776</int>
+										<object class="NSArray" key="NSReps">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<object class="NSArray">
+												<bool key="EncodedWithXMLCoder">YES</bool>
+												<integer value="5"/>
+												<object class="NSURL">
+													<nil key="NS.base"/>
+													<string key="NS.relative">file://localhost/Users/robertpayne/Assets/Cocoa/PSMTabBarControl/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/overflowImage.png</string>
+												</object>
+											</object>
+										</object>
+										<object class="NSColor" key="NSColor" id="475690959">
+											<int key="NSColorSpace">3</int>
+											<bytes key="NSWhite">MCAwAA</bytes>
+										</object>
+									</object>
+									<object class="NSImage" key="PSMTabBarOverflowDownPopUpImage">
+										<int key="NSImageFlags">79691776</int>
+										<object class="NSArray" key="NSReps">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<object class="NSArray">
+												<bool key="EncodedWithXMLCoder">YES</bool>
+												<integer value="5"/>
+												<object class="NSURL">
+													<nil key="NS.base"/>
+													<string key="NS.relative">file://localhost/Users/robertpayne/Assets/Cocoa/PSMTabBarControl/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/overflowImagePressed.png</string>
+												</object>
+											</object>
+										</object>
+										<reference key="NSColor" ref="475690959"/>
+									</object>
+									<bool key="PSMTabBarOverflowAnimatingAlternateImage">NO</bool>
+								</object>
+								<object class="PSMRolloverButton" id="516092298">
+									<reference key="NSNextResponder" ref="503659476"/>
+									<int key="NSvFlags">-2147483392</int>
+									<string key="NSFrame">{{12, 3}, {16, 16}}</string>
+									<reference key="NSSuperview" ref="503659476"/>
+									<int key="NSTag">-1</int>
+									<bool key="NSEnabled">YES</bool>
+									<object class="NSButtonCell" key="NSCell">
+										<int key="NSCellFlags">67239424</int>
+										<int key="NSCellFlags2">134217728</int>
+										<string key="NSContents"/>
+										<object class="NSFont" key="NSSupport">
+											<string key="NSName">LucidaGrande</string>
+											<double key="NSSize">12</double>
+											<int key="NSfFlags">16</int>
+										</object>
+										<reference key="NSControlView" ref="516092298"/>
+										<int key="NSButtonFlags">138428671</int>
+										<int key="NSButtonFlags2">6</int>
+										<object class="NSImage" key="NSNormalImage" id="132464873">
+											<int key="NSImageFlags">79691776</int>
+											<object class="NSArray" key="NSReps">
+												<bool key="EncodedWithXMLCoder">YES</bool>
+												<object class="NSArray">
+													<bool key="EncodedWithXMLCoder">YES</bool>
+													<integer value="5"/>
+													<object class="NSURL">
+														<nil key="NS.base"/>
+														<string key="NS.relative">file://localhost/Users/robertpayne/Assets/Cocoa/PSMTabBarControl/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabNewMetal.png</string>
+													</object>
+												</object>
+											</object>
+											<reference key="NSColor" ref="475690959"/>
+										</object>
+										<object class="NSImage" key="NSAlternateImage" id="666987295">
+											<int key="NSImageFlags">79691776</int>
+											<object class="NSArray" key="NSReps">
+												<bool key="EncodedWithXMLCoder">YES</bool>
+												<object class="NSArray">
+													<bool key="EncodedWithXMLCoder">YES</bool>
+													<integer value="5"/>
+													<object class="NSURL">
+														<nil key="NS.base"/>
+														<string key="NS.relative">file://localhost/Users/robertpayne/Assets/Cocoa/PSMTabBarControl/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabNewMetalPressed.png</string>
+													</object>
+												</object>
+											</object>
+											<reference key="NSColor" ref="475690959"/>
+										</object>
+										<string key="NSKeyEquivalent"/>
+										<int key="NSPeriodicDelay">400</int>
+										<int key="NSPeriodicInterval">75</int>
+									</object>
+									<object class="NSImage" key="rolloverImage" id="969033977">
+										<int key="NSImageFlags">79691776</int>
+										<object class="NSArray" key="NSReps">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<object class="NSArray">
+												<bool key="EncodedWithXMLCoder">YES</bool>
+												<integer value="5"/>
+												<object class="NSURL">
+													<nil key="NS.base"/>
+													<string key="NS.relative">file://localhost/Users/robertpayne/Assets/Cocoa/PSMTabBarControl/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabNewMetalRollover.png</string>
+												</object>
+											</object>
+										</object>
+										<reference key="NSColor" ref="475690959"/>
+									</object>
+									<reference key="usualImage" ref="132464873"/>
+									<int key="myTrackingRectTag">4668681136</int>
+								</object>
+							</object>
+							<object class="NSMutableSet" key="NSDragTypes">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="set.sortedObjects">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>PSMTabBarControlItemPBType</string>
+								</object>
+							</object>
+							<string key="NSFrame">{{0, 482}, {477, 22}}</string>
+							<reference key="NSSuperview" ref="547639528"/>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSMutableArray" key="PSMcells">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+							</object>
+							<nil key="PSMtabView"/>
+							<reference key="PSMoverflowPopUpButton" ref="76616750"/>
+							<reference key="PSMaddTabButton" ref="516092298"/>
+							<object class="PSMMetalTabStyle" key="PSMstyle">
+								<object class="NSImage" key="metalCloseButton">
+									<int key="NSImageFlags">79691776</int>
+									<object class="NSArray" key="NSReps">
+										<bool key="EncodedWithXMLCoder">YES</bool>
+										<object class="NSArray">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<integer value="5"/>
+											<object class="NSURL">
+												<nil key="NS.base"/>
+												<string key="NS.relative">file://localhost/Users/robertpayne/Assets/Cocoa/PSMTabBarControl/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabClose_Front.png</string>
+											</object>
+										</object>
+									</object>
+									<reference key="NSColor" ref="475690959"/>
+								</object>
+								<object class="NSImage" key="metalCloseButtonDown">
+									<int key="NSImageFlags">79691776</int>
+									<object class="NSArray" key="NSReps">
+										<bool key="EncodedWithXMLCoder">YES</bool>
+										<object class="NSArray">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<integer value="5"/>
+											<object class="NSURL">
+												<nil key="NS.base"/>
+												<string key="NS.relative">file://localhost/Users/robertpayne/Assets/Cocoa/PSMTabBarControl/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabClose_Front_Pressed.png</string>
+											</object>
+										</object>
+									</object>
+									<reference key="NSColor" ref="475690959"/>
+								</object>
+								<object class="NSImage" key="metalCloseButtonOver">
+									<int key="NSImageFlags">79691776</int>
+									<object class="NSArray" key="NSReps">
+										<bool key="EncodedWithXMLCoder">YES</bool>
+										<object class="NSArray">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<integer value="5"/>
+											<object class="NSURL">
+												<nil key="NS.base"/>
+												<string key="NS.relative">file://localhost/Users/robertpayne/Assets/Cocoa/PSMTabBarControl/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabClose_Front_Rollover.png</string>
+											</object>
+										</object>
+									</object>
+									<reference key="NSColor" ref="475690959"/>
+								</object>
+								<object class="NSImage" key="metalCloseDirtyButton">
+									<int key="NSImageFlags">79691776</int>
+									<object class="NSArray" key="NSReps">
+										<bool key="EncodedWithXMLCoder">YES</bool>
+										<object class="NSArray">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<integer value="5"/>
+											<object class="NSURL">
+												<nil key="NS.base"/>
+												<string key="NS.relative">file://localhost/Users/robertpayne/Assets/Cocoa/PSMTabBarControl/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabClose_Dirty.png</string>
+											</object>
+										</object>
+									</object>
+									<reference key="NSColor" ref="475690959"/>
+								</object>
+								<object class="NSImage" key="metalCloseDirtyButtonDown">
+									<int key="NSImageFlags">79691776</int>
+									<object class="NSArray" key="NSReps">
+										<bool key="EncodedWithXMLCoder">YES</bool>
+										<object class="NSArray">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<integer value="5"/>
+											<object class="NSURL">
+												<nil key="NS.base"/>
+												<string key="NS.relative">file://localhost/Users/robertpayne/Assets/Cocoa/PSMTabBarControl/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabClose_Dirty_Pressed.png</string>
+											</object>
+										</object>
+									</object>
+									<reference key="NSColor" ref="475690959"/>
+								</object>
+								<object class="NSImage" key="metalCloseDirtyButtonOver">
+									<int key="NSImageFlags">79691776</int>
+									<object class="NSArray" key="NSReps">
+										<bool key="EncodedWithXMLCoder">YES</bool>
+										<object class="NSArray">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<integer value="5"/>
+											<object class="NSURL">
+												<nil key="NS.base"/>
+												<string key="NS.relative">file://localhost/Users/robertpayne/Assets/Cocoa/PSMTabBarControl/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabClose_Dirty_Rollover.png</string>
+											</object>
+										</object>
+									</object>
+									<reference key="NSColor" ref="475690959"/>
+								</object>
+								<reference key="addTabButtonImage" ref="132464873"/>
+								<reference key="addTabButtonPressedImage" ref="666987295"/>
+								<reference key="addTabButtonRolloverImage" ref="969033977"/>
+							</object>
+							<int key="PSMorientation">0</int>
+							<bool key="PSMcanCloseOnlyTab">NO</bool>
+							<bool key="PSMdisableTabClose">NO</bool>
+							<bool key="PSMhideForSingleTab">NO</bool>
+							<bool key="PSMallowsBackgroundTabClosing">YES</bool>
+							<bool key="PSMallowsResizing">NO</bool>
+							<bool key="PSMselectsTabsOnMouseDown">NO</bool>
+							<bool key="PSMshowAddTabButton">NO</bool>
+							<bool key="PSMsizeCellsToFit">NO</bool>
+							<int key="PSMcellMinWidth">100</int>
+							<int key="PSMcellMaxWidth">280</int>
+							<int key="PSMcellOptimumWidth">130</int>
+							<int key="PSMcurrentStep">-1</int>
+							<bool key="PSMisHidden">NO</bool>
+							<nil key="PSMpartnerView"/>
+							<bool key="PSMawakenedFromNib">YES</bool>
+							<nil key="PSMlastMouseDownEvent"/>
+							<nil key="PSMdelegate"/>
+							<bool key="PSMuseOverflowMenu">YES</bool>
+							<bool key="PSMautomaticallyAnimates">NO</bool>
+							<bool key="PSMalwaysShowActiveTab">NO</bool>
 						</object>
 					</object>
 					<string key="NSFrameSize">{477, 504}</string>
@@ -1071,35 +1353,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">partnerView</string>
-						<reference key="source" ref="744569244"/>
-						<reference key="destination" ref="982771337"/>
-					</object>
-					<int key="connectionID">91</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">tabView</string>
-						<reference key="source" ref="744569244"/>
-						<reference key="destination" ref="982771337"/>
-					</object>
-					<int key="connectionID">92</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">contentView</string>
 						<reference key="source" ref="707160855"/>
 						<reference key="destination" ref="974342671"/>
 					</object>
 					<int key="connectionID">93</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="982771337"/>
-						<reference key="destination" ref="744569244"/>
-					</object>
-					<int key="connectionID">94</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1228,14 +1486,6 @@
 						<reference key="destination" ref="431068963"/>
 					</object>
 					<int key="connectionID">110</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">tabBar</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="744569244"/>
-					</object>
-					<int key="connectionID">111</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1439,19 +1689,43 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">initialFirstResponder</string>
-						<reference key="source" ref="181263325"/>
-						<reference key="destination" ref="744569244"/>
+						<string key="label">tabView</string>
+						<reference key="source" ref="503659476"/>
+						<reference key="destination" ref="982771337"/>
 					</object>
-					<int key="connectionID">139</int>
+					<int key="connectionID">183</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">partnerView</string>
+						<reference key="source" ref="503659476"/>
+						<reference key="destination" ref="982771337"/>
+					</object>
+					<int key="connectionID">184</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
-						<reference key="source" ref="744569244"/>
+						<reference key="source" ref="982771337"/>
+						<reference key="destination" ref="503659476"/>
+					</object>
+					<int key="connectionID">185</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="503659476"/>
 						<reference key="destination" ref="1001"/>
 					</object>
-					<int key="connectionID">140</int>
+					<int key="connectionID">186</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">tabBar</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="503659476"/>
+					</object>
+					<int key="connectionID">187</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2098,8 +2372,8 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="355463507"/>
-							<reference ref="744569244"/>
 							<reference ref="982771337"/>
+							<reference ref="503659476"/>
 						</object>
 						<reference key="parent" ref="181263325"/>
 					</object>
@@ -2116,11 +2390,6 @@
 						<int key="objectID">89</int>
 						<reference key="object" ref="795419747"/>
 						<reference key="parent" ref="355463507"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">86</int>
-						<reference key="object" ref="744569244"/>
-						<reference key="parent" ref="547639528"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">85</int>
@@ -2144,6 +2413,11 @@
 						<int key="objectID">88</int>
 						<reference key="object" ref="81385104"/>
 						<reference key="parent" ref="944312339"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">182</int>
+						<reference key="object" ref="503659476"/>
+						<reference key="parent" ref="547639528"/>
 					</object>
 				</object>
 			</object>
@@ -2170,6 +2444,7 @@
 					<string>17.ImportedFromIB2</string>
 					<string>18.IBPluginDependency</string>
 					<string>18.ImportedFromIB2</string>
+					<string>182.IBPluginDependency</string>
 					<string>19.IBPluginDependency</string>
 					<string>19.ImportedFromIB2</string>
 					<string>20.IBPluginDependency</string>
@@ -2296,8 +2571,6 @@
 					<string>84.ImportedFromIB2</string>
 					<string>85.IBPluginDependency</string>
 					<string>85.ImportedFromIB2</string>
-					<string>86.IBPluginDependency</string>
-					<string>86.ImportedFromIB2</string>
 					<string>87.IBPluginDependency</string>
 					<string>87.ImportedFromIB2</string>
 					<string>88.IBPluginDependency</string>
@@ -2327,6 +2600,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.positivespinmedia.PSMTabBarControlPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2347,9 +2621,9 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{401, 227}, {477, 504}}</string>
+					<string>{{400, 218}, {477, 504}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{401, 227}, {477, 504}}</string>
+					<string>{{400, 218}, {477, 504}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{213, 107}</string>
@@ -2458,8 +2732,6 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<boolean value="YES"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 				</object>
@@ -2480,7 +2752,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">140</int>
+			<int key="maxID">187</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
