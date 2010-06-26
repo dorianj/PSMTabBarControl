@@ -13,6 +13,12 @@
 
 @implementation PSMTabBarControl (PSMTabBarControlIntegration)
 
+- (NSSize)ibMinimumSize {
+	return NSMakeSize(50,22);
+} 
+- (NSSize)ibMaximumSize {
+	return NSMakeSize(100000,22);
+}
 - (void)ibPopulateKeyPaths:(NSMutableDictionary *)keyPaths {
 	[super ibPopulateKeyPaths:keyPaths];
 	[[keyPaths objectForKey:IBAttributeKeyPaths] addObjectsFromArray:[NSArray array]];
