@@ -72,12 +72,11 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 293977477;
-			PBXWorkspaceStateSaveDate = 293977477;
+			PBXPerProjectTemplateStateSaveDate = 294098208;
+			PBXWorkspaceStateSaveDate = 294098208;
 		};
 		perUserProjectItems = {
 			8B1B7ABE1185088600F5DDEC /* PBXBookmark */ = 8B1B7ABE1185088600F5DDEC /* PBXBookmark */;
-			8B379F6C1185BD5F00CF680B /* PBXTextBookmark */ = 8B379F6C1185BD5F00CF680B /* PBXTextBookmark */;
 			8B379F791185BDC400CF680B /* PBXTextBookmark */ = 8B379F791185BDC400CF680B /* PBXTextBookmark */;
 			8B3988C21184F6C6004462EE /* PBXBookmark */ = 8B3988C21184F6C6004462EE /* PBXBookmark */;
 			8B3988C41184F6C6004462EE /* PlistBookmark */ = 8B3988C41184F6C6004462EE /* PlistBookmark */;
@@ -97,6 +96,7 @@
 			8B7C938E11851BFF00983F46 /* PBXTextBookmark */ = 8B7C938E11851BFF00983F46 /* PBXTextBookmark */;
 			8B7C938F11851BFF00983F46 /* PBXTextBookmark */ = 8B7C938F11851BFF00983F46 /* PBXTextBookmark */;
 			8BD439871185159900DB4AC3 /* PlistBookmark */ = 8BD439871185159900DB4AC3 /* PlistBookmark */;
+			8BE8CBF81187B0B100BDED63 /* PBXTextBookmark */ = 8BE8CBF81187B0B100BDED63 /* PBXTextBookmark */;
 		};
 		sourceControlManager = C096A9320C03CEA700263BB0 /* Source Control */;
 		userBuildSettings = {
@@ -139,16 +139,6 @@
 	8B1B7ABE1185088600F5DDEC /* PBXBookmark */ = {
 		isa = PBXBookmark;
 		fRef = 8B3987C11184F19D004462EE /* 32x32_log.png */;
-	};
-	8B379F6C1185BD5F00CF680B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 8BD4397B1185154600DB4AC3 /* DemoWindowController.h */;
-		name = "DemoWindowController.h: 28";
-		rLen = 0;
-		rLoc = 733;
-		rType = 0;
-		vrLen = 1491;
-		vrLoc = 0;
 	};
 	8B379F791185BDC400CF680B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -637,6 +627,16 @@
 		name = "/Users/robertpayne/Assets/Cocoa/PSMTabBarControl/PSMTabBarControlDemo-Info.plist";
 		rLen = 0;
 		rLoc = 9223372036854775808;
+	};
+	8BE8CBF81187B0B100BDED63 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 8BD4397B1185154600DB4AC3 /* DemoWindowController.h */;
+		name = "DemoWindowController.h: 28";
+		rLen = 0;
+		rLoc = 733;
+		rType = 0;
+		vrLen = 1490;
+		vrLoc = 0;
 	};
 	8D1AC9600486D14A00FE50C9 /* PSMTabBarControl */ = {
 		activeExec = 0;

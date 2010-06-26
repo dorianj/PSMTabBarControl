@@ -148,7 +148,7 @@
 	if([aCoder allowsKeyedCoding]) {
 		[aCoder encodeObject:_rolloverImage forKey:@"rolloverImage"];
 		[aCoder encodeObject:_usualImage forKey:@"usualImage"];
-		[aCoder encodeInteger:_myTrackingRectTag forKey:@"myTrackingRectTag"];
+		[aCoder encodeInt64:_myTrackingRectTag forKey:@"myTrackingRectTag"];
 	}
 }
 
@@ -158,7 +158,7 @@
 		if([aDecoder allowsKeyedCoding]) {
 			_rolloverImage = [[aDecoder decodeObjectForKey:@"rolloverImage"] retain];
 			_usualImage = [[aDecoder decodeObjectForKey:@"usualImage"] retain];
-			_myTrackingRectTag = [aDecoder decodeIntegerForKey:@"myTrackingRectTag"];
+			_myTrackingRectTag = [aDecoder decodeInt64ForKey:@"myTrackingRectTag"];
 		}
 	}
 	return self;
