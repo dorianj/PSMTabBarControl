@@ -10,7 +10,11 @@
 
 @class PSMTabBarControl, PSMTabBarCell;
 
-@interface PSMTabBarController : NSObject <NSMenuDelegate> {		
+@interface PSMTabBarController : NSObject
+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1060
+	<NSMenuDelegate>
+#endif
+{
 	PSMTabBarControl						*_control;
 	NSMutableArray						*_cellTrackingRects;
 	NSMutableArray						*_closeButtonTrackingRects;
