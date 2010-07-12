@@ -4,8 +4,9 @@
 		// "myAction:" = id;
 	};
 	Outlets = {
-		// Define outlet descriptions here, for example
-		// myOutlet = NSView;
+		tabView = NSTabView;
+		partnerView = id;
+		delegate = id;
 	};
     ClassName = PSMTabBarControl; 
     SuperClass = NSControl; 
