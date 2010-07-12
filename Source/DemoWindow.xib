@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
-		<int key="IBDocument.SystemTarget">1060</int>
+		<int key="IBDocument.SystemTarget">1050</int>
 		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">762</string>
+		<string key="IBDocument.InterfaceBuilderVersion">788</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
@@ -15,7 +15,7 @@
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>762</string>
+				<string>788</string>
 				<string>1</string>
 			</object>
 		</object>
@@ -26,8 +26,8 @@
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<string>com.positivespinmedia.PSMTabBarControlPlugin</string>
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+			<string>com.positivespinmedia.PSMTabBarControlPlugin</string>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.Metadata">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -61,7 +61,7 @@
 				<object class="NSMutableString" key="NSViewClass">
 					<characters key="NS.bytes">View</characters>
 				</object>
-				<string key="NSWindowContentMaxSize">{3.40282e+38, 3.40282e+38}</string>
+				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
 				<string key="NSWindowContentMinSize">{213, 107}</string>
 				<object class="NSView" key="NSWindowView" id="547639528">
 					<reference key="NSNextResponder"/>
@@ -92,7 +92,7 @@
 										<string key="NSColorName">controlColor</string>
 										<object class="NSColor" key="NSColor">
 											<int key="NSColorSpace">3</int>
-											<bytes key="NSWhite">MC42NjY2NjY2ODY1AA</bytes>
+											<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 										</object>
 									</object>
 									<reference key="NSTabView" ref="982771337"/>
@@ -140,16 +140,16 @@
 								</object>
 							</object>
 						</object>
-						<object class="PSMTabBarControl" id="567353161">
+						<object class="PSMTabBarControl" id="466467214">
 							<reference key="NSNextResponder" ref="547639528"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">266</int>
 							<object class="NSMutableArray" key="NSSubviews">
 								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="PSMOverflowPopUpButton" id="138585030">
-									<reference key="NSNextResponder" ref="567353161"/>
+								<object class="PSMOverflowPopUpButton" id="508107129">
+									<reference key="NSNextResponder" ref="466467214"/>
 									<int key="NSvFlags">-2147483391</int>
 									<string key="NSFrame">{{454, 0}, {24, 22}}</string>
-									<reference key="NSSuperview" ref="567353161"/>
+									<reference key="NSSuperview" ref="466467214"/>
 									<int key="NSTag">-1</int>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSPopUpButtonCell" key="NSCell">
@@ -160,7 +160,7 @@
 											<double key="NSSize">13</double>
 											<int key="NSfFlags">1301</int>
 										</object>
-										<reference key="NSControlView" ref="138585030"/>
+										<reference key="NSControlView" ref="508107129"/>
 										<int key="NSButtonFlags">-2046672641</int>
 										<int key="NSButtonFlags2">2</int>
 										<object class="NSFont" key="NSAlternateImage" id="920933024">
@@ -189,7 +189,7 @@
 												<integer value="5"/>
 												<object class="NSURL">
 													<nil key="NS.base"/>
-													<string key="NS.relative">file://localhost/Users/robertpayne/Assets/Cocoa/PSMTabBarControl/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/overflowImage.png</string>
+													<string key="NS.relative">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/overflowImage.png</string>
 												</object>
 											</object>
 										</object>
@@ -207,7 +207,7 @@
 												<integer value="5"/>
 												<object class="NSURL">
 													<nil key="NS.base"/>
-													<string key="NS.relative">file://localhost/Users/robertpayne/Assets/Cocoa/PSMTabBarControl/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/overflowImagePressed.png</string>
+													<string key="NS.relative">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/overflowImagePressed.png</string>
 												</object>
 											</object>
 										</object>
@@ -215,26 +215,26 @@
 									</object>
 									<bool key="PSMTabBarOverflowAnimatingAlternateImage">NO</bool>
 								</object>
-								<object class="PSMRolloverButton" id="99624702">
-									<reference key="NSNextResponder" ref="567353161"/>
+								<object class="PSMRolloverButton" id="877414098">
+									<reference key="NSNextResponder" ref="466467214"/>
 									<int key="NSvFlags">-2147483392</int>
-									<string key="NSFrameSize">{1, 0}</string>
-									<reference key="NSSuperview" ref="567353161"/>
+									<string key="NSFrame">{{12, 3}, {16, 16}}</string>
+									<reference key="NSSuperview" ref="466467214"/>
 									<int key="NSTag">-1</int>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell">
 										<int key="NSCellFlags">67239424</int>
 										<int key="NSCellFlags2">134217728</int>
 										<string key="NSContents"/>
-										<object class="NSFont" key="NSSupport">
+										<object class="NSFont" key="NSSupport" id="794656878">
 											<string key="NSName">LucidaGrande</string>
 											<double key="NSSize">12</double>
 											<int key="NSfFlags">16</int>
 										</object>
-										<reference key="NSControlView" ref="99624702"/>
+										<reference key="NSControlView" ref="877414098"/>
 										<int key="NSButtonFlags">138428671</int>
 										<int key="NSButtonFlags2">6</int>
-										<object class="NSImage" key="NSNormalImage" id="904284138">
+										<object class="NSImage" key="NSNormalImage" id="331453482">
 											<int key="NSImageFlags">79691776</int>
 											<object class="NSArray" key="NSReps">
 												<bool key="EncodedWithXMLCoder">YES</bool>
@@ -243,7 +243,135 @@
 													<integer value="5"/>
 													<object class="NSURL">
 														<nil key="NS.base"/>
-														<string key="NS.relative">file://localhost/Users/robertpayne/Assets/Cocoa/PSMTabBarControl/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabNewMetal.png</string>
+														<string key="NS.relative">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabNewMetal.png</string>
+													</object>
+												</object>
+											</object>
+											<reference key="NSColor" ref="215437824"/>
+										</object>
+										<object class="NSImage" key="NSAlternateImage" id="124160412">
+											<int key="NSImageFlags">79691776</int>
+											<object class="NSArray" key="NSReps">
+												<bool key="EncodedWithXMLCoder">YES</bool>
+												<object class="NSArray">
+													<bool key="EncodedWithXMLCoder">YES</bool>
+													<integer value="5"/>
+													<object class="NSURL">
+														<nil key="NS.base"/>
+														<string key="NS.relative">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabNewMetalPressed.png</string>
+													</object>
+												</object>
+											</object>
+											<reference key="NSColor" ref="215437824"/>
+										</object>
+										<string key="NSKeyEquivalent"/>
+										<int key="NSPeriodicDelay">400</int>
+										<int key="NSPeriodicInterval">75</int>
+									</object>
+									<object class="NSImage" key="rolloverImage" id="354062661">
+										<int key="NSImageFlags">79691776</int>
+										<object class="NSArray" key="NSReps">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<object class="NSArray">
+												<bool key="EncodedWithXMLCoder">YES</bool>
+												<integer value="5"/>
+												<object class="NSURL">
+													<nil key="NS.base"/>
+													<string key="NS.relative">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabNewMetalRollover.png</string>
+												</object>
+											</object>
+										</object>
+										<reference key="NSColor" ref="215437824"/>
+									</object>
+									<reference key="usualImage" ref="331453482"/>
+									<int key="myTrackingRectTag">4615992000</int>
+								</object>
+								<object class="PSMOverflowPopUpButton" id="52215190">
+									<reference key="NSNextResponder" ref="466467214"/>
+									<int key="NSvFlags">-2147483391</int>
+									<string key="NSFrame">{{454, 0}, {24, 22}}</string>
+									<reference key="NSSuperview" ref="466467214"/>
+									<int key="NSTag">-1</int>
+									<bool key="NSEnabled">YES</bool>
+									<object class="NSPopUpButtonCell" key="NSCell">
+										<int key="NSCellFlags">67239488</int>
+										<int key="NSCellFlags2">2048</int>
+										<reference key="NSSupport" ref="617427382"/>
+										<reference key="NSControlView" ref="52215190"/>
+										<int key="NSButtonFlags">-2046672641</int>
+										<int key="NSButtonFlags2">2</int>
+										<reference key="NSAlternateImage" ref="920933024"/>
+										<string key="NSKeyEquivalent"/>
+										<int key="NSPeriodicDelay">400</int>
+										<int key="NSPeriodicInterval">75</int>
+										<nil key="NSMenuItem"/>
+										<bool key="NSMenuItemRespectAlignment">YES</bool>
+										<object class="NSMenu" key="NSMenu">
+											<string key="NSTitle"/>
+										</object>
+										<bool key="NSPullDown">YES</bool>
+										<int key="NSPreferredEdge">2</int>
+										<bool key="NSUsesItemFromMenu">YES</bool>
+										<bool key="NSAltersState">YES</bool>
+										<int key="NSArrowPosition">1</int>
+									</object>
+									<object class="NSImage" key="PSMTabBarOverflowPopUpImage">
+										<int key="NSImageFlags">79691776</int>
+										<object class="NSArray" key="NSReps">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<object class="NSArray">
+												<bool key="EncodedWithXMLCoder">YES</bool>
+												<integer value="5"/>
+												<object class="NSURL">
+													<nil key="NS.base"/>
+													<string key="NS.relative">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/overflowImage.png</string>
+												</object>
+											</object>
+										</object>
+										<reference key="NSColor" ref="215437824"/>
+									</object>
+									<object class="NSImage" key="PSMTabBarOverflowDownPopUpImage">
+										<int key="NSImageFlags">79691776</int>
+										<object class="NSArray" key="NSReps">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<object class="NSArray">
+												<bool key="EncodedWithXMLCoder">YES</bool>
+												<integer value="5"/>
+												<object class="NSURL">
+													<nil key="NS.base"/>
+													<string key="NS.relative">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/overflowImagePressed.png</string>
+												</object>
+											</object>
+										</object>
+										<reference key="NSColor" ref="215437824"/>
+									</object>
+									<bool key="PSMTabBarOverflowAnimatingAlternateImage">NO</bool>
+								</object>
+								<object class="PSMRolloverButton" id="640047236">
+									<reference key="NSNextResponder" ref="466467214"/>
+									<int key="NSvFlags">-2147483392</int>
+									<string key="NSFrame">{{157, 3}, {16, 16}}</string>
+									<reference key="NSSuperview" ref="466467214"/>
+									<int key="NSTag">-1</int>
+									<bool key="NSEnabled">YES</bool>
+									<object class="NSButtonCell" key="NSCell">
+										<int key="NSCellFlags">67239424</int>
+										<int key="NSCellFlags2">134217728</int>
+										<string key="NSContents"/>
+										<reference key="NSSupport" ref="794656878"/>
+										<reference key="NSControlView" ref="640047236"/>
+										<int key="NSButtonFlags">138428671</int>
+										<int key="NSButtonFlags2">6</int>
+										<object class="NSImage" key="NSNormalImage" id="979253037">
+											<int key="NSImageFlags">79691776</int>
+											<object class="NSArray" key="NSReps">
+												<bool key="EncodedWithXMLCoder">YES</bool>
+												<object class="NSArray">
+													<bool key="EncodedWithXMLCoder">YES</bool>
+													<integer value="5"/>
+													<object class="NSURL">
+														<nil key="NS.base"/>
+														<string key="NS.relative">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabNewMetal.png</string>
 													</object>
 												</object>
 											</object>
@@ -258,7 +386,7 @@
 													<integer value="5"/>
 													<object class="NSURL">
 														<nil key="NS.base"/>
-														<string key="NS.relative">file://localhost/Users/robertpayne/Assets/Cocoa/PSMTabBarControl/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabNewMetalPressed.png</string>
+														<string key="NS.relative">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabNewMetalPressed.png</string>
 													</object>
 												</object>
 											</object>
@@ -277,27 +405,27 @@
 												<integer value="5"/>
 												<object class="NSURL">
 													<nil key="NS.base"/>
-													<string key="NS.relative">file://localhost/Users/robertpayne/Assets/Cocoa/PSMTabBarControl/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabNewMetalRollover.png</string>
+													<string key="NS.relative">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabNewMetalRollover.png</string>
 												</object>
 											</object>
 										</object>
 										<reference key="NSColor" ref="215437824"/>
 									</object>
-									<reference key="usualImage" ref="904284138"/>
-									<int key="myTrackingRectTag">482304640</int>
+									<reference key="usualImage" ref="979253037"/>
+									<int key="myTrackingRectTag">4616005344</int>
 								</object>
-								<object class="PSMOverflowPopUpButton" id="121093072">
-									<reference key="NSNextResponder" ref="567353161"/>
+								<object class="PSMOverflowPopUpButton" id="75679124">
+									<reference key="NSNextResponder" ref="466467214"/>
 									<int key="NSvFlags">-2147483391</int>
 									<string key="NSFrame">{{454, 0}, {24, 22}}</string>
-									<reference key="NSSuperview" ref="567353161"/>
+									<reference key="NSSuperview" ref="466467214"/>
 									<int key="NSTag">-1</int>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSPopUpButtonCell" key="NSCell">
 										<int key="NSCellFlags">67239488</int>
 										<int key="NSCellFlags2">2048</int>
 										<reference key="NSSupport" ref="617427382"/>
-										<reference key="NSControlView" ref="121093072"/>
+										<reference key="NSControlView" ref="75679124"/>
 										<int key="NSButtonFlags">-2046672641</int>
 										<int key="NSButtonFlags2">2</int>
 										<reference key="NSAlternateImage" ref="920933024"/>
@@ -326,7 +454,7 @@
 												<object class="NSURL">
 													<nil key="NS.base"/>
 													<object class="NSMutableString" key="NS.relative">
-														<characters key="NS.bytes">file://localhost/Volumes/Data/code/mac/robertpayne_tabbarcontrol/psmtabbarcontrol/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/overflowImage.png</characters>
+														<characters key="NS.bytes">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/overflowImage.png</characters>
 													</object>
 												</object>
 											</object>
@@ -343,7 +471,7 @@
 												<object class="NSURL">
 													<nil key="NS.base"/>
 													<object class="NSMutableString" key="NS.relative">
-														<characters key="NS.bytes">file://localhost/Volumes/Data/code/mac/robertpayne_tabbarcontrol/psmtabbarcontrol/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/overflowImagePressed.png</characters>
+														<characters key="NS.bytes">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/overflowImagePressed.png</characters>
 													</object>
 												</object>
 											</object>
@@ -352,11 +480,11 @@
 									</object>
 									<bool key="PSMTabBarOverflowAnimatingAlternateImage">NO</bool>
 								</object>
-								<object class="PSMRolloverButton" id="747876578">
-									<reference key="NSNextResponder" ref="567353161"/>
+								<object class="PSMRolloverButton" id="941157543">
+									<reference key="NSNextResponder" ref="466467214"/>
 									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{454, 3}, {16, 16}}</string>
-									<reference key="NSSuperview" ref="567353161"/>
+									<reference key="NSSuperview" ref="466467214"/>
 									<int key="NSTag">-1</int>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell">
@@ -368,10 +496,10 @@
 											<double key="NSSize">12</double>
 											<int key="NSfFlags">4883</int>
 										</object>
-										<reference key="NSControlView" ref="747876578"/>
+										<reference key="NSControlView" ref="941157543"/>
 										<int key="NSButtonFlags">138428671</int>
 										<int key="NSButtonFlags2">6</int>
-										<object class="NSImage" key="NSNormalImage" id="734456021">
+										<object class="NSImage" key="NSNormalImage" id="579443530">
 											<int key="NSImageFlags">79691776</int>
 											<object class="NSArray" key="NSReps">
 												<bool key="EncodedWithXMLCoder">YES</bool>
@@ -381,7 +509,7 @@
 													<object class="NSURL">
 														<nil key="NS.base"/>
 														<object class="NSMutableString" key="NS.relative">
-															<characters key="NS.bytes">file://localhost/Volumes/Data/code/mac/robertpayne_tabbarcontrol/psmtabbarcontrol/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabNewMetal.png</characters>
+															<characters key="NS.bytes">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabNewMetal.png</characters>
 														</object>
 													</object>
 												</object>
@@ -398,7 +526,7 @@
 													<object class="NSURL">
 														<nil key="NS.base"/>
 														<object class="NSMutableString" key="NS.relative">
-															<characters key="NS.bytes">file://localhost/Volumes/Data/code/mac/robertpayne_tabbarcontrol/psmtabbarcontrol/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabNewMetalPressed.png</characters>
+															<characters key="NS.bytes">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabNewMetalPressed.png</characters>
 														</object>
 													</object>
 												</object>
@@ -419,15 +547,15 @@
 												<object class="NSURL">
 													<nil key="NS.base"/>
 													<object class="NSMutableString" key="NS.relative">
-														<characters key="NS.bytes">file://localhost/Volumes/Data/code/mac/robertpayne_tabbarcontrol/psmtabbarcontrol/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabNewMetalRollover.png</characters>
+														<characters key="NS.bytes">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabNewMetalRollover.png</characters>
 													</object>
 												</object>
 											</object>
 										</object>
 										<reference key="NSColor" ref="215437824"/>
 									</object>
-									<reference key="usualImage" ref="734456021"/>
-									<int key="myTrackingRectTag">378041328</int>
+									<reference key="usualImage" ref="579443530"/>
+									<int key="myTrackingRectTag">4615315696</int>
 								</object>
 							</object>
 							<object class="NSMutableSet" key="NSDragTypes">
@@ -437,9 +565,131 @@
 									<string>PSMTabBarControlItemPBType</string>
 								</object>
 							</object>
-							<string key="NSFrame">{{0, 483}, {477, 22}}</string>
+							<string key="NSFrame">{{0, 482}, {477, 22}}</string>
 							<reference key="NSSuperview" ref="547639528"/>
 							<bool key="NSEnabled">YES</bool>
+							<object class="NSMutableArray" key="PSMcells">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+							</object>
+							<nil key="PSMtabView"/>
+							<reference key="PSMoverflowPopUpButton" ref="508107129"/>
+							<reference key="PSMaddTabButton" ref="877414098"/>
+							<object class="PSMMetalTabStyle" key="PSMstyle">
+								<object class="NSImage" key="metalCloseButton">
+									<int key="NSImageFlags">79691776</int>
+									<object class="NSArray" key="NSReps">
+										<bool key="EncodedWithXMLCoder">YES</bool>
+										<object class="NSArray">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<integer value="5"/>
+											<object class="NSURL">
+												<nil key="NS.base"/>
+												<string key="NS.relative">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabClose_Front.png</string>
+											</object>
+										</object>
+									</object>
+									<reference key="NSColor" ref="215437824"/>
+								</object>
+								<object class="NSImage" key="metalCloseButtonDown">
+									<int key="NSImageFlags">79691776</int>
+									<object class="NSArray" key="NSReps">
+										<bool key="EncodedWithXMLCoder">YES</bool>
+										<object class="NSArray">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<integer value="5"/>
+											<object class="NSURL">
+												<nil key="NS.base"/>
+												<string key="NS.relative">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabClose_Front_Pressed.png</string>
+											</object>
+										</object>
+									</object>
+									<reference key="NSColor" ref="215437824"/>
+								</object>
+								<object class="NSImage" key="metalCloseButtonOver">
+									<int key="NSImageFlags">79691776</int>
+									<object class="NSArray" key="NSReps">
+										<bool key="EncodedWithXMLCoder">YES</bool>
+										<object class="NSArray">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<integer value="5"/>
+											<object class="NSURL">
+												<nil key="NS.base"/>
+												<string key="NS.relative">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabClose_Front_Rollover.png</string>
+											</object>
+										</object>
+									</object>
+									<reference key="NSColor" ref="215437824"/>
+								</object>
+								<object class="NSImage" key="metalCloseDirtyButton">
+									<int key="NSImageFlags">79691776</int>
+									<object class="NSArray" key="NSReps">
+										<bool key="EncodedWithXMLCoder">YES</bool>
+										<object class="NSArray">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<integer value="5"/>
+											<object class="NSURL">
+												<nil key="NS.base"/>
+												<string key="NS.relative">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabClose_Dirty.png</string>
+											</object>
+										</object>
+									</object>
+									<reference key="NSColor" ref="215437824"/>
+								</object>
+								<object class="NSImage" key="metalCloseDirtyButtonDown">
+									<int key="NSImageFlags">79691776</int>
+									<object class="NSArray" key="NSReps">
+										<bool key="EncodedWithXMLCoder">YES</bool>
+										<object class="NSArray">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<integer value="5"/>
+											<object class="NSURL">
+												<nil key="NS.base"/>
+												<string key="NS.relative">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabClose_Dirty_Pressed.png</string>
+											</object>
+										</object>
+									</object>
+									<reference key="NSColor" ref="215437824"/>
+								</object>
+								<object class="NSImage" key="metalCloseDirtyButtonOver">
+									<int key="NSImageFlags">79691776</int>
+									<object class="NSArray" key="NSReps">
+										<bool key="EncodedWithXMLCoder">YES</bool>
+										<object class="NSArray">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<integer value="5"/>
+											<object class="NSURL">
+												<nil key="NS.base"/>
+												<string key="NS.relative">file://localhost/Users/ono/Library/Application%20Support/Interface%20Builder%203.0/Plugins/PSMTabBarControl.ibplugin/Contents/Frameworks/PSMTabBarControl.framework/Resources/TabClose_Dirty_Rollover.png</string>
+											</object>
+										</object>
+									</object>
+									<reference key="NSColor" ref="215437824"/>
+								</object>
+								<reference key="addTabButtonImage" ref="331453482"/>
+								<reference key="addTabButtonPressedImage" ref="124160412"/>
+								<reference key="addTabButtonRolloverImage" ref="354062661"/>
+							</object>
+							<int key="PSMorientation">0</int>
+							<bool key="PSMcanCloseOnlyTab">NO</bool>
+							<bool key="PSMdisableTabClose">NO</bool>
+							<bool key="PSMhideForSingleTab">NO</bool>
+							<bool key="PSMallowsBackgroundTabClosing">YES</bool>
+							<bool key="PSMallowsResizing">NO</bool>
+							<bool key="PSMselectsTabsOnMouseDown">NO</bool>
+							<bool key="PSMshowAddTabButton">NO</bool>
+							<bool key="PSMsizeCellsToFit">NO</bool>
+							<int key="PSMcellMinWidth">100</int>
+							<int key="PSMcellMaxWidth">280</int>
+							<int key="PSMcellOptimumWidth">130</int>
+							<int key="PSMcurrentStep">-1</int>
+							<bool key="PSMisHidden">NO</bool>
+							<nil key="PSMpartnerView"/>
+							<bool key="PSMawakenedFromNib">YES</bool>
+							<nil key="PSMlastMouseDownEvent"/>
+							<nil key="PSMdelegate"/>
+							<bool key="PSMuseOverflowMenu">YES</bool>
+							<bool key="PSMautomaticallyAnimates">NO</bool>
+							<bool key="PSMalwaysShowActiveTab">NO</bool>
 						</object>
 					</object>
 					<string key="NSFrameSize">{477, 504}</string>
@@ -447,7 +697,7 @@
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{213, 129}</string>
-				<string key="NSMaxSize">{3.40282e+38, 3.40282e+38}</string>
+				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
 			</object>
 			<object class="NSDrawer" id="707160855">
 				<nil key="NSNextResponder"/>
@@ -1710,43 +1960,43 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">tabView</string>
-						<reference key="source" ref="567353161"/>
-						<reference key="destination" ref="982771337"/>
-					</object>
-					<int key="connectionID">183</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">partnerView</string>
-						<reference key="source" ref="567353161"/>
+						<reference key="source" ref="466467214"/>
 						<reference key="destination" ref="982771337"/>
 					</object>
-					<int key="connectionID">184</int>
+					<int key="connectionID">189</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="982771337"/>
-						<reference key="destination" ref="567353161"/>
+						<string key="label">tabView</string>
+						<reference key="source" ref="466467214"/>
+						<reference key="destination" ref="982771337"/>
 					</object>
-					<int key="connectionID">185</int>
+					<int key="connectionID">190</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
-						<reference key="source" ref="567353161"/>
+						<reference key="source" ref="466467214"/>
 						<reference key="destination" ref="1001"/>
 					</object>
-					<int key="connectionID">186</int>
+					<int key="connectionID">191</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">tabBar</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="567353161"/>
+						<reference key="destination" ref="466467214"/>
 					</object>
-					<int key="connectionID">187</int>
+					<int key="connectionID">192</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="982771337"/>
+						<reference key="destination" ref="466467214"/>
+					</object>
+					<int key="connectionID">193</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2394,7 +2644,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="355463507"/>
 							<reference ref="982771337"/>
-							<reference ref="567353161"/>
+							<reference ref="466467214"/>
 						</object>
 						<reference key="parent" ref="181263325"/>
 					</object>
@@ -2436,8 +2686,8 @@
 						<reference key="parent" ref="944312339"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">182</int>
-						<reference key="object" ref="567353161"/>
+						<int key="objectID">188</int>
+						<reference key="object" ref="466467214"/>
 						<reference key="parent" ref="547639528"/>
 					</object>
 				</object>
@@ -2465,7 +2715,7 @@
 					<string>17.ImportedFromIB2</string>
 					<string>18.IBPluginDependency</string>
 					<string>18.ImportedFromIB2</string>
-					<string>182.IBPluginDependency</string>
+					<string>188.IBPluginDependency</string>
 					<string>19.IBPluginDependency</string>
 					<string>19.ImportedFromIB2</string>
 					<string>20.IBPluginDependency</string>
@@ -2642,9 +2892,9 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{400, 218}, {477, 504}}</string>
+					<string>{{475, 47}, {477, 504}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{400, 218}, {477, 504}}</string>
+					<string>{{475, 47}, {477, 504}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{213, 107}</string>
@@ -2695,7 +2945,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{1086, 506}, {204, 530}}</string>
+					<string>{{799, 326}, {204, 530}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2773,7 +3023,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">187</int>
+			<int key="maxID">193</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2836,6 +3086,130 @@
 							<string>id</string>
 						</object>
 					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>addNewTab:</string>
+							<string>closeTab:</string>
+							<string>configAddTabButton:</string>
+							<string>configAllowsScrubbing:</string>
+							<string>configAutomaticallyAnimates:</string>
+							<string>configCanCloseOnlyTab:</string>
+							<string>configDisableTabClose:</string>
+							<string>configHideForSingleTab:</string>
+							<string>configOrientation:</string>
+							<string>configStyle:</string>
+							<string>configTabMaxWidth:</string>
+							<string>configTabMinWidth:</string>
+							<string>configTabOptimumWidth:</string>
+							<string>configTabSizeToFit:</string>
+							<string>configTearOffStyle:</string>
+							<string>configUseOverflowMenu:</string>
+							<string>isEditedAction:</string>
+							<string>isProcessingAction:</string>
+							<string>setIconNamed:</string>
+							<string>setObjectCount:</string>
+							<string>setTabLabel:</string>
+							<string>stopProcessing:</string>
+							<string>toggleToolbar:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">addNewTab:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">closeTab:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">configAddTabButton:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">configAllowsScrubbing:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">configAutomaticallyAnimates:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">configCanCloseOnlyTab:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">configDisableTabClose:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">configHideForSingleTab:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">configOrientation:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">configStyle:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">configTabMaxWidth:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">configTabMinWidth:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">configTabOptimumWidth:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">configTabSizeToFit:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">configTearOffStyle:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">configUseOverflowMenu:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">isEditedAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">isProcessingAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">setIconNamed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">setObjectCount:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">setTabLabel:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">stopProcessing:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">toggleToolbar:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+						</object>
+					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
@@ -2889,6 +3263,125 @@
 							<string>NSTextField</string>
 						</object>
 					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>button_allowScrubbing</string>
+							<string>button_automaticallyAnimate</string>
+							<string>button_canCloseOnlyTab</string>
+							<string>button_disableTabClosing</string>
+							<string>button_hideForSingleTab</string>
+							<string>button_showAddTab</string>
+							<string>button_sizeToFit</string>
+							<string>button_useOverflow</string>
+							<string>drawer</string>
+							<string>iconButton</string>
+							<string>isEditedButton</string>
+							<string>isProcessingButton</string>
+							<string>objectCounterField</string>
+							<string>popUp_orientation</string>
+							<string>popUp_style</string>
+							<string>popUp_tearOff</string>
+							<string>tabBar</string>
+							<string>tabField</string>
+							<string>tabView</string>
+							<string>textField_maxWidth</string>
+							<string>textField_minWidth</string>
+							<string>textField_optimumWidth</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">button_allowScrubbing</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">button_automaticallyAnimate</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">button_canCloseOnlyTab</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">button_disableTabClosing</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">button_hideForSingleTab</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">button_showAddTab</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">button_sizeToFit</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">button_useOverflow</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">drawer</string>
+								<string key="candidateClassName">NSDrawer</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">iconButton</string>
+								<string key="candidateClassName">NSPopUpButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">isEditedButton</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">isProcessingButton</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">objectCounterField</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">popUp_orientation</string>
+								<string key="candidateClassName">NSPopUpButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">popUp_style</string>
+								<string key="candidateClassName">NSPopUpButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">popUp_tearOff</string>
+								<string key="candidateClassName">NSPopUpButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">tabBar</string>
+								<string key="candidateClassName">PSMTabBarControl</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">tabField</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">tabView</string>
+								<string key="candidateClassName">NSTabView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">textField_maxWidth</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">textField_minWidth</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">textField_optimumWidth</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">DemoWindowController.h</string>
@@ -2937,6 +3430,35 @@
 							<string>id</string>
 							<string>id</string>
 							<string>NSTabView</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>delegate</string>
+							<string>partnerView</string>
+							<string>style</string>
+							<string>tabView</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">delegate</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">partnerView</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">style</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">tabView</string>
+								<string key="candidateClassName">NSTabView</string>
+							</object>
 						</object>
 					</object>
 					<reference key="sourceIdentifier" ref="122548619"/>
@@ -3456,6 +3978,13 @@
 						<string key="NS.key.0">showWindow:</string>
 						<string key="NS.object.0">id</string>
 					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">showWindow:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">showWindow:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSWindowController.h</string>
@@ -3467,7 +3996,7 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1060" key="NS.object.0"/>
+			<integer value="1050" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
