@@ -15,6 +15,7 @@
 #import "PSMAquaTabStyle.h"
 #import "PSMUnifiedTabStyle.h"
 #import "PSMAdiumTabStyle.h"
+#import "PSMLiveChatTabStyle.h"
 #import "PSMTabDragAssistant.h"
 #import "PSMTabBarController.h"
 
@@ -352,6 +353,8 @@
 		newStyle = [[PSMUnifiedTabStyle alloc] init];
 	} else if([name isEqualToString:@"Adium"]) {
 		newStyle = [[PSMAdiumTabStyle alloc] init];
+	} else if([name isEqualToString:@"LiveChat"]) {
+		newStyle = [[PSMLiveChatTabStyle alloc] init];
 	} else {
 		newStyle = [[PSMMetalTabStyle alloc] init];
 	}

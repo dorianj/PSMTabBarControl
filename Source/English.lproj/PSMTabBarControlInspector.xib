@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">10D567</string>
-		<string key="IBDocument.InterfaceBuilderVersion">785</string>
+		<string key="IBDocument.SystemVersion">10F569</string>
+		<string key="IBDocument.InterfaceBuilderVersion">788</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
-		<string key="IBDocument.HIToolboxVersion">460.00</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">785</string>
+			<string key="NS.object.0">788</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -475,18 +475,18 @@
 							</object>
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
-							<object class="NSMenuItem" key="NSMenuItem" id="297115089">
+							<object class="NSMenuItem" key="NSMenuItem" id="267791434">
 								<reference key="NSMenu" ref="542530794"/>
-								<string key="NSTitle">Adium</string>
+								<string key="NSTitle">Metal</string>
 								<string key="NSKeyEquiv"/>
 								<int key="NSKeyEquivModMask">1048576</int>
 								<int key="NSMnemonicLoc">2147483647</int>
 								<int key="NSState">1</int>
-								<object class="NSCustomResource" key="NSOnImage" id="67295271">
+								<object class="NSCustomResource" key="NSOnImage" id="26555484">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSMenuCheckmark</string>
 								</object>
-								<object class="NSCustomResource" key="NSMixedImage" id="383827577">
+								<object class="NSCustomResource" key="NSMixedImage" id="802938582">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSMenuMixedState</string>
 								</object>
@@ -500,25 +500,15 @@
 								</object>
 								<object class="NSMutableArray" key="NSMenuItems">
 									<bool key="EncodedWithXMLCoder">YES</bool>
-									<object class="NSMenuItem" id="267791434">
-										<reference key="NSMenu" ref="542530794"/>
-										<string key="NSTitle">Metal</string>
-										<string key="NSKeyEquiv"/>
-										<int key="NSKeyEquivModMask">1048576</int>
-										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSOnImage" ref="67295271"/>
-										<reference key="NSMixedImage" ref="383827577"/>
-										<string key="NSAction">_popUpItemAction:</string>
-										<reference key="NSTarget" ref="806728539"/>
-									</object>
+									<reference ref="267791434"/>
 									<object class="NSMenuItem" id="396737798">
 										<reference key="NSMenu" ref="542530794"/>
 										<string key="NSTitle">Aqua</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSOnImage" ref="67295271"/>
-										<reference key="NSMixedImage" ref="383827577"/>
+										<reference key="NSOnImage" ref="26555484"/>
+										<reference key="NSMixedImage" ref="802938582"/>
 										<string key="NSAction">_popUpItemAction:</string>
 										<reference key="NSTarget" ref="806728539"/>
 									</object>
@@ -528,15 +518,35 @@
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSOnImage" ref="67295271"/>
-										<reference key="NSMixedImage" ref="383827577"/>
+										<reference key="NSOnImage" ref="26555484"/>
+										<reference key="NSMixedImage" ref="802938582"/>
 										<string key="NSAction">_popUpItemAction:</string>
 										<reference key="NSTarget" ref="806728539"/>
 									</object>
-									<reference ref="297115089"/>
+									<object class="NSMenuItem" id="297115089">
+										<reference key="NSMenu" ref="542530794"/>
+										<string key="NSTitle">Adium</string>
+										<string key="NSKeyEquiv"/>
+										<int key="NSKeyEquivModMask">1048576</int>
+										<int key="NSMnemonicLoc">2147483647</int>
+										<reference key="NSOnImage" ref="26555484"/>
+										<reference key="NSMixedImage" ref="802938582"/>
+										<string key="NSAction">_popUpItemAction:</string>
+										<reference key="NSTarget" ref="806728539"/>
+									</object>
+									<object class="NSMenuItem" id="937300762">
+										<reference key="NSMenu" ref="542530794"/>
+										<string key="NSTitle">LiveChat</string>
+										<string key="NSKeyEquiv"/>
+										<int key="NSKeyEquivModMask">1048576</int>
+										<int key="NSMnemonicLoc">2147483647</int>
+										<reference key="NSOnImage" ref="26555484"/>
+										<reference key="NSMixedImage" ref="802938582"/>
+										<string key="NSAction">_popUpItemAction:</string>
+										<reference key="NSTarget" ref="806728539"/>
+									</object>
 								</object>
 							</object>
-							<int key="NSSelectedIndex">3</int>
 							<int key="NSPreferredEdge">3</int>
 							<bool key="NSUsesItemFromMenu">YES</bool>
 							<bool key="NSAltersState">YES</bool>
@@ -978,6 +988,7 @@
 							<reference ref="366698837"/>
 							<reference ref="267791434"/>
 							<reference ref="396737798"/>
+							<reference ref="937300762"/>
 						</object>
 						<reference key="parent" ref="806728539"/>
 					</object>
@@ -1245,6 +1256,11 @@
 						<reference key="object" ref="309510197"/>
 						<reference key="parent" ref="221157432"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">193</int>
+						<reference key="object" ref="937300762"/>
+						<reference key="parent" ref="542530794"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1309,6 +1325,7 @@
 					<string>140.IBPluginDependency</string>
 					<string>141.IBPluginDependency</string>
 					<string>142.IBPluginDependency</string>
+					<string>143.IBEditorWindowLastContentRect</string>
 					<string>143.IBPluginDependency</string>
 					<string>143.ImportedFromIB2</string>
 					<string>144.IBPluginDependency</string>
@@ -1320,6 +1337,8 @@
 					<string>147.IBPluginDependency</string>
 					<string>147.ImportedFromIB2</string>
 					<string>148.IBPluginDependency</string>
+					<string>193.IBPluginDependency</string>
+					<string>193.ImportedFromIB2</string>
 					<string>21.GUserGuides</string>
 					<string>21.IBEditorWindowLastContentRect</string>
 					<string>21.IBPluginDependency</string>
@@ -1388,6 +1407,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>{{429, 272}, {146, 88}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1399,6 +1419,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<boolean value="YES"/>
 					<object class="NSMutableArray">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="IBUserGuide">
@@ -1412,7 +1434,7 @@
 							<int key="affinity">0</int>
 						</object>
 					</object>
-					<string>{{387, 648}, {272, 387}}</string>
+					<string>{{387, 0}, {272, 387}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSMutableArray">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1438,7 +1460,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">192</int>
+			<int key="maxID">193</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2075,7 +2097,7 @@
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1060" key="NS.object.0"/>
+			<integer value="1050" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>

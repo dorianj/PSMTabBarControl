@@ -55,8 +55,8 @@
 		8B3988831184F65B004462EE /* PSMTabDragWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3988281184F40E004462EE /* PSMTabDragWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B3988841184F65B004462EE /* PSMTabDragWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3988291184F40E004462EE /* PSMTabDragWindowController.m */; };
 		8B3988851184F65B004462EE /* PSMTabStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B39882A1184F40E004462EE /* PSMTabStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8B3988861184F65C004462EE /* PSMUnifiedTabStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B39882B1184F40E004462EE /* PSMUnifiedTabStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8B3988871184F65C004462EE /* PSMUnifiedTabStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B39882C1184F40E004462EE /* PSMUnifiedTabStyle.m */; };
+		8B3988861184F65C004462EE /* PSMLiveChatTabStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B39882B1184F40E004462EE /* PSMLiveChatTabStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B3988871184F65C004462EE /* PSMLiveChatTabStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B39882C1184F40E004462EE /* PSMLiveChatTabStyle.m */; };
 		8B3988911184F668004462EE /* 32x32_log.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B3987C11184F19D004462EE /* 32x32_log.png */; };
 		8B3988921184F668004462EE /* 32x32cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B3987C21184F19D004462EE /* 32x32cancel.png */; };
 		8B3988931184F668004462EE /* AdiumGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B3987C31184F19D004462EE /* AdiumGradient.png */; };
@@ -113,6 +113,9 @@
 		8D1AC96C0486D14A00FE50C9 /* PSMTabBarControlInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 0259C577FE90428111CA0C5A /* PSMTabBarControlInspector.m */; settings = {ATTRIBUTES = (); }; };
 		8D1AC9700486D14A00FE50C9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92D38A0106425D02CA0E72 /* Cocoa.framework */; };
 		8D1AC9800486D23B00FE50C9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8D1AC97F0486D23B00FE50C9 /* InfoPlist.strings */; };
+		97FF177211EB5711004FA751 /* PSMUnifiedTabStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FF177111EB5711004FA751 /* PSMUnifiedTabStyle.m */; };
+		97FF179D11EB5938004FA751 /* PSMUnifiedTabStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 97FF177011EB5711004FA751 /* PSMUnifiedTabStyle.h */; };
+		97FF179E11EB5938004FA751 /* PSMUnifiedTabStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FF177111EB5711004FA751 /* PSMUnifiedTabStyle.m */; };
 		C0A47C500A523B730004BDC3 /* PSMTabBarControlInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = C05B20D80A48CB530099B9E5 /* PSMTabBarControlInspector.xib */; };
 		C0D069560A49DF9100C95564 /* InterfaceBuilderKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D069550A49DF9100C95564 /* InterfaceBuilderKit.framework */; };
 		D1AEDE470A6C289C0010C343 /* PSMTabBarControlLibrary.nib in Resources */ = {isa = PBXBuildFile; fileRef = D1AEDE460A6C289C0010C343 /* PSMTabBarControlLibrary.nib */; };
@@ -253,8 +256,8 @@
 		8B3988281184F40E004462EE /* PSMTabDragWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSMTabDragWindowController.h; sourceTree = "<group>"; };
 		8B3988291184F40E004462EE /* PSMTabDragWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSMTabDragWindowController.m; sourceTree = "<group>"; };
 		8B39882A1184F40E004462EE /* PSMTabStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSMTabStyle.h; sourceTree = "<group>"; };
-		8B39882B1184F40E004462EE /* PSMUnifiedTabStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSMUnifiedTabStyle.h; sourceTree = "<group>"; };
-		8B39882C1184F40E004462EE /* PSMUnifiedTabStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSMUnifiedTabStyle.m; sourceTree = "<group>"; };
+		8B39882B1184F40E004462EE /* PSMLiveChatTabStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSMLiveChatTabStyle.h; sourceTree = "<group>"; };
+		8B39882C1184F40E004462EE /* PSMLiveChatTabStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSMLiveChatTabStyle.m; sourceTree = "<group>"; };
 		8B39882D1184F424004462EE /* PSMTabBarControlPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSMTabBarControlPlugin.h; sourceTree = "<group>"; };
 		8B39882E1184F424004462EE /* PSMTabBarControlPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSMTabBarControlPlugin.m; sourceTree = "<group>"; };
 		8B3988CB1184F703004462EE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -272,6 +275,8 @@
 		8BD4399D118516A900DB4AC3 /* DemoWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DemoWindow.xib; sourceTree = "<group>"; };
 		8D1AC9740486D14A00FE50C9 /* PSMTabBarControl.ibplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PSMTabBarControl.ibplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D1AC97B0486D23100FE50C9 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		97FF177011EB5711004FA751 /* PSMUnifiedTabStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSMUnifiedTabStyle.h; sourceTree = "<group>"; };
+		97FF177111EB5711004FA751 /* PSMUnifiedTabStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSMUnifiedTabStyle.m; sourceTree = "<group>"; };
 		C05B20D80A48CB530099B9E5 /* PSMTabBarControlInspector.xib */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = file.xib; name = PSMTabBarControlInspector.xib; path = English.lproj/PSMTabBarControlInspector.xib; sourceTree = "<group>"; };
 		C0D069550A49DF9100C95564 /* InterfaceBuilderKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InterfaceBuilderKit.framework; path = /Developer/Library/Frameworks/InterfaceBuilderKit.framework; sourceTree = "<absolute>"; };
 		D1AEDE460A6C289C0010C343 /* PSMTabBarControlLibrary.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = PSMTabBarControlLibrary.nib; path = English.lproj/PSMTabBarControlLibrary.nib; sourceTree = "<group>"; };
@@ -480,14 +485,16 @@
 			isa = PBXGroup;
 			children = (
 				8B39882A1184F40E004462EE /* PSMTabStyle.h */,
-				8B39882B1184F40E004462EE /* PSMUnifiedTabStyle.h */,
-				8B39882C1184F40E004462EE /* PSMUnifiedTabStyle.m */,
+				97FF177011EB5711004FA751 /* PSMUnifiedTabStyle.h */,
+				97FF177111EB5711004FA751 /* PSMUnifiedTabStyle.m */,
 				8B3988101184F40E004462EE /* PSMAdiumTabStyle.h */,
 				8B3988111184F40E004462EE /* PSMAdiumTabStyle.m */,
 				8B3988121184F40E004462EE /* PSMAquaTabStyle.h */,
 				8B3988131184F40E004462EE /* PSMAquaTabStyle.m */,
 				8B3988141184F40E004462EE /* PSMMetalTabStyle.h */,
 				8B3988151184F40E004462EE /* PSMMetalTabStyle.m */,
+				8B39882B1184F40E004462EE /* PSMLiveChatTabStyle.h */,
+				8B39882C1184F40E004462EE /* PSMLiveChatTabStyle.m */,
 			);
 			name = Styles;
 			sourceTree = "<group>";
@@ -550,6 +557,7 @@
 				8B39886B1184F64E004462EE /* PSMAdiumTabStyle.h in Headers */,
 				8B39886D1184F650004462EE /* PSMAquaTabStyle.h in Headers */,
 				8B39886F1184F651004462EE /* PSMMetalTabStyle.h in Headers */,
+				8B3988861184F65C004462EE /* PSMLiveChatTabStyle.h in Headers */,
 				8B3988711184F652004462EE /* PSMOverflowPopUpButton.h in Headers */,
 				8B3988731184F653004462EE /* PSMProgressIndicator.h in Headers */,
 				8B3988751184F653004462EE /* PSMRolloverButton.h in Headers */,
@@ -561,7 +569,7 @@
 				8B3988811184F65A004462EE /* PSMTabDragWindow.h in Headers */,
 				8B3988831184F65B004462EE /* PSMTabDragWindowController.h in Headers */,
 				8B3988851184F65B004462EE /* PSMTabStyle.h in Headers */,
-				8B3988861184F65C004462EE /* PSMUnifiedTabStyle.h in Headers */,
+				97FF179D11EB5938004FA751 /* PSMUnifiedTabStyle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -735,7 +743,8 @@
 				8B3988801184F659004462EE /* PSMTabDragView.m in Sources */,
 				8B3988821184F65A004462EE /* PSMTabDragWindow.m in Sources */,
 				8B3988841184F65B004462EE /* PSMTabDragWindowController.m in Sources */,
-				8B3988871184F65C004462EE /* PSMUnifiedTabStyle.m in Sources */,
+				8B3988871184F65C004462EE /* PSMLiveChatTabStyle.m in Sources */,
+				97FF179E11EB5938004FA751 /* PSMUnifiedTabStyle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -747,6 +756,7 @@
 				8BD439801185154600DB4AC3 /* DemoFakeModel.m in Sources */,
 				8BD439821185155700DB4AC3 /* DemoAppController.m in Sources */,
 				8B7C937811851AA200983F46 /* demo_main.m in Sources */,
+				97FF177211EB5711004FA751 /* PSMUnifiedTabStyle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -825,10 +835,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -845,7 +851,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = PSMTabBarControlDemo;
-				VALID_ARCHS = "i386 x86_64";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -873,10 +878,6 @@
 		C056398108A954F8003078D8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					i386,
-					x86_64,
-				);
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -894,7 +895,6 @@
 				INSTALL_PATH = "@loader_path/../Frameworks";
 				PRODUCT_NAME = PSMTabBarControl;
 				SKIP_INSTALL = NO;
-				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};
@@ -931,10 +931,6 @@
 		C056398508A954F8003078D8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					i386,
-					x86_64,
-				);
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -950,7 +946,6 @@
 				INSTALL_PATH = "";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = PSMTabBarControl;
-				VALID_ARCHS = "i386 x86_64";
 				WRAPPER_EXTENSION = ibplugin;
 			};
 			name = Release;
