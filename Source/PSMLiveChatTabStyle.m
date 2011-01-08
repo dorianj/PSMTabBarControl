@@ -41,10 +41,10 @@
 		_addTabButtonPressedImage = [[NSImage alloc] initByReferencingFile:[[PSMTabBarControl bundle] pathForImageResource:@"AquaTabNewPressed"]];
 		_addTabButtonRolloverImage = [[NSImage alloc] initByReferencingFile:[[PSMTabBarControl bundle] pathForImageResource:@"AquaTabNewRollover"]];
 
-		_objectCountStringAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[[NSFontManager sharedFontManager] convertFont:[NSFont fontWithName:@"Helvetica" size:11.0] toHaveTrait:NSBoldFontMask], NSFontAttributeName,
+		_objectCountStringAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
 										[[NSColor whiteColor] colorWithAlphaComponent:0.85], NSForegroundColorAttributeName,
-										nil, nil];
-
+										[[NSFontManager sharedFontManager] convertFont:[NSFont fontWithName:@"Lucida Grande" size:11.0] toHaveTrait:NSBoldFontMask], NSFontAttributeName,
+										nil];
 		leftMargin = 5.0;
 	}
 	return self;
@@ -175,6 +175,9 @@
 
 	if(![[cell indicator] isHidden]) {
 		result.origin.x -= kPSMTabBarIndicatorWidth + kPSMTabBarCellPadding;
+	}
+	if([cell hasCloseButton] == YES) {
+		result.origin.x -= [liveChatCloseButton size].width + kPSMTabBarCellPadding;
 	}
 
 	return result;
@@ -364,16 +367,6 @@
 			[NSBezierPath strokeLineFromPoint:NSMakePoint(NSMaxX(aRect) + 1.0, aRect.origin.y - 0.5)
 			 toPoint:NSMakePoint(NSMaxX(aRect) + 1.0, NSMaxY(aRect) - 2.5)];
 		}
-
-		// If this is the leftmost tab, we want to draw a line on the left, too
-		if([cell tabState] & PSMTab_PositionLeftMask) {
-			[lineColor set];
-			[NSBezierPath strokeLineFromPoint:NSMakePoint(aRect.origin.x, aRect.origin.y - 0.5)
-			 toPoint:NSMakePoint(aRect.origin.x, NSMaxY(aRect) - 2.5)];
-			[[[NSColor whiteColor] colorWithAlphaComponent:0.5] set];
-			[NSBezierPath strokeLineFromPoint:NSMakePoint(aRect.origin.x + 1.0, aRect.origin.y - 0.5)
-			 toPoint:NSMakePoint(aRect.origin.x + 1.0, NSMaxY(aRect) - 2.5)];
-		}
 	}
 
 	[self drawInteriorWithTabCell:cell inView:[cell controlView]];
@@ -525,36 +518,12 @@
 #pragma mark Archiving
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-	//[super encodeWithCoder:aCoder];
-	if([aCoder allowsKeyedCoding]) {
-		[aCoder encodeObject:liveChatCloseButton forKey:@"unifiedCloseButton"];
-		[aCoder encodeObject:liveChatCloseButtonDown forKey:@"unifiedCloseButtonDown"];
-		[aCoder encodeObject:liveChatCloseButtonOver forKey:@"unifiedCloseButtonOver"];
-		[aCoder encodeObject:liveChatCloseDirtyButton forKey:@"unifiedCloseDirtyButton"];
-		[aCoder encodeObject:liveChatCloseDirtyButtonDown forKey:@"unifiedCloseDirtyButtonDown"];
-		[aCoder encodeObject:liveChatCloseDirtyButtonOver forKey:@"unifiedCloseDirtyButtonOver"];
-		[aCoder encodeObject:_addTabButtonImage forKey:@"addTabButtonImage"];
-		[aCoder encodeObject:_addTabButtonPressedImage forKey:@"addTabButtonPressedImage"];
-		[aCoder encodeObject:_addTabButtonRolloverImage forKey:@"addTabButtonRolloverImage"];
-	}
+	// ... do not encode anything
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
-	// self = [super initWithCoder:aDecoder];
-	//if (self) {
-	if([aDecoder allowsKeyedCoding]) {
-		liveChatCloseButton = [[aDecoder decodeObjectForKey:@"unifiedCloseButton"] retain];
-		liveChatCloseButtonDown = [[aDecoder decodeObjectForKey:@"unifiedCloseButtonDown"] retain];
-		liveChatCloseButtonOver = [[aDecoder decodeObjectForKey:@"unifiedCloseButtonOver"] retain];
-		liveChatCloseDirtyButton = [[aDecoder decodeObjectForKey:@"unifiedCloseDirtyButton"] retain];
-		liveChatCloseDirtyButtonDown = [[aDecoder decodeObjectForKey:@"unifiedCloseDirtyButtonDown"] retain];
-		liveChatCloseDirtyButtonOver = [[aDecoder decodeObjectForKey:@"unifiedCloseDirtyButtonOver"] retain];
-		_addTabButtonImage = [[aDecoder decodeObjectForKey:@"addTabButtonImage"] retain];
-		_addTabButtonPressedImage = [[aDecoder decodeObjectForKey:@"addTabButtonPressedImage"] retain];
-		_addTabButtonRolloverImage = [[aDecoder decodeObjectForKey:@"addTabButtonRolloverImage"] retain];
-	}
-	//}
-	return self;
+	// ... do not read anything
+	return [self init];
 }
 
 @end
