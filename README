@@ -1,0 +1,5 @@
+PSMTabBarControl is cool, but outdated
+==
+
+
+PSMTabBarControl remains the best way to have Safari-style tabs in your app. This fork attempts to make it bearable when developing apps for 10.6 using Xcode 4. This fork contains none of the IBPlugin stuff, and removes a ton of the associated graphics to get a much smaller framework size.
