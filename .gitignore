@@ -1,4 +1,5 @@
 .DS_Store
+build/
 Source/PSMTabBarControl.xcodeproj/*.mode1v3
 Source/PSMTabBarControl.xcodeproj/*.xcworkspace
 Source/PSMTabBarControl.xcodeproj/xcuserdata/
