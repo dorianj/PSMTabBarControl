@@ -1,5 +1,7 @@
 .DS_Store
 Source/PSMTabBarControl.xcodeproj/*.mode1v3
+Source/PSMTabBarControl.xcodeproj/*.xcworkspace
+Source/PSMTabBarControl.xcodeproj/xcuserdata/
 Source/PSMTabBarControl.xcodeproj/*.pbxuser
 PSMTabBarControl.framework/Headers
 PSMTabBarControl.framework/Versions/A/Headers/
