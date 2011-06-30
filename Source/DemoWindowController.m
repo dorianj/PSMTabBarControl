@@ -70,13 +70,6 @@
 	[[tabView tabViewItemAtIndex:0] setLabel:@"Tab"];
 	[[tabView tabViewItemAtIndex:1] setLabel:@"Bar"];
 	[[tabView tabViewItemAtIndex:2] setLabel:@"Control"];
-	NSRect tabViewBounds = [[[tabView tabViewItemAtIndex:0] view] bounds];
-	[[tabView tabViewItemAtIndex:0] setView:[[NSImageView alloc] initWithFrame:tabViewBounds]];
-	[[[tabView tabViewItemAtIndex:0] view] setImage:[NSImage imageNamed:@"mcqueen_large"]];
-	[[tabView tabViewItemAtIndex:1] setView:[[NSImageView alloc] initWithFrame:tabViewBounds]];
-	[[[tabView tabViewItemAtIndex:1] view] setImage:[NSImage imageNamed:@"mater_large"]];
-	[[tabView tabViewItemAtIndex:2] setView:[[NSImageView alloc] initWithFrame:tabViewBounds]];
-	[[[tabView tabViewItemAtIndex:2] view] setImage:[NSImage imageNamed:@"sally_large"]];
 }
 
 - (IBAction)addNewTab:(id)sender {
@@ -472,7 +465,7 @@
 		[item setPaletteLabel:@"Configuration"];
 		[item setLabel:@"Configuration"];
 		[item setToolTip:@"Configuration"];
-		[item setImage:[NSImage imageNamed:@"32x32_log"]];
+		[item setImage:[NSImage imageNamed:NSImageNamePreferencesGeneral]];
 		[item setTarget:drawer];
 		[item setAction:@selector(toggle:)];
 	}
