@@ -1,6 +1,6 @@
 About dorianj/PSMTabBarControl
 ===
-PSMTabBarControl remains the best way to have Safari-style tabs in your app. This fork attempts to make it bearable when developing apps for 10.6 using Xcode 4.
+PSMTabBarControl remains the best way to have Safari-style tabs in your app. This fork makes it easy to use PSMTabBarControl when developing apps for 10.6/10.7 using Xcode 4.
 
 This fork contains none of the IBPlugin stuff, and removes unnecessary graphics to get a much smaller framework size (about 850kb uncompressed, 200kb deflated).
 
@@ -8,6 +8,11 @@ Building
 ====
 
 To build, simply open a terminal window in the PSMTabBarControl repo and run ./build.sh. The framework will be in build/Release.
+
+Installing
+====
+
+Add the .framework bundle to your xcode project, and add it to the Linked Frameworks and Libraries (under Target -> Summary). Next, under Target -> Build Phases, Add  a new build phase that copies it to the Frameworks directory of your app. (Add Build Phase > Copy Files. Destination: Frameworks)
 
 Copying
 ====
