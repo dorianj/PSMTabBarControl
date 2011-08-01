@@ -74,7 +74,7 @@
 
 - (IBAction)addNewTab:(id)sender {
 	DemoFakeModel *newModel = [[DemoFakeModel alloc] init];
-	NSTabViewItem *newItem = [[[NSTabViewItem alloc] initWithIdentifier:newModel] autorelease];
+	NSTabViewItem *newItem = [[(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:newModel] autorelease];
 	[newItem setLabel:@"Untitled"];
 	[tabView addTabViewItem:newItem];
 	[tabView selectTabViewItem:newItem]; // this is optional, but expected behavior

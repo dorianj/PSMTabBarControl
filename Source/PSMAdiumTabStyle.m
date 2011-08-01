@@ -188,7 +188,7 @@
 	}
 
 	NSRect cellFrame = [cell frame];
-	NSImage *icon = [[[cell representedObject] identifier] icon];
+	NSImage *icon = [[(NSTabViewItem*)[cell representedObject] identifier] icon];
 	NSSize iconSize = [icon size];
 
 	NSRect result;
@@ -585,7 +585,7 @@
 			[self drawObjectCounterInCell:cell withRect:drawingRect];
 			/* closeButtonOrIcon == nil */
 		} else if([cell hasIcon]) {
-			closeButtonOrIcon = [[[cell representedObject] identifier] icon];
+			closeButtonOrIcon = [[(NSTabViewItem*)[cell representedObject] identifier] icon];
 			drawingRect = iconRect;
 		} else {
 			closeButtonOrIcon = ([cell isEdited] ? _closeDirtyButton : _closeButton);
@@ -626,7 +626,7 @@
 	} else if([cell hasIcon]) {
 		/* The close button is disabled; the cell has an icon */
 		NSRect iconRect = [self iconRectForTabCell:cell];
-		NSImage *icon = [[[cell representedObject] identifier] icon];
+		NSImage *icon = [[(NSTabViewItem*)[cell representedObject] identifier] icon];
 
 		if([controlView isFlipped]) {
 			iconRect.origin.y += iconRect.size.height;
