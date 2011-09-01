@@ -653,10 +653,19 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	// did the tab's identifier change?
 	if([keyPath isEqualToString:@"identifier"]) {
+        id oldIdentifier = [change objectForKey: NSKeyValueChangeOldKey];
 		NSEnumerator *e = [_cells objectEnumerator];
 		PSMTabBarCell *cell;
 		while((cell = [e nextObject])) {
 			if([cell representedObject] == object) {
+                // unbind the old value first
+                NSArray *selectors = [NSArray arrayWithObjects: @"isProcessing", @"icon", @"objectCount", @"countColor", @"largeImage", @"isEdited", nil];
+                for (NSString *selector in selectors) {
+                    if([oldIdentifier respondsToSelector: NSSelectorFromString(selector)]) {
+                        [oldIdentifier unbind: selector];
+                        [oldIdentifier removeObserver:cell forKeyPath:selector];
+                    }
+                }
 				[self _bindPropertiesForCell:cell andTabViewItem:object];
 			}
 		}
@@ -1827,7 +1836,7 @@
 	[self _bindPropertiesForCell:cell andTabViewItem:item];
 
 	// watch for changes in the identifier
-	[item addObserver:self forKeyPath:@"identifier" options:0 context:nil];
+	[item addObserver:self forKeyPath:@"identifier" options:NSKeyValueObservingOptionOld context:nil];
 }
 
 - (void)_bindPropertiesForCell:(PSMTabBarCell *)cell andTabViewItem:(NSTabViewItem *)item {
