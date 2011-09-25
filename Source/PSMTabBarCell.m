@@ -139,7 +139,7 @@
 }
 
 - (NSAttributedString *)attributedStringValue {
-	return [(id < PSMTabStyle >)[_controlView style] attributedStringValueForTabCell:self];
+	return [(id < PSMTabStyle >)[(PSMTabBarControl *)_controlView style] attributedStringValueForTabCell:self];
 }
 
 - (NSInteger)tabState {
@@ -286,19 +286,19 @@
 #pragma mark Component Attributes
 
 - (NSRect)indicatorRectForFrame:(NSRect)cellFrame {
-	return [(id < PSMTabStyle >)[_controlView style] indicatorRectForTabCell:self];
+	return [(id < PSMTabStyle >)[(PSMTabBarControl *)_controlView style] indicatorRectForTabCell:self];
 }
 
 - (NSRect)closeButtonRectForFrame:(NSRect)cellFrame {
-	return [(id < PSMTabStyle >)[_controlView style] closeButtonRectForTabCell:self withFrame:cellFrame];
+	return [(id < PSMTabStyle >)[(PSMTabBarControl *)_controlView style] closeButtonRectForTabCell:self withFrame:cellFrame];
 }
 
 - (CGFloat)minimumWidthOfCell {
-	return [(id < PSMTabStyle >)[_controlView style] minimumWidthOfTabCell:self];
+	return [(id < PSMTabStyle >)[(PSMTabBarControl *)_controlView style] minimumWidthOfTabCell:self];
 }
 
 - (CGFloat)desiredWidthOfCell {
-	return [(id < PSMTabStyle >)[_controlView style] desiredWidthOfTabCell:self];
+	return [(id < PSMTabStyle >)[(PSMTabBarControl *)_controlView style] desiredWidthOfTabCell:self];
 }
 
 #pragma mark -
@@ -311,7 +311,7 @@
 		return;
 	}
 
-	[(id < PSMTabStyle >)[_controlView style] drawTabCell:self];
+	[(id < PSMTabStyle >)[(PSMTabBarControl *)_controlView style] drawTabCell:self];
 }
 
 #pragma mark -
