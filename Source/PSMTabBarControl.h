@@ -59,6 +59,8 @@ enum {
 	PSMTab_PositionSingleMask		= 1 << 7,
 };
 
+@protocol PSMTabBarControlDelegate;
+
 @interface PSMTabBarControl : NSControl {
 												
 	// control basics
@@ -115,7 +117,7 @@ enum {
 	BOOL										_closeClicked;
 
 	// MVC help
-	IBOutlet id								delegate;
+	IBOutlet id<PSMTabBarControlDelegate>		delegate;
 }
 
 // control characteristics
@@ -166,8 +168,8 @@ enum {
 // accessors
 - (NSTabView *)tabView;
 - (void)setTabView:(NSTabView *)view;
-- (id)delegate;
-- (void)setDelegate:(id)object;
+- (id<PSMTabBarControlDelegate>)delegate;
+- (void)setDelegate:(id<PSMTabBarControlDelegate>)object;
 - (id)partnerView;
 - (void)setPartnerView:(id)view;
 
@@ -191,8 +193,9 @@ enum {
 
 @end
 
+@protocol PSMTabBarControlDelegate <NSTabViewDelegate>
 
-@interface NSObject (TabBarControlDelegateMethods)
+@optional
 
 //Standard NSTabView methods
 - (BOOL)tabView:(NSTabView *)aTabView shouldCloseTabViewItem:(NSTabViewItem *)tabViewItem;
