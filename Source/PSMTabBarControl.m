@@ -30,6 +30,7 @@
 
 // contents
 - (void)addTabViewItem:(NSTabViewItem *)item;
+- (void)addTabViewItem:(NSTabViewItem *)item atIndex:(NSUInteger)index;
 - (void)removeTabForCell:(PSMTabBarCell *)cell;
 
 // draw
@@ -541,7 +542,7 @@
 #pragma mark -
 #pragma mark Functionality
 
-- (void)addTabViewItem:(NSTabViewItem *)item {
+- (void)addTabViewItem:(NSTabViewItem *)item atIndex:(NSUInteger)index {
 	// create cell
 	PSMTabBarCell *cell = [[PSMTabBarCell alloc] initWithControlView:self];
 	NSRect cellRect, lastCellFrame;
@@ -569,11 +570,15 @@
 	[self bindPropertiesForCell:cell andTabViewItem:item];
 
 	// add to collection
-	[_cells addObject:cell];
+	[_cells insertObject:cell atIndex:index];
 	[cell release];
 	if([_cells count] == [tabView numberOfTabViewItems]) {
 		[self update]; // don't update unless all are accounted for!
 	}
+}
+
+- (void)addTabViewItem:(NSTabViewItem *)item {
+  [self addTabViewItem:item atIndex:[_cells count]];
 }
 
 - (void)removeTabForCell:(PSMTabBarCell *)cell {
@@ -1473,6 +1478,7 @@
 	NSTabViewItem *item = [sender representedObject];
 	[sender retain];
 	if(([_cells count] == 1) && (![self canCloseOnlyTab])) {
+    [sender release];
 		return;
 	}
 
@@ -1480,6 +1486,7 @@
 		if(![[self delegate] tabView:tabView shouldCloseTabViewItem:item]) {
 			// fix mouse downed close button
 			[sender setCloseButtonPressed:NO];
+      [sender release];
 			return;
 		}
 	}
@@ -1705,10 +1712,13 @@
 	NSMutableArray *cellItems = [self representedTabViewItems];
 	NSEnumerator *ex = [tabItems objectEnumerator];
 	NSTabViewItem *item;
+  
+  NSUInteger i = 0;
 	while((item = [ex nextObject])) {
 		if(![cellItems containsObject:item]) {
-			[self addTabViewItem:item];
+			[self addTabViewItem:item atIndex:i];
 		}
+    ++i;
 	}
 
 	// pass along for other delegate responses
