@@ -441,7 +441,11 @@
 	id attributeValue = nil;
 
 	if([attribute isEqualToString: NSAccessibilityRoleAttribute]) {
-		attributeValue = NSAccessibilityButtonRole;
+		attributeValue = NSAccessibilityRadioButtonRole;
+	} else if([attribute isEqualToString: NSAccessibilityRoleDescriptionAttribute]) {
+		attributeValue = NSLocalizedString(@"Tab", nil);
+	} else if([attribute isEqualToString: NSAccessibilityTitleAttribute]) {
+		attributeValue = [self title];
 	} else if([attribute isEqualToString: NSAccessibilityHelpAttribute]) {
 		if([[[self controlView] delegate] respondsToSelector:@selector(accessibilityStringForTabView:objectCount:)]) {
 			attributeValue = [NSString stringWithFormat:@"%@, %lu %@", [self stringValue],
