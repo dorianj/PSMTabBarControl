@@ -13,6 +13,7 @@
 			buildPhases = (
 			);
 			dependencies = (
+				5A56530315D1E7A700F9EFD5 /* PBXTargetDependency */,
 				53DF6905067E5B930090B5B0 /* PBXTargetDependency */,
 			);
 			name = All;
@@ -114,6 +115,13 @@
 			remoteGlobalIDString = 53DF68FC067E5B5A0090B5B0;
 			remoteInfo = PSMTabBarControlFramework;
 		};
+		5A56530215D1E7A700F9EFD5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0259C573FE90428111CA0C5A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BD439591185147D00DB4AC3;
+			remoteInfo = PSMTabBarControlDemo;
+		};
 		8BD439631185149C00DB4AC3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0259C573FE90428111CA0C5A /* Project object */;
@@ -142,7 +150,16 @@
 		13F8B88907B434F6008AE28D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		13F8B88A07B434F6008AE28D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		53DF68FD067E5B5A0090B5B0 /* PSMTabBarControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PSMTabBarControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		53DF68FE067E5B5A0090B5B0 /* PSMTabBarControl-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = PSMTabBarControl-Info.plist; path = Source/PSMTabBarControl-Info.plist; sourceTree = "<group>"; };
+		53DF68FE067E5B5A0090B5B0 /* PSMTabBarControl-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PSMTabBarControl-Info.plist"; path = "Source/PSMTabBarControl-Info.plist"; sourceTree = "<group>"; };
+		5A5652F915D1E72F00F9EFD5 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		5A5652FA15D1E72F00F9EFD5 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		5A5652FB15D1E72F00F9EFD5 /* PSMTabBarControlDemo-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "PSMTabBarControlDemo-Base.xcconfig"; sourceTree = "<group>"; };
+		5A5652FC15D1E72F00F9EFD5 /* PSMTabBarControlDemo-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "PSMTabBarControlDemo-Debug.xcconfig"; sourceTree = "<group>"; };
+		5A5652FD15D1E72F00F9EFD5 /* PSMTabBarControlDemo-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "PSMTabBarControlDemo-Release.xcconfig"; sourceTree = "<group>"; };
+		5A5652FE15D1E72F00F9EFD5 /* PSMTabBarControlFramework-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "PSMTabBarControlFramework-Base.xcconfig"; sourceTree = "<group>"; };
+		5A5652FF15D1E72F00F9EFD5 /* PSMTabBarControlFramework-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "PSMTabBarControlFramework-Debug.xcconfig"; sourceTree = "<group>"; };
+		5A56530015D1E72F00F9EFD5 /* PSMTabBarControlFramework-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "PSMTabBarControlFramework-Release.xcconfig"; sourceTree = "<group>"; };
+		5A56530115D1E72F00F9EFD5 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		8B3987C31184F19D004462EE /* AdiumGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AdiumGradient.png; path = Resources/AdiumGradient.png; sourceTree = "<group>"; };
 		8B3987C41184F19D004462EE /* AquaTabClose_Front_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AquaTabClose_Front_Pressed.png; path = Resources/AquaTabClose_Front_Pressed.png; sourceTree = "<group>"; };
 		8B3987C51184F19D004462EE /* AquaTabClose_Front_Rollover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AquaTabClose_Front_Rollover.png; path = Resources/AquaTabClose_Front_Rollover.png; sourceTree = "<group>"; };
@@ -207,7 +224,7 @@
 		8B39882C1184F40E004462EE /* PSMLiveChatTabStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PSMLiveChatTabStyle.m; path = Source/PSMLiveChatTabStyle.m; sourceTree = "<group>"; };
 		8B7C937711851AA200983F46 /* demo_main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = demo_main.m; path = Source/demo_main.m; sourceTree = "<group>"; };
 		8BD4395A1185147D00DB4AC3 /* PSMTabBarControlDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PSMTabBarControlDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8BD4395C1185147D00DB4AC3 /* PSMTabBarControlDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = PSMTabBarControlDemo-Info.plist; path = Source/PSMTabBarControlDemo-Info.plist; sourceTree = "<group>"; };
+		8BD4395C1185147D00DB4AC3 /* PSMTabBarControlDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PSMTabBarControlDemo-Info.plist"; path = "Source/PSMTabBarControlDemo-Info.plist"; sourceTree = "<group>"; };
 		8BD43969118514BA00DB4AC3 /* DemoAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoAppController.h; path = Source/DemoAppController.h; sourceTree = "<group>"; };
 		8BD4396A118514BA00DB4AC3 /* DemoAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemoAppController.m; path = Source/DemoAppController.m; sourceTree = "<group>"; };
 		8BD4396D118514D800DB4AC3 /* PSMTabBarControlDemo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = PSMTabBarControlDemo.xib; path = Resources/PSMTabBarControlDemo.xib; sourceTree = "<group>"; };
@@ -257,6 +274,7 @@
 			children = (
 				8BD439551185146A00DB4AC3 /* Demo */,
 				54D33B2C06778E4400C9C163 /* Framework */,
+				5A5652F815D1E72F00F9EFD5 /* xcconfigs */,
 				1ED78706FE9D4A0611CA0C5A /* Products */,
 				2E58F364FFB232C311CA0CBA /* Frameworks */,
 			);
@@ -353,6 +371,22 @@
 				0259C582FE90428111CA0C5A /* Resources */,
 			);
 			name = Framework;
+			sourceTree = "<group>";
+		};
+		5A5652F815D1E72F00F9EFD5 /* xcconfigs */ = {
+			isa = PBXGroup;
+			children = (
+				5A5652F915D1E72F00F9EFD5 /* Base.xcconfig */,
+				5A5652FA15D1E72F00F9EFD5 /* Debug.xcconfig */,
+				5A5652FB15D1E72F00F9EFD5 /* PSMTabBarControlDemo-Base.xcconfig */,
+				5A5652FC15D1E72F00F9EFD5 /* PSMTabBarControlDemo-Debug.xcconfig */,
+				5A5652FD15D1E72F00F9EFD5 /* PSMTabBarControlDemo-Release.xcconfig */,
+				5A5652FE15D1E72F00F9EFD5 /* PSMTabBarControlFramework-Base.xcconfig */,
+				5A5652FF15D1E72F00F9EFD5 /* PSMTabBarControlFramework-Debug.xcconfig */,
+				5A56530015D1E72F00F9EFD5 /* PSMTabBarControlFramework-Release.xcconfig */,
+				5A56530115D1E72F00F9EFD5 /* Release.xcconfig */,
+			);
+			path = xcconfigs;
 			sourceTree = "<group>";
 		};
 		8B549E451185BC1C00740C49 /* Categories */ = {
@@ -628,6 +662,11 @@
 			target = 53DF68FC067E5B5A0090B5B0 /* PSMTabBarControlFramework */;
 			targetProxy = 53DF6904067E5B930090B5B0 /* PBXContainerItemProxy */;
 		};
+		5A56530315D1E7A700F9EFD5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BD439591185147D00DB4AC3 /* PSMTabBarControlDemo */;
+			targetProxy = 5A56530215D1E7A700F9EFD5 /* PBXContainerItemProxy */;
+		};
 		8BD439641185149C00DB4AC3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 53DF68FC067E5B5A0090B5B0 /* PSMTabBarControlFramework */;
@@ -649,139 +688,55 @@
 /* Begin XCBuildConfiguration section */
 		8BD4395D1185147E00DB4AC3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A5652FC15D1E72F00F9EFD5 /* PSMTabBarControlDemo-Debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "Source/PSMTabBarControlDemo-Info.plist";
-				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = PSMTabBarControlDemo;
 			};
 			name = Debug;
 		};
 		8BD4395E1185147E00DB4AC3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A5652FD15D1E72F00F9EFD5 /* PSMTabBarControlDemo-Release.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "Source/PSMTabBarControlDemo-Info.plist";
-				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = PSMTabBarControlDemo;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
 		C056398008A954F8003078D8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A5652FF15D1E72F00F9EFD5 /* PSMTabBarControlFramework-Debug.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "Source/PSMTabBarControl-Info.plist";
-				INSTALL_PATH = "@loader_path/../Frameworks";
-				PRODUCT_NAME = PSMTabBarControl;
-				SKIP_INSTALL = NO;
 			};
 			name = Debug;
 		};
 		C056398108A954F8003078D8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A56530015D1E72F00F9EFD5 /* PSMTabBarControlFramework-Release.xcconfig */;
 			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "Source/PSMTabBarControl-Info.plist";
-				INSTALL_MODE_FLAG = "go-w,a+rX";
-				INSTALL_PATH = "@loader_path/../Frameworks";
-				PRODUCT_NAME = PSMTabBarControl;
-				SKIP_INSTALL = NO;
 			};
 			name = Release;
 		};
 		C056398808A954F8003078D8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				PRODUCT_NAME = All;
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
 			};
 			name = Debug;
 		};
 		C056398908A954F8003078D8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
 				PRODUCT_NAME = All;
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
 			};
 			name = Release;
 		};
 		C056398C08A954F8003078D8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
 		C056398D08A954F8003078D8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};

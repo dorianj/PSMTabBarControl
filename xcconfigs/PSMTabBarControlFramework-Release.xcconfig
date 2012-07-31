@@ -1,0 +1,3 @@
+#include "Release.xcconfig"
+#include "PSMTabBarControlFramework-Base.xcconfig"
+INSTALL_MODE_FLAG = go-w,a+rX

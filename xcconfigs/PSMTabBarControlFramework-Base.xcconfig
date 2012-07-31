@@ -1,0 +1,9 @@
+#include "Base.xcconfig"
+PRODUCT_NAME = PSMTabBarControl
+DYLIB_CURRENT_VERSION = 1
+SKIP_INSTALL = NO
+GCC_ENABLE_OBJC_GC = unsupported
+FRAMEWORK_VERSION = A
+INSTALL_PATH = @loader_path/../Frameworks
+INFOPLIST_FILE = Source/PSMTabBarControl-Info.plist
+DYLIB_COMPATIBILITY_VERSION = 1

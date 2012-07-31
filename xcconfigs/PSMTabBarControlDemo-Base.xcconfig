@@ -1,0 +1,6 @@
+#include "Base.xcconfig"
+OTHER_LDFLAGS = -framework Foundation -framework AppKit
+PRODUCT_NAME = PSMTabBarControlDemo
+INSTALL_PATH = $(HOME)/Applications
+INFOPLIST_FILE = Source/PSMTabBarControlDemo-Info.plist
+ALWAYS_SEARCH_USER_PATHS = NO
