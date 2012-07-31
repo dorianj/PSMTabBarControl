@@ -631,7 +631,11 @@
 	}
 
 	// stop watching identifier
-	[item removeObserver:self forKeyPath:@"identifier"];
+	@try {
+		[item removeObserver:self forKeyPath:@"identifier"];
+	}
+	@catch (NSException *exception) {
+	}	
 
 	// remove indicator
 	if([[self subviews] containsObject:[cell indicator]]) {

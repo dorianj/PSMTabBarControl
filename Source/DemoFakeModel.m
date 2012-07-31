@@ -12,7 +12,7 @@
 @implementation DemoFakeModel
 
 - (id)init {
-	if((self == [super init])) {
+	if((self = [super init])) {
 		_isProcessing = NO;
 		_icon = nil;
 		_iconName = nil;
