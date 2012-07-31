@@ -690,7 +690,7 @@
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 
 	NSShadow *shadow = [[NSShadow alloc] init];
-	[shadow setShadowOffset:NSMakeSize(-2, -2)];
+	[shadow setShadowOffset:NSMakeSize(-1.5, -1.5)];
 	[shadow setShadowBlurRadius:2];
 	[shadow setShadowColor:[NSColor colorWithCalibratedWhite:0.6 alpha:1.0]];
 
@@ -719,7 +719,7 @@
 			[bezier moveToPoint:NSMakePoint(aRect.origin.x, aRect.origin.y)];
 			[bezier lineToPoint:NSMakePoint(aRect.origin.x, aRect.origin.y + aRect.size.height)];
 
-			[shadow setShadowOffset:NSMakeSize(-2, -2)];
+			[shadow setShadowOffset:NSMakeSize(-1.5, -1.5)];
 			[shadow set];
 			[bezier stroke];
 
@@ -735,7 +735,7 @@
 				[bezier lineToPoint:NSMakePoint(aRect.origin.x + aRect.size.width, aRect.origin.y + 0.5)];
 			}
 
-			[shadow setShadowOffset:NSMakeSize(2, -2)];
+			[shadow setShadowOffset:NSMakeSize(1.5, -1.5)];
 			[shadow set];
 			[bezier stroke];
 		} else {
@@ -792,7 +792,7 @@
 				//Bottom
 				[bezier lineToPoint:NSMakePoint(NSMaxX(aRect), NSMaxY(aRect))];
 			}
-			[shadow setShadowOffset:NSMakeSize((_drawsRight ? 2 : -2), -2)];
+			[shadow setShadowOffset:NSMakeSize((_drawsRight ? 1.5 : -1.5), -1.5)];
 			[shadow set];
 			[bezier stroke];
 		}
@@ -878,7 +878,7 @@
 		rect.origin.y++;
 		[path moveToPoint:NSMakePoint(rect.origin.x, rect.origin.y)];
 		[path lineToPoint:NSMakePoint(rect.origin.x + rect.size.width, rect.origin.y)];
-		[shadow setShadowOffset:NSMakeSize(2, -2)];
+		[shadow setShadowOffset:NSMakeSize(1.5, -1.5)];
 
 		[shadow set];
 		[path stroke];
@@ -895,11 +895,11 @@
 		if(_drawsRight) {
 			startPoint = NSMakePoint(NSMinX(rect), NSMinY(rect));
 			endPoint = NSMakePoint(NSMinX(rect), NSMaxY(rect));
-			shadowOffset = NSMakeSize(2, -2);
+			shadowOffset = NSMakeSize(1.5, -1.5);
 		} else {
 			startPoint = NSMakePoint(NSMaxX(rect) - 1, NSMinY(rect));
 			endPoint = NSMakePoint(NSMaxX(rect) - 1, NSMaxY(rect));
-			shadowOffset = NSMakeSize(-2, -2);
+			shadowOffset = NSMakeSize(-1.5, -1.5);
 		}
 
 		[path moveToPoint:startPoint];
@@ -914,7 +914,7 @@
 		//Draw top horizontal shadow
 		startPoint = NSMakePoint(NSMinX(rect), NSMinY(rect));
 		endPoint = NSMakePoint(NSMaxX(rect), NSMinY(rect));
-		shadowOffset = NSMakeSize(0, -1);
+		shadowOffset = NSMakeSize(0, -1.5);
 
 		[path moveToPoint:startPoint];
 		[path lineToPoint:endPoint];
