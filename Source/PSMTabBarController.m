@@ -329,7 +329,6 @@ static NSInteger potentialMinimumForArray(NSArray *array, NSInteger minimum){
 						[newWidths addObject:[NSNumber numberWithDouble:(desiredWidth < averageWidth && [_control sizeCellsToFit]) ? desiredWidth : averageWidth]];
 					}
 
-					totalOccupiedWidth = [[newWidths valueForKeyPath:@"@sum.intValue"] integerValue];
 					break;
 				}
 
@@ -486,8 +485,6 @@ static NSInteger potentialMinimumForArray(NSArray *array, NSInteger minimum){
 			if(totalOccupiedWidth < availableWidth) {
 				[newWidths replaceObjectAtIndex:0 withObject:[NSNumber numberWithDouble:availableWidth - [cellWidth doubleValue]]];
 			}
-
-			numberOfVisibleCells = 2;
 		}
 	}
 
