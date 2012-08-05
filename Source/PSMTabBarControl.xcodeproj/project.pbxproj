@@ -260,16 +260,14 @@
 		0259C582FE90428111CA0C5A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				98CC8D2F15CECFB900A40F8B /* AquaTabClose_Front_Pressed@2x.png */,
-				98CC8D3015CECFB900A40F8B /* AquaTabClose_Front_Rollover@2x.png */,
-				98CC8D3115CECFB900A40F8B /* AquaTabClose_Front@2x.png */,
-				98CC8D3215CECFB900A40F8B /* overflowImage@2x.png */,
-				98CC8D3315CECFB900A40F8B /* overflowImagePressed@2x.png */,
 				8B3987C31184F19D004462EE /* AdiumGradient.png */,
 				8B3987C41184F19D004462EE /* AquaTabClose_Front_Pressed.png */,
 				8B3987C51184F19D004462EE /* AquaTabClose_Front_Rollover.png */,
+				98CC8D3015CECFB900A40F8B /* AquaTabClose_Front_Rollover@2x.png */,
 				8B3987C61184F19D004462EE /* AquaTabClose_Front.png */,
+				98CC8D3115CECFB900A40F8B /* AquaTabClose_Front@2x.png */,
 				8B3987C71184F19D004462EE /* AquaTabCloseDirty_Front_Pressed.png */,
+				98CC8D2F15CECFB900A40F8B /* AquaTabClose_Front_Pressed@2x.png */,
 				8B3987C81184F19D004462EE /* AquaTabCloseDirty_Front_Rollover.png */,
 				8B3987C91184F19D004462EE /* AquaTabCloseDirty_Front.png */,
 				8B3987CA1184F19D004462EE /* AquaTabNew.png */,
@@ -283,7 +281,9 @@
 				8B3987D21184F19D004462EE /* AquaTabsSeparatorDown.png */,
 				8B3987D51184F19D004462EE /* largeImage.png */,
 				8B3987D81184F19D004462EE /* overflowImage.png */,
+				98CC8D3215CECFB900A40F8B /* overflowImage@2x.png */,
 				8B3987D91184F19D004462EE /* overflowImagePressed.png */,
+				98CC8D3315CECFB900A40F8B /* overflowImagePressed@2x.png */,
 				8B3987DA1184F19D004462EE /* pi.png */,
 				8B3987DC1184F19D004462EE /* TabClose_Dirty_Pressed.png */,
 				8B3987DD1184F19D004462EE /* TabClose_Dirty_Rollover.png */,
@@ -690,11 +690,9 @@
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "PSMTabBarControl-Info.plist";
 				INSTALL_PATH = "@loader_path/../Frameworks";
 				PRODUCT_NAME = PSMTabBarControl;
@@ -710,10 +708,8 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "PSMTabBarControl-Info.plist";
 				INSTALL_MODE_FLAG = "go-w,a+rX";
 				INSTALL_PATH = "@loader_path/../Frameworks";

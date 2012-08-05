@@ -1,8 +1,10 @@
 About dorianj/PSMTabBarControl
 ===
-PSMTabBarControl remains the best way to have Safari-style tabs in your app. This fork makes it easy to use PSMTabBarControl when developing apps for 10.6/10.7 using Xcode 4.
+PSMTabBarControl remains the best way to have Safari-style tabs in your app. This fork makes it easy to use PSMTabBarControl when developing apps for 10.6, 10.7, and 10.8 using Xcode 4. It is also Retina-ready.
 
-This fork contains none of the IBPlugin stuff, and removes unnecessary graphics to get a much smaller framework size (about 850kb uncompressed, 200kb deflated).
+This fork contains none of the IBPlugin stuff, and removes unnecessary graphics to get a much smaller framework size (about 668kb uncompressed, 232kb deflated).
+
+If you make any improvements, please submit them as pull requests.
 
 Building
 ====
