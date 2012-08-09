@@ -11,8 +11,6 @@
 #import "PSMTabStyle.h"
 #import "PSMTabDragWindowController.h"
 
-#define PI 3.1417
-
 @interface PSMTabBarControl (Private)
 - (void)update:(BOOL)animate;
 @end
@@ -147,7 +145,7 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 	NSInteger i;
 	CGFloat cellStepSize = ([control orientation] == PSMTabBarHorizontalOrientation) ? (cellFrame.size.width + 6) : (cellFrame.size.height + 1);
 	for(i = 0; i < kPSMTabDragAnimationSteps - 1; i++) {
-		NSInteger thisWidth = (NSInteger)(cellStepSize - ((cellStepSize / 2.0) + ((sin((PI / 2.0) + ((CGFloat)i / (CGFloat)kPSMTabDragAnimationSteps) * PI) * cellStepSize) / 2.0)));
+		NSInteger thisWidth = (NSInteger)(cellStepSize - ((cellStepSize / 2.0) + ((sin((M_PI / 2.0) + ((CGFloat)i / (CGFloat)kPSMTabDragAnimationSteps) * M_PI) * cellStepSize) / 2.0)));
 		[_sineCurveWidths addObject:[NSNumber numberWithInteger:thisWidth]];
 	}
 	[_sineCurveWidths addObject:[NSNumber numberWithInteger:([control orientation] == PSMTabBarHorizontalOrientation) ? cellFrame.size.width : cellFrame.size.height]];

@@ -545,11 +545,9 @@
 - (void)addTabViewItem:(NSTabViewItem *)item atIndex:(NSUInteger)index {
 	// create cell
 	PSMTabBarCell *cell = [[PSMTabBarCell alloc] initWithControlView:self];
-	NSRect cellRect, lastCellFrame;
+	NSRect cellRect = NSZeroRect, lastCellFrame = NSZeroRect;
 	if([_cells lastObject] != nil) {
-		cellRect = lastCellFrame = [[_cells lastObject] frame];
-	} else {
-		cellRect = lastCellFrame = NSZeroRect;
+		lastCellFrame = [[_cells lastObject] frame];
 	}
 
 	if([self orientation] == PSMTabBarHorizontalOrientation) {
@@ -978,8 +976,6 @@
 		NSMutableArray *targetFrames = [NSMutableArray arrayWithCapacity:[_cells count]];
 
 		for(NSInteger i = 0; i < [_cells count]; i++) {
-			currentCell = [_cells objectAtIndex:i];
-
 			//we're going from NSRect -> NSValue -> NSRect -> NSValue here - oh well
 			[targetFrames addObject:[NSValue valueWithRect:[_controller cellFrameAtIndex:i]]];
 		}
