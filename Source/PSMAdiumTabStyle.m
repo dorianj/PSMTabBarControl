@@ -158,6 +158,7 @@
 	}
 
 	NSRect result;
+    result.origin = NSMakePoint(0.0, 0.0);
 	result.size = [_closeButton size];
 
 	switch(orientation) {
@@ -192,6 +193,7 @@
 	NSSize iconSize = [icon size];
 
 	NSRect result;
+    result.origin = NSMakePoint(0.0, 0.0);
 	result.size = iconSize;
 
 	switch(orientation) {
@@ -953,15 +955,13 @@
 		attrStr = [[[NSMutableAttributedString alloc] initWithString:contents] autorelease];
 		NSRange range = NSMakeRange(0, [contents length]);
 		[attrStr addAttribute:NSFontAttributeName value:[NSFont systemFontOfSize:11.0] range:range];
-		NSMutableParagraphStyle *centeredParagraphStyle = nil;
-
-		if(!centeredParagraphStyle) {
-			centeredParagraphStyle = [[[NSParagraphStyle defaultParagraphStyle] mutableCopy] retain];
-			[centeredParagraphStyle setAlignment:NSCenterTextAlignment];
-		}
+		NSMutableParagraphStyle *centeredParagraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        [centeredParagraphStyle setAlignment:NSCenterTextAlignment];
 
 		[attrStr addAttribute:NSParagraphStyleAttributeName value:centeredParagraphStyle range:range];
 		[attrStr drawInRect:labelRect];
+        
+        [centeredParagraphStyle release];
 		return;
 	}
 

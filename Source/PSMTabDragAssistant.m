@@ -257,7 +257,7 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 			NSUInteger mask;             //we don't need this but we can't pass nil in for the style mask, as some delegate implementations will crash
 
 			if(!(image = [self _miniwindowImageOfWindow:[control window]])) {
-				image = [[self _imageForViewOfCell:[self draggedCell] styleMask:&mask] copy];
+				image = [self _imageForViewOfCell:[self draggedCell] styleMask:&mask];
 			}
 
 			imageSize = [image size];
@@ -362,6 +362,7 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 		[item retain];
 		[tabView removeTabViewItem:item];
 		[tabView insertTabViewItem:item atIndex:index];
+        [item release];
 		if(reselect) {
 			[tabView selectTabViewItem:item];
 		}
@@ -580,7 +581,7 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 		[viewImage unlockFocus];
 	}
 
-	if(*outMask | NSBorderlessWindowMask) {
+	if(outMask && (*outMask | NSBorderlessWindowMask)) {
 		_dragWindowOffset.height += 22;
 	}
 
@@ -609,6 +610,8 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 	[animation setCurrentProgress:0.1];
 	[animation startAnimation];
 	NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1.0 / 30.0 target:self selector:@selector(_expandWindowTimerFired:) userInfo:[NSDictionary dictionaryWithObjectsAndKeys:window, @"Window", animation, @"Animation", nil] repeats:YES];
+    [animation release];
+    
 	[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSEventTrackingRunLoopMode];
 }
 
@@ -636,7 +639,6 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 
 	if(![animation isAnimating]) {
 		[timer invalidate];
-		[animation release];
 	}
 }
 
