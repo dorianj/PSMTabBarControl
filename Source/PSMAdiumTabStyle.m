@@ -158,6 +158,7 @@
 	}
 
 	NSRect result;
+    result.origin = NSMakePoint(0.0, 0.0);
 	result.size = [_closeButton size];
 
 	switch(orientation) {
@@ -192,6 +193,7 @@
 	NSSize iconSize = [icon size];
 
 	NSRect result;
+    result.origin = NSMakePoint(0.0, 0.0);
 	result.size = iconSize;
 
 	switch(orientation) {

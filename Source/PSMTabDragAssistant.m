@@ -581,7 +581,7 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 		[viewImage unlockFocus];
 	}
 
-	if(*outMask | NSBorderlessWindowMask) {
+	if(outMask && (*outMask | NSBorderlessWindowMask)) {
 		_dragWindowOffset.height += 22;
 	}
 
