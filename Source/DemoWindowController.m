@@ -113,6 +113,15 @@
 	[[[tabView selectedTabViewItem] identifier] setValue:[NSNumber numberWithBool:[sender state]] forKeyPath:@"isEdited"];
 }
 
+- (IBAction)hasLargeImageAction:(id)sender {
+    
+    if ([sender state] == NSOnState) {
+         [[[tabView selectedTabViewItem] identifier] setValue:[NSImage imageNamed:@"largeImage"] forKeyPath:@"largeImage"];
+    } else {
+        [[[tabView selectedTabViewItem] identifier] setValue:nil forKeyPath:@"largeImage"];
+    }
+}
+
 - (IBAction)setTabLabel:(id)sender {
 	[[tabView selectedTabViewItem] setLabel:[sender stringValue]];
 }
@@ -306,6 +315,10 @@
 
 	if([[tabViewItem identifier] respondsToSelector:@selector(isEdited)]) {
 		[isEditedButton setState:[[tabViewItem identifier] isEdited]];
+	}
+
+	if([[tabViewItem identifier] respondsToSelector:@selector(largeImage)]) {
+		[isEditedButton setState:[[tabViewItem identifier] largeImage] != nil];
 	}
 
 	if([[tabViewItem identifier] respondsToSelector:@selector(iconName)]) {
