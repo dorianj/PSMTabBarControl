@@ -318,7 +318,7 @@
 	}
 
 	if([[tabViewItem identifier] respondsToSelector:@selector(largeImage)]) {
-		[isEditedButton setState:[[tabViewItem identifier] largeImage] != nil];
+		[hasLargeImageButton setState:[[tabViewItem identifier] largeImage] != nil];
 	}
 
 	if([[tabViewItem identifier] respondsToSelector:@selector(iconName)]) {

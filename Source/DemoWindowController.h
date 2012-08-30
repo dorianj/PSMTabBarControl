@@ -19,6 +19,7 @@
 
 	IBOutlet NSButton               *isProcessingButton;
 	IBOutlet NSButton				*isEditedButton;
+	IBOutlet NSButton				*hasLargeImageButton;
 	IBOutlet NSTextField			*objectCounterField;
 	IBOutlet NSPopUpButton			*iconButton;
 
