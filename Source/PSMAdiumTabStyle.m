@@ -152,6 +152,19 @@
 - (BOOL)closeButtonIsEnabledForCell:(PSMTabBarCell *)cell {
 	return([cell hasCloseButton] && ![cell isCloseButtonSuppressed]);
 }
+
+- (NSRect)_drawingRectForTabCell:(PSMTabBarCell *)cell {
+
+    NSRect cellFrame = [cell frame];
+    
+    if([cell state] == NSOnState) {
+		cellFrame.origin.y -= 1;
+        cellFrame.size.height -= 1;
+	}
+    
+    return NSInsetRect(cellFrame, Adium_MARGIN_X, MARGIN_Y);
+}
+
 - (NSRect)closeButtonRectForTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)cellFrame {
 	if([self closeButtonIsEnabledForCell:cell] == NO) {
 		return NSZeroRect;
@@ -183,18 +196,61 @@
 	return result;
 }
 
+- (NSRect)largeImageRectForTabCell:(PSMTabBarCell *)cell {
+
+	if([cell hasLargeImage] == NO || orientation == PSMTabBarHorizontalOrientation) {
+		return NSZeroRect;
+	}
+
+    NSRect drawingRect = [self _drawingRectForTabCell:cell];
+    
+    NSImage *image = [[[cell representedObject] identifier] largeImage];
+    
+    NSSize scaledImageSize = [cell scaleImageWithSize:[image size] toFitInSize:NSMakeSize(kPSMTabBarLargeImageWidth, kPSMTabBarLargeImageHeight) scalingType:NSImageScaleProportionallyUpOrDown];
+    
+    NSRect result = NSMakeRect(drawingRect.origin.x,
+                                         drawingRect.origin.y - ((scaledImageSize.height - scaledImageSize.height) / 2) - 0.5,
+                                         scaledImageSize.width, scaledImageSize.height);
+
+    if(scaledImageSize.width < kPSMTabBarIconWidth) {
+        result.origin.x += (kPSMTabBarIconWidth - scaledImageSize.width) / 2.0;
+    }
+    if(scaledImageSize.height < drawingRect.size.height) {
+        result.origin.y += (drawingRect.size.height - scaledImageSize.height) / 2.0;
+    }
+    
+    return result;
+}
+
 - (NSRect)iconRectForTabCell:(PSMTabBarCell *)cell {
 	if([cell hasIcon] == NO) {
 		return NSZeroRect;
 	}
 
+    NSRect drawingRect = [self _drawingRectForTabCell:cell];
+    
+    NSImage *icon = [[(NSTabViewItem*)[cell representedObject] identifier] icon];
+    
+    NSSize scaledSize = [cell scaleImageWithSize:[icon size] toFitInSize:NSMakeSize(kPSMTabBarIconWidth, drawingRect.size.height) scalingType:NSImageScaleProportionallyDown];
+
+    NSRect result = NSMakeRect(drawingRect.origin.x, drawingRect.origin.y, scaledSize.width, scaledSize.height);
+    
+    if(scaledSize.width < kPSMTabBarIconWidth) {
+        result.origin.x += (kPSMTabBarIconWidth - scaledSize.width) / 2.0;
+    }
+    if(scaledSize.height < drawingRect.size.height) {
+        result.origin.y += (drawingRect.size.height - scaledSize.height) / 2.0;
+    }
+        
+    return result;
+/*
 	NSRect cellFrame = [cell frame];
 	NSImage *icon = [[(NSTabViewItem*)[cell representedObject] identifier] icon];
 	NSSize iconSize = [icon size];
 
 	NSRect result;
     result.origin = NSMakePoint(0.0, 0.0);
-	result.size = iconSize;
+	result.size = [cell scaleImageWithSize:iconSize toFitInSize:cellFrame.size scalingType:NSImageScaleProportionallyDown];
 
 	switch(orientation) {
 	case PSMTabBarHorizontalOrientation:
@@ -223,6 +279,7 @@
 	}
 
 	return result;
+*/    
 }
 
 - (NSRect)indicatorRectForTabCell:(PSMTabBarCell *)cell {
@@ -497,55 +554,41 @@
 
 - (void)drawInteriorWithTabCell:(PSMTabBarCell *)cell inView:(NSView*)controlView {
 	NSRect cellFrame = [cell frame];
+    
+    NSRect drawingRect = [self _drawingRectForTabCell:cell];
 
 	if((orientation == PSMTabBarVerticalOrientation) &&
 	   [cell hasLargeImage]) {
 		NSImage *image = [[[cell representedObject] identifier] largeImage];
-		cellFrame.origin.x += Adium_MARGIN_X;
 
-		NSRect imageDrawingRect = NSMakeRect(cellFrame.origin.x,
-											 cellFrame.origin.y - ((kPSMTabBarControlSourceListHeight - kPSMTabBarLargeImageHeight) / 2),
-											 kPSMTabBarLargeImageWidth, kPSMTabBarLargeImageHeight);
-
+        NSRect imageDrawingRect = [self largeImageRectForTabCell:cell];
+        
 		[NSGraphicsContext saveGraphicsState];
-		//Use a transform to draw an arbitrary image in our flipped view
-		NSAffineTransform *transform = [NSAffineTransform transform];
-		[transform translateXBy:imageDrawingRect.origin.x yBy:(imageDrawingRect.origin.y + imageDrawingRect.size.height)];
-		[transform scaleXBy:1.0 yBy:-1.0];
-		[transform concat];
-
-		imageDrawingRect.origin = NSMakePoint(0, 0);
-
+                
 		//Create Rounding.
 		CGFloat userIconRoundingRadius = (kPSMTabBarLargeImageWidth / 4.0);
-		if(userIconRoundingRadius > 3) {
-			userIconRoundingRadius = 3;
+		if(userIconRoundingRadius > 3.0) {
+			userIconRoundingRadius = 3.0;
 		}
-		NSBezierPath    *clipPath = [self bezierPathWithRoundedRect:imageDrawingRect radius:userIconRoundingRadius];
-		[clipPath addClip];
-
-		[image drawInRect:imageDrawingRect
-		 fromRect:NSMakeRect(0, 0, [image size].width, [image size].height)
-		 operation:NSCompositeSourceOver
-		 fraction:1.0];
-
+        
+		NSBezierPath *clipPath = [self bezierPathWithRoundedRect:imageDrawingRect radius:userIconRoundingRadius];
+		[clipPath addClip];        
+  
+        [image drawInRect:imageDrawingRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
+    
 		[NSGraphicsContext restoreGraphicsState];
-
-		cellFrame.origin.x += imageDrawingRect.size.width;
-		cellFrame.size.width -= imageDrawingRect.size.width;
+        
+        drawingRect.origin.x += imageDrawingRect.size.width + Adium_CellPadding;
+        drawingRect.size.width -= imageDrawingRect.size.width + Adium_CellPadding;   
 	}
 
 	// label rect
-	NSRect labelRect;
-	labelRect.origin.x = cellFrame.origin.x + Adium_MARGIN_X;
-	labelRect.size.width = cellFrame.size.width - (labelRect.origin.x - cellFrame.origin.x) - Adium_CellPadding;
-	labelRect.size.height = cellFrame.size.height;
+	NSRect labelRect = drawingRect;
 	switch(orientation) {
 	case PSMTabBarHorizontalOrientation :
-		labelRect.origin.y = cellFrame.origin.y + MARGIN_Y + 1.0;
+		labelRect.origin.y += 1;
 		break;
 	case PSMTabBarVerticalOrientation:
-		labelRect.origin.y = cellFrame.origin.y;
 		break;
 	}
 
@@ -553,10 +596,10 @@
 		/* The close button and the icon (if present) are drawn combined, changing on-hover */
 		NSRect closeButtonRect = [cell closeButtonRectForFrame:cellFrame];
 		NSRect iconRect = [self iconRectForTabCell:cell];
-		NSRect drawingRect;
+		NSRect localDrawingRect;
 		NSImage *closeButtonOrIcon = nil;
 
-		if([cell hasIcon]) {
+		if([cell hasIcon] && orientation == PSMTabBarHorizontalOrientation) {
 			/* If the cell has an icon and a close button, determine which rect should be used and use it consistently
 			 * This only matters for horizontal tabs; vertical tabs look fine without making this adjustment.
 			 */
@@ -567,10 +610,10 @@
 
 		if([cell closeButtonPressed]) {
 			closeButtonOrIcon = ([cell isEdited] ? _closeDirtyButtonDown : _closeButtonDown);
-			drawingRect = closeButtonRect;
+			localDrawingRect = closeButtonRect;
 		} else if([cell closeButtonOver]) {
 			closeButtonOrIcon = ([cell isEdited] ? _closeDirtyButtonOver : _closeButtonOver);
-			drawingRect = closeButtonRect;
+			localDrawingRect = closeButtonRect;
 		} else if((orientation == PSMTabBarVerticalOrientation) &&
 				  ([cell count] > 0)) {
 			/* In vertical tabs, the count indicator supercedes the icon */
@@ -583,22 +626,18 @@
 			closeButtonRect.origin.y = cellFrame.origin.y + ((NSHeight(cellFrame) - counterSize.height) / 2);
 			closeButtonRect.size.height = counterSize.height;
 
-			drawingRect = closeButtonRect;
-			[self drawObjectCounterInCell:cell withRect:drawingRect];
+			localDrawingRect = closeButtonRect;
+			[self drawObjectCounterInCell:cell withRect:localDrawingRect];
 			/* closeButtonOrIcon == nil */
 		} else if([cell hasIcon]) {
 			closeButtonOrIcon = [[(NSTabViewItem*)[cell representedObject] identifier] icon];
-			drawingRect = iconRect;
+			localDrawingRect = iconRect;
 		} else {
 			closeButtonOrIcon = ([cell isEdited] ? _closeDirtyButton : _closeButton);
-			drawingRect = closeButtonRect;
+			localDrawingRect = closeButtonRect;
 		}
 
-		if([controlView isFlipped]) {
-			drawingRect.origin.y += drawingRect.size.height;
-		}
-
-		[closeButtonOrIcon compositeToPoint:drawingRect.origin operation:NSCompositeSourceOver fraction:1.0];
+        [closeButtonOrIcon drawInRect:localDrawingRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
 
 		// scoot label over
 		switch(orientation) {
@@ -630,11 +669,7 @@
 		NSRect iconRect = [self iconRectForTabCell:cell];
 		NSImage *icon = [[(NSTabViewItem*)[cell representedObject] identifier] icon];
 
-		if([controlView isFlipped]) {
-			iconRect.origin.y += iconRect.size.height;
-		}
-
-		[icon compositeToPoint:iconRect.origin operation:NSCompositeSourceOver fraction:1.0];
+        [icon drawInRect:iconRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
 
 		// scoot label over by the size of the standard close button
 		switch(orientation) {
@@ -643,12 +678,13 @@
 			labelRect.size.width -= (NSWidth(iconRect) + Adium_CellPadding);
 			break;
 		case PSMTabBarVerticalOrientation:
+            labelRect.origin.x += (NSWidth(iconRect) + Adium_CellPadding);        
 			labelRect.size.width -= (NSWidth(iconRect) + Adium_CellPadding);
 			break;
 		}
 	}
 
-	if([cell state] == NSOnState) {
+	if(orientation == PSMTabBarHorizontalOrientation && [cell state] == NSOnState) {
 		labelRect.origin.y -= 1;
 	}
 
