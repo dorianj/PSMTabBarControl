@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		069DFB2915EFBDF500FB9F1C /* largeImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B3987D51184F19D004462EE /* largeImage.png */; };
 		13F8B89007B43554008AE28D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92D38A0106425D02CA0E72 /* Cocoa.framework */; };
 		8B3988671184F64C004462EE /* NSBezierPath_AMShading.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B39880C1184F40E004462EE /* NSBezierPath_AMShading.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B3988681184F64D004462EE /* NSBezierPath_AMShading.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B39880D1184F40E004462EE /* NSBezierPath_AMShading.m */; };
@@ -72,7 +73,6 @@
 		8B3988A01184F668004462EE /* AquaTabsDownNonKey.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B3987D01184F19D004462EE /* AquaTabsDownNonKey.png */; };
 		8B3988A11184F668004462EE /* AquaTabsSeparator.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B3987D11184F19D004462EE /* AquaTabsSeparator.png */; };
 		8B3988A21184F668004462EE /* AquaTabsSeparatorDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B3987D21184F19D004462EE /* AquaTabsSeparatorDown.png */; };
-		8B3988A51184F668004462EE /* largeImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B3987D51184F19D004462EE /* largeImage.png */; };
 		8B3988A81184F668004462EE /* overflowImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B3987D81184F19D004462EE /* overflowImage.png */; };
 		8B3988A91184F668004462EE /* overflowImagePressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B3987D91184F19D004462EE /* overflowImagePressed.png */; };
 		8B3988AA1184F668004462EE /* pi.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B3987DA1184F19D004462EE /* pi.png */; };
@@ -582,7 +582,6 @@
 				8B3988A01184F668004462EE /* AquaTabsDownNonKey.png in Resources */,
 				8B3988A11184F668004462EE /* AquaTabsSeparator.png in Resources */,
 				8B3988A21184F668004462EE /* AquaTabsSeparatorDown.png in Resources */,
-				8B3988A51184F668004462EE /* largeImage.png in Resources */,
 				8B3988A81184F668004462EE /* overflowImage.png in Resources */,
 				8B3988A91184F668004462EE /* overflowImagePressed.png in Resources */,
 				8B3988AA1184F668004462EE /* pi.png in Resources */,
@@ -612,6 +611,7 @@
 			files = (
 				8BD439811185155300DB4AC3 /* PSMTabBarControlDemo.xib in Resources */,
 				8BD4399E118516A900DB4AC3 /* DemoWindow.xib in Resources */,
+				069DFB2915EFBDF500FB9F1C /* largeImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
