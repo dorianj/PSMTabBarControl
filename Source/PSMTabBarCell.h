@@ -87,6 +87,9 @@
 - (CGFloat)minimumWidthOfCell;
 - (CGFloat)desiredWidthOfCell;
 
+// image scaling
+- (NSSize)scaleImageWithSize:(NSSize)imageSize toFitInSize:(NSSize)canvasSize scalingType:(NSImageScaling)scalingType;
+
 // drawing
 - (void)drawWithFrame:(NSRect) cellFrame inView:(NSView *)controlView;
 

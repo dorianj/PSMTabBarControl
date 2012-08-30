@@ -302,6 +302,54 @@
 }
 
 #pragma mark -
+#pragma mark Image Scaling
+
+static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BOOL scaleUpOrDown) {
+
+    CGFloat ratio;
+
+    if (imageSize.width <= 0 || imageSize.height <= 0) {
+      return NSMakeSize(0, 0);
+    }
+
+    // get the smaller ratio and scale the image size with it
+    ratio = MIN(canvasSize.width / imageSize.width,
+	      canvasSize.height / imageSize.height);
+  
+    // Only scale down, unless scaleUpOrDown is YES
+    if (ratio < 1.0 || scaleUpOrDown)
+        {
+        imageSize.width *= ratio;
+        imageSize.height *= ratio;
+        }
+
+    return imageSize;
+} 
+
+- (NSSize)scaleImageWithSize:(NSSize)imageSize toFitInSize:(NSSize)canvasSize scalingType:(NSImageScaling)scalingType {
+
+    NSSize result;
+  
+    switch (scalingType)  {
+        case NSImageScaleProportionallyDown:
+            result = scaleProportionally (imageSize, canvasSize, NO);
+            break;
+        case NSImageScaleAxesIndependently:
+            result = canvasSize;
+            break;
+        default:
+        case NSImageScaleNone:
+            result = imageSize;
+            break;
+        case NSImageScaleProportionallyUpOrDown:
+            result = scaleProportionally (imageSize, canvasSize, YES);
+            break;
+    }
+    
+    return result;
+}
+
+#pragma mark -
 #pragma mark Drawing
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView {
