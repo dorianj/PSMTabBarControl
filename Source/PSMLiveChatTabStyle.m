@@ -399,11 +399,8 @@
 		}
 
 		closeButtonSize = [closeButton size];
-		if([controlView isFlipped]) {
-			closeButtonRect.origin.y += closeButtonRect.size.height;
-		}
 
-		[closeButton compositeToPoint:closeButtonRect.origin operation:NSCompositeSourceOver fraction:1.0];
+        [closeButton drawInRect:closeButtonRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
 
 		// scoot label over
 		labelRect.size.width -= closeButtonSize.width + kPSMTabBarCellPadding;
@@ -413,9 +410,6 @@
 	if([cell hasIcon]) {
 		NSRect iconRect = [self iconRectForTabCell:cell];
 		NSImage *icon = [[(NSTabViewItem*)[cell representedObject] identifier] icon];
-		if([controlView isFlipped]) {
-			iconRect.origin.y += iconRect.size.height;
-		}
 
 		// center in available space (in case icon image is smaller than kPSMTabBarIconWidth)
 		if([icon size].width < kPSMTabBarIconWidth) {
@@ -425,7 +419,7 @@
 			iconRect.origin.y -= (kPSMTabBarIconWidth - [icon size].height) / 2.0;
 		}
 
-		[icon compositeToPoint:iconRect.origin operation:NSCompositeSourceOver fraction:1.0];
+        [icon drawInRect:iconRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
 
 		// scoot label over
 		labelRect.size.width -= iconRect.size.width + kPSMTabBarCellPadding;
