@@ -735,7 +735,7 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 		}
 		[cell setFrame:newRect];
 		if([cell indicator]) {
-			[[cell indicator] setFrame:[[control style] indicatorRectForTabCell:cell]];
+			[[cell indicator] setFrame:[cell indicatorRectForBounds:newRect]];
 		}
 	}
 	if(removeFlag) {
