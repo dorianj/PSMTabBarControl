@@ -94,7 +94,6 @@
 		8BD439821185155700DB4AC3 /* DemoAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4396A118514BA00DB4AC3 /* DemoAppController.m */; };
 		8BD4399E118516A900DB4AC3 /* DemoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BD4399D118516A900DB4AC3 /* DemoWindow.xib */; };
 		8BFD0B351185199800F69178 /* PSMTabBarControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53DF68FD067E5B5A0090B5B0 /* PSMTabBarControl.framework */; };
-		97FF177211EB5711004FA751 /* PSMUnifiedTabStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FF177111EB5711004FA751 /* PSMUnifiedTabStyle.m */; };
 		97FF179D11EB5938004FA751 /* PSMUnifiedTabStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 97FF177011EB5711004FA751 /* PSMUnifiedTabStyle.h */; };
 		97FF179E11EB5938004FA751 /* PSMUnifiedTabStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FF177111EB5711004FA751 /* PSMUnifiedTabStyle.m */; };
 		98CC8D3415CECFC100A40F8B /* AquaTabClose_Front_Pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98CC8D2F15CECFB900A40F8B /* AquaTabClose_Front_Pressed@2x.png */; };
@@ -650,7 +649,6 @@
 				8BD439801185154600DB4AC3 /* DemoFakeModel.m in Sources */,
 				8BD439821185155700DB4AC3 /* DemoAppController.m in Sources */,
 				8B7C937811851AA200983F46 /* demo_main.m in Sources */,
-				97FF177211EB5711004FA751 /* PSMUnifiedTabStyle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
