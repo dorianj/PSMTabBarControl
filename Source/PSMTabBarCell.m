@@ -18,6 +18,18 @@
 
 @implementation PSMTabBarCell
 
+@synthesize tabState = _tabState;
+@synthesize hasCloseButton = _hasCloseButton;
+@synthesize hasIcon = _hasIcon;
+@synthesize hasLargeImage = _hasLargeImage;
+@synthesize count = _count;
+@synthesize countColor = _countColor;
+@synthesize isPlaceholder = _isPlaceholder;
+@synthesize isEdited = _isEdited;
+@synthesize closeButtonPressed = _closeButtonPressed;
+@synthesize closeButtonTrackingTag = _closeButtonTrackingTag;
+@synthesize cellTrackingTag = _cellTrackingTag;
+
 #pragma mark -
 #pragma mark Creation/Destruction
 - (id)initWithControlView:(PSMTabBarControl *)controlView {
@@ -94,22 +106,6 @@
 	_controlView = view;
 }
 
-- (NSTrackingRectTag)closeButtonTrackingTag {
-	return _closeButtonTrackingTag;
-}
-
-- (void)setCloseButtonTrackingTag:(NSTrackingRectTag)tag {
-	_closeButtonTrackingTag = tag;
-}
-
-- (NSTrackingRectTag)cellTrackingTag {
-	return _cellTrackingTag;
-}
-
-- (void)setCellTrackingTag:(NSTrackingRectTag)tag {
-	_cellTrackingTag = tag;
-}
-
 - (CGFloat)width {
 	return _frame.size.width;
 }
@@ -123,7 +119,7 @@
 
 	//move the status indicator along with the rest of the cell
 	if(![[self indicator] isHidden] && ![_controlView isTabBarHidden]) {
-		[[self indicator] setFrame:[self indicatorRectForFrame:rect]];
+		[[self indicator] setFrame:[self indicatorRectForBounds:rect]];
 	}
 }
 
@@ -140,14 +136,6 @@
 
 - (NSAttributedString *)attributedStringValue {
 	return [(id < PSMTabStyle >)[(PSMTabBarControl *)_controlView style] attributedStringValueForTabCell:self];
-}
-
-- (NSInteger)tabState {
-	return _tabState;
-}
-
-- (void)setTabState:(NSInteger)state {
-	_tabState = state;
 }
 
 - (NSProgressIndicator *)indicator {
@@ -167,29 +155,12 @@
 	}
 }
 
-- (BOOL)closeButtonPressed {
-	return _closeButtonPressed;
-}
-
-- (void)setCloseButtonPressed:(BOOL)value {
-	_closeButtonPressed = value;
-}
-
 - (BOOL)closeButtonOver {
 	return(_closeButtonOver && ([_controlView allowsBackgroundTabClosing] || ([self tabState] & PSMTab_SelectedMask) || [[NSApp currentEvent] modifierFlags] & NSCommandKeyMask));
 }
 
 - (void)setCloseButtonOver:(BOOL)value {
 	_closeButtonOver = value;
-}
-
-- (BOOL)hasCloseButton {
-	return _hasCloseButton;
-}
-
-- (void)setHasCloseButton:(BOOL)set;
-{
-	_hasCloseButton = set;
 }
 
 - (void)setCloseButtonSuppressed:(BOOL)suppress;
@@ -200,51 +171,6 @@
 - (BOOL)isCloseButtonSuppressed;
 {
 	return _isCloseButtonSuppressed;
-}
-
-- (BOOL)hasIcon {
-	return _hasIcon;
-}
-
-- (void)setHasIcon:(BOOL)value {
-	_hasIcon = value;
-	//[_controlView update:[[self controlView] automaticallyAnimates]]; // binding notice is too fast
-}
-
-- (BOOL)hasLargeImage {
-	return _hasLargeImage;
-}
-
-- (void)setHasLargeImage:(BOOL)value {
-	_hasLargeImage = value;
-}
-
-
-- (NSInteger)count {
-	return _count;
-}
-
-- (void)setCount:(NSInteger)value {
-	_count = value;
-	//[_controlView update:[[self controlView] automaticallyAnimates]]; // binding notice is too fast
-}
-
-- (NSColor *)countColor {
-	return _countColor;
-}
-
-- (void)setCountColor:(NSColor *)color {
-	[_countColor release];
-	_countColor = [color retain];
-}
-
-- (BOOL)isPlaceholder {
-	return _isPlaceholder;
-}
-
-- (void)setIsPlaceholder:(BOOL)value;
-{
-	_isPlaceholder = value;
 }
 
 - (NSInteger)currentStep {
@@ -263,15 +189,6 @@
 	_currentStep = value;
 }
 
-- (BOOL)isEdited {
-	return _isEdited;
-}
-
-- (void)setIsEdited:(BOOL)value {
-	_isEdited = value;
-	//[_controlView update:[[self controlView] automaticallyAnimates]]; // binding notice is too fast
-}
-
 #pragma mark -
 #pragma mark Bindings
 
@@ -283,22 +200,359 @@
 }
 
 #pragma mark -
-#pragma mark Component Attributes
+#pragma mark Providing Images
 
-- (NSRect)indicatorRectForFrame:(NSRect)cellFrame {
-	return [(id < PSMTabStyle >)[(PSMTabBarControl *)_controlView style] indicatorRectForTabCell:self];
+- (NSImage *)closeButtonImageOfType:(PSMCloseButtonImageType)type {
+
+    id <PSMTabStyle> tabStyle = [(PSMTabBarControl *)_controlView style];
+    
+    if ([tabStyle respondsToSelector:@selector(closeButtonImageOfType:forTabCell:)]) {
+        return [tabStyle closeButtonImageOfType:PSMCloseButtonImageTypeStandard forTabCell:self];
+    // use standard image
+    } else {
+        switch (type) {
+            case PSMCloseButtonImageTypeStandard:
+                return [NSImage imageNamed:@"TabClose_Front"];
+            case PSMCloseButtonImageTypeRollover:
+                return [NSImage imageNamed:@"TabClose_Front_Rollover"];
+            case PSMCloseButtonImageTypePressed:
+                return [NSImage imageNamed:@"TabClose_Front_Pressed"];
+                
+            case PSMCloseButtonImageTypeDirty:
+                return [NSImage imageNamed:@"TabClose_Dirty"];
+            case PSMCloseButtonImageTypeDirtyRollover:
+                return [NSImage imageNamed:@"TabClose_Dirty_Rollover"];
+            case PSMCloseButtonImageTypeDirtyPressed:
+                return [NSImage imageNamed:@"TabClose_Dirty_Pressed"];
+                
+            default:
+                break;
+        }
+        
+        return nil;
+    }
+    
+    
+}  // -closeButtonImageOfType:
+
+#pragma mark -
+#pragma mark Determining Cell Size
+
+- (NSRect)drawingRectForBounds:(NSRect)theRect {
+
+    id <PSMTabStyle> tabStyle = [(PSMTabBarControl *)_controlView style];
+    if ([tabStyle respondsToSelector:@selector(drawingRectForBounds:ofTabCell:)])
+        return [tabStyle drawingRectForBounds:theRect ofTabCell:self];
+    else
+        return NSInsetRect(theRect, MARGIN_X, MARGIN_Y);
 }
 
-- (NSRect)closeButtonRectForFrame:(NSRect)cellFrame {
-	return [(id < PSMTabStyle >)[(PSMTabBarControl *)_controlView style] closeButtonRectForTabCell:self withFrame:cellFrame];
+- (NSRect)titleRectForBounds:(NSRect)theRect {
+
+    id <PSMTabStyle> tabStyle = [(PSMTabBarControl *)_controlView style];
+    if ([tabStyle respondsToSelector:@selector(titleRectForBounds:ofTabCell:)])
+        return [tabStyle titleRectForBounds:theRect ofTabCell:self];
+    else {
+    
+        NSRect drawingRect = [self drawingRectForBounds:theRect];
+
+        NSRect constrainedDrawingRect = drawingRect;
+
+        NSRect closeButtonRect = [self closeButtonRectForBounds:theRect];
+        if (!NSEqualRects(closeButtonRect, NSZeroRect))
+            {
+            constrainedDrawingRect.origin.x += NSWidth(closeButtonRect)  + kPSMTabBarCellPadding;
+            constrainedDrawingRect.size.width -= NSWidth(closeButtonRect) + kPSMTabBarCellPadding;
+            }
+            
+        NSRect iconRect = [self iconRectForBounds:theRect];
+        if (!NSEqualRects(iconRect, NSZeroRect))
+            {
+            constrainedDrawingRect.origin.x += NSWidth(iconRect)  + kPSMTabBarCellPadding;
+            constrainedDrawingRect.size.width -= NSWidth(iconRect) + kPSMTabBarCellPadding;
+            }
+            
+        NSRect indicatorRect = [self indicatorRectForBounds:theRect];
+        if (!NSEqualRects(indicatorRect, NSZeroRect))
+            {
+            constrainedDrawingRect.size.width -= NSWidth(indicatorRect) + kPSMTabBarCellPadding;
+            }
+
+        NSRect counterBadgeRect = [self objectCounterRectForBounds:theRect];
+        if (!NSEqualRects(counterBadgeRect, NSZeroRect))
+            {
+            constrainedDrawingRect.size.width -= NSWidth(counterBadgeRect) + kPSMTabBarCellPadding;
+            }
+                                
+        NSAttributedString *attrString = [self attributedStringValue];
+        if ([attrString length] == 0)
+            return NSZeroRect;
+            
+        NSSize stringSize = [attrString size];
+        
+        NSRect result = NSMakeRect(constrainedDrawingRect.origin.x, drawingRect.origin.y+(drawingRect.size.height-stringSize.height)/2, constrainedDrawingRect.size.width, stringSize.height);
+                        
+        return result;
+        }
+}
+
+- (NSRect)iconRectForBounds:(NSRect)theRect {
+
+    id <PSMTabStyle> tabStyle = [(PSMTabBarControl *)_controlView style];
+    if ([tabStyle respondsToSelector:@selector(iconRectForBounds:ofTabCell:)]) {
+        return [tabStyle iconRectForBounds:theRect ofTabCell:self];
+    } else {
+    
+        if (![self hasIcon])
+            return NSZeroRect;
+
+        NSImage *icon = [[(NSTabViewItem*)[self representedObject] identifier] icon];
+        if (!icon)
+            return NSZeroRect;
+    
+        // calculate rect
+        NSRect drawingRect = [self drawingRectForBounds:theRect];
+
+        NSRect constrainedDrawingRect = drawingRect;
+
+        NSRect closeButtonRect = [self closeButtonRectForBounds:theRect];
+        if (!NSEqualRects(closeButtonRect, NSZeroRect))
+            {
+            constrainedDrawingRect.origin.x += NSWidth(closeButtonRect)  + kPSMTabBarCellPadding;
+            constrainedDrawingRect.size.width -= NSWidth(closeButtonRect) + kPSMTabBarCellPadding;
+            }
+                    
+        NSSize iconSize = [icon size];
+        
+        NSSize scaledIconSize = [self scaleImageWithSize:iconSize toFitInSize:NSMakeSize(iconSize.width, constrainedDrawingRect.size.height) scalingType:NSImageScaleProportionallyDown];
+
+        NSRect result = NSMakeRect(constrainedDrawingRect.origin.x, constrainedDrawingRect.origin.y, scaledIconSize.width, scaledIconSize.height);
+    
+		// center in available space (in case icon image is smaller than kPSMTabBarIconWidth)
+		if(scaledIconSize.width < kPSMTabBarIconWidth) {
+			result.origin.x += (kPSMTabBarIconWidth - scaledIconSize.width) / 2.0;
+		}
+
+		if(scaledIconSize.height < kPSMTabBarIconWidth) {
+			result.origin.y -= (kPSMTabBarIconWidth - scaledIconSize.height) / 2.0;
+		}
+
+        return result;
+    }
+}
+
+- (NSRect)largeImageRectForBounds:(NSRect)theRect {
+
+    // support for large images for horizontal orientation only
+    if ([(PSMTabBarControl *)[self controlView] orientation] == PSMTabBarHorizontalOrientation)
+        return NSZeroRect;
+
+    id <PSMTabStyle> tabStyle = [(PSMTabBarControl *)_controlView style];
+    if ([tabStyle respondsToSelector:@selector(largeImageRectForBounds:ofTabCell:)])
+        return [tabStyle largeImageRectForBounds:theRect ofTabCell:self];
+    else
+        return theRect;
+}
+
+- (NSRect)indicatorRectForBounds:(NSRect)theRect {
+
+    id <PSMTabStyle> tabStyle = [(PSMTabBarControl *)_controlView style];
+    if ([tabStyle respondsToSelector:@selector(indicatorRectForBounds:ofTabCell:)])
+        return [tabStyle indicatorRectForBounds:theRect ofTabCell:self];
+    else
+        {
+        if([[self indicator] isHidden]) {
+            return NSZeroRect;
+        }
+    
+        // calculate rect
+        NSRect drawingRect = [self drawingRectForBounds:theRect];
+
+        NSSize indicatorSize = NSMakeSize(kPSMTabBarIndicatorWidth, kPSMTabBarIndicatorWidth);
+        
+        NSRect result = NSMakeRect(NSMaxX(drawingRect)-indicatorSize.width,NSMidY(drawingRect)-indicatorSize.height/2,indicatorSize.width,indicatorSize.height);
+        
+        return result;
+        }
+}
+
+- (NSSize)objectCounterSize
+{
+    id <PSMTabStyle> tabStyle = [(PSMTabBarControl *)_controlView style];
+
+    if ([tabStyle respondsToSelector:@selector(objectCounterSizeForTabCell:)]) {
+        return [tabStyle objectCounterSizeOfTabCell:self];
+    } else {
+        if([self count] == 0) {
+            return NSZeroSize;
+        }
+        
+        // get badge width
+        CGFloat countWidth = [[tabStyle attributedObjectCountValueForTabCell:self] size].width;
+            countWidth += (2 * kPSMObjectCounterRadius - 6.0);
+            if(countWidth < kPSMObjectCounterMinWidth) {
+                countWidth = kPSMObjectCounterMinWidth;
+            }
+        
+        return NSMakeSize(countWidth, 2 * kPSMObjectCounterRadius);
+    }
+    
+}  // -objectCounterSize
+
+- (NSRect)objectCounterRectForBounds:(NSRect)theRect {
+
+    id <PSMTabStyle> tabStyle = [(PSMTabBarControl *)_controlView style];
+    if ([tabStyle respondsToSelector:@selector(objectCounterRectForBounds:ofTabCell:)]) {
+        return [tabStyle objectCounterRectForBounds:theRect ofTabCell:self];
+    } else {
+    	if([self count] == 0) {
+            return NSZeroRect;
+        }
+
+        NSRect drawingRect = [self drawingRectForBounds:theRect];
+
+        NSRect constrainedDrawingRect = drawingRect;
+
+        NSRect indicatorRect = [self indicatorRectForBounds:theRect];
+        if (!NSEqualRects(indicatorRect, NSZeroRect))
+            {
+            constrainedDrawingRect.size.width -= NSWidth(indicatorRect) + kPSMTabBarCellPadding;
+            }
+        
+        NSSize counterBadgeSize = [self objectCounterSize];
+        
+        // calculate rect
+        NSRect result;
+        result.size = counterBadgeSize; // temp
+        result.origin.x = NSMaxX(constrainedDrawingRect)-counterBadgeSize.width;
+        result.origin.y = constrainedDrawingRect.origin.y+(constrainedDrawingRect.size.height-result.size.height)/2;
+
+        if(![[self indicator] isHidden]) {
+            result.origin.x -= kPSMTabBarCellPadding;
+        }
+                    
+        return result;
+    }
+}
+
+- (NSRect)closeButtonRectForBounds:(NSRect)theRect {
+    
+    id <PSMTabStyle> tabStyle = [(PSMTabBarControl *)_controlView style];
+    
+    // ask style for rect if available
+    if ([tabStyle respondsToSelector:@selector(closeButtonRectForBounds:ofTabCell:)]) {
+        return [tabStyle closeButtonRectForBounds:theRect ofTabCell:self];
+    // default handling
+    } else {
+        if ([self shouldDrawCloseButton] == NO) {
+            return NSZeroRect;
+        }
+        
+        // ask style for image
+        NSImage *image = [self closeButtonImageOfType:PSMCloseButtonImageTypeStandard];            
+        if (!image)
+            return NSZeroRect;
+        
+        // calculate rect
+        NSRect drawingRect = [self drawingRectForBounds:theRect];
+        
+        NSSize imageSize = [image size];
+        
+        NSSize scaledImageSize = [self scaleImageWithSize:imageSize toFitInSize:NSMakeSize(imageSize.width, drawingRect.size.height) scalingType:NSImageScaleProportionallyDown];
+
+        NSRect result = NSMakeRect(drawingRect.origin.x, drawingRect.origin.y, scaledImageSize.width, scaledImageSize.height);
+
+        if(scaledImageSize.height < drawingRect.size.height) {
+            result.origin.y += (drawingRect.size.height - scaledImageSize.height) / 2.0;
+        }
+    
+        return result;
+    }
 }
 
 - (CGFloat)minimumWidthOfCell {
-	return [(id < PSMTabStyle >)[(PSMTabBarControl *)_controlView style] minimumWidthOfTabCell:self];
+
+    id < PSMTabStyle > style = [(PSMTabBarControl *)_controlView style];
+    if ([style respondsToSelector:@selector(minimumWidthOfTabCell)]) {
+        return [style minimumWidthOfTabCell:self];
+    } else {
+        
+        CGFloat resultWidth = 0.0;
+
+        // left margin
+        resultWidth = MARGIN_X;
+
+        // close button?
+        if ([self shouldDrawCloseButton]) {
+            NSImage *image = [self closeButtonImageOfType:PSMCloseButtonImageTypeStandard];
+            resultWidth += [image size].width + kPSMTabBarCellPadding;
+        }
+
+        // icon?
+        if([self hasIcon]) {
+            resultWidth += kPSMTabBarIconWidth + kPSMTabBarCellPadding;
+        }
+
+        // the label
+        resultWidth += kPSMMinimumTitleWidth;
+
+        // object counter?
+        if([self count] > 0) {
+            resultWidth += [self objectCounterSize].width + kPSMTabBarCellPadding;
+        }
+
+        // indicator?
+        if([[self indicator] isHidden] == NO) {
+            resultWidth += kPSMTabBarCellPadding + kPSMTabBarIndicatorWidth;
+        }
+
+        // right margin
+        resultWidth += MARGIN_X;
+
+        return ceil(resultWidth);
+    }
 }
 
 - (CGFloat)desiredWidthOfCell {
-	return [(id < PSMTabStyle >)[(PSMTabBarControl *)_controlView style] desiredWidthOfTabCell:self];
+
+    id < PSMTabStyle > style = [(PSMTabBarControl *)_controlView style];
+    if ([style respondsToSelector:@selector(desiredWidthOfTabCell)]) {
+        return [style desiredWidthOfTabCell:self];
+    } else {    
+        CGFloat resultWidth = 0.0;
+
+        // left margin
+        resultWidth = MARGIN_X;
+
+        // close button?
+        if ([self shouldDrawCloseButton]) {
+            NSImage *image = [self closeButtonImageOfType:PSMCloseButtonImageTypeStandard];
+            resultWidth += [image size].width + kPSMTabBarCellPadding;
+        }
+
+        // icon?
+        if([self hasIcon]) {
+            resultWidth += kPSMTabBarIconWidth + kPSMTabBarCellPadding;
+        }
+
+        // the label
+        resultWidth += [[self attributedStringValue] size].width;
+
+        // object counter?
+        if([self count] > 0) {
+            resultWidth += [self objectCounterSize].width + kPSMTabBarCellPadding;
+        }
+
+        // indicator?
+        if([[self indicator] isHidden] == NO) {
+            resultWidth += kPSMTabBarCellPadding + kPSMTabBarIndicatorWidth;
+        }
+
+        // right margin
+        resultWidth += MARGIN_X;
+
+        return ceil(resultWidth);    
+    }
 }
 
 #pragma mark -
@@ -352,6 +606,11 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 #pragma mark -
 #pragma mark Drawing
 
+- (BOOL)shouldDrawCloseButton
+{
+    return [self hasCloseButton] && ![self isCloseButtonSuppressed];
+}  // -shouldDrawCloseButton
+
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView {
 	if(_isPlaceholder) {
 		[[NSColor colorWithCalibratedWhite:0.0 alpha:0.2] set];
@@ -359,8 +618,176 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 		return;
 	}
 
-	[(id < PSMTabStyle >)[(PSMTabBarControl *)_controlView style] drawTabCell:self];
-}
+    id <PSMTabStyle> style = [(PSMTabBarControl *)controlView style];
+    
+    if ([style respondsToSelector:@selector(drawBezelOfTabCell:withFrame:inView:)])
+        [style drawBezelOfTabCell:self withFrame:cellFrame inView:controlView];
+    else
+        [(id < PSMTabStyle >)[(PSMTabBarControl *)_controlView style] drawTabCell:self];
+        
+    [self drawInteriorWithFrame:cellFrame inView:controlView];
+}  // -drawWithFrame:inView:
+
+- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView {
+    id <PSMTabStyle> style = [(PSMTabBarControl *)controlView style];
+    
+    if ([style respondsToSelector:@selector(drawInteriorOfTabCell:withFrame:inView:)]) {
+        [style drawInteriorOfTabCell:self withFrame:cellFrame inView:controlView];
+    } else {
+        NSRect componentRect;
+        
+        componentRect = [self largeImageRectForBounds:cellFrame];
+        if (!NSEqualRects(componentRect, NSZeroRect))
+            [self drawLargeImageWithFrame:cellFrame inView:controlView];
+            
+        componentRect = [self iconRectForBounds:cellFrame];
+        if (!NSEqualRects(componentRect, NSZeroRect))
+            [self drawIconWithFrame:cellFrame inView:controlView];
+            
+        componentRect = [self titleRectForBounds:cellFrame];
+        if (!NSEqualRects(componentRect, NSZeroRect))
+            [self drawTitleWithFrame:cellFrame inView:controlView];
+            
+        componentRect = [self objectCounterRectForBounds:cellFrame];
+        if (!NSEqualRects(componentRect, NSZeroRect))
+            [self drawObjectCounterWithFrame:cellFrame inView:controlView];
+            
+        componentRect = [self indicatorRectForBounds:cellFrame];
+        if (!NSEqualRects(componentRect, NSZeroRect))
+            [self drawIndicatorWithFrame:cellFrame inView:controlView];
+            
+        componentRect = [self closeButtonRectForBounds:cellFrame];
+        if (!NSEqualRects(componentRect, NSZeroRect))
+            [self drawCloseButtonWithFrame:cellFrame inView:controlView];
+    }
+    
+}  // -drawInteriorWithFrame:inView:
+
+- (void)drawLargeImageWithFrame:(NSRect)frame inView:(NSView *)controlView {
+    
+    id <PSMTabStyle> style = [(PSMTabBarControl *)controlView style];
+    if ([style respondsToSelector:@selector(drawLargeImageOfTabCell:withFrame:inView:)]) {
+        [style drawLargeImageOfTabCell:self withFrame:frame inView:controlView];
+    } else {
+    
+    
+    }
+    
+}  // -drawLargeImageWithFrame:inView:
+
+- (void)drawIconWithFrame:(NSRect)frame inView:(NSView *)controlView {
+
+    id <PSMTabStyle> style = [(PSMTabBarControl *)controlView style];
+    if ([style respondsToSelector:@selector(drawIconOfTabCell:withFrame:inView:)]) {
+        [style drawIconOfTabCell:self withFrame:frame inView:controlView];
+    } else {
+    
+        NSRect iconRect = [self iconRectForBounds:frame];
+        
+		NSImage *icon = [[(NSTabViewItem*)[self representedObject] identifier] icon];
+
+        [icon drawInRect:iconRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];       
+    }
+    
+}  // -drawIconWithFrame:inView:
+
+- (void)drawTitleWithFrame:(NSRect)frame inView:(NSView *)controlView {
+
+    id <PSMTabStyle> style = [(PSMTabBarControl *)controlView style];
+    if ([style respondsToSelector:@selector(drawTitleOfTabCell:withFrame:inView:)]) {
+        [style drawTitleOfTabCell:self withFrame:frame inView:controlView];
+    } else {
+        NSRect rect = [self titleRectForBounds:frame];
+ 
+        // draw title
+        [[self attributedStringValue] drawInRect:rect];
+    }
+}  // -drawTitleWithFrame:inView:
+
+- (void)drawObjectCounterWithFrame:(NSRect)frame inView:(NSView *)controlView {
+
+    id <PSMTabStyle> style = [(PSMTabBarControl *)controlView style];
+    if ([style respondsToSelector:@selector(drawObjectCounterOfTabCell:withFrame:inView:)]) {
+        [style drawObjectCounterOfTabCell:self withFrame:frame inView:controlView];
+    } else {
+
+        // set color
+		[[self countColor] ?: [NSColor colorWithCalibratedWhite:0.3 alpha:0.45] set];
+        
+        // get rect
+        NSRect myRect = [self objectCounterRectForBounds:frame];
+        
+        // create badge path
+        NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:myRect xRadius:kPSMObjectCounterRadius yRadius:kPSMObjectCounterRadius];
+        
+        // fill badge
+		[path fill];
+
+		// draw attributed string centered in area
+		NSRect counterStringRect;
+		NSAttributedString *counterString = [style attributedObjectCountValueForTabCell:self];
+		counterStringRect.size = [counterString size];
+		counterStringRect.origin.x = myRect.origin.x + ((myRect.size.width - counterStringRect.size.width) / 2.0) + 0.25;
+		counterStringRect.origin.y = myRect.origin.y + ((myRect.size.height - counterStringRect.size.height) / 2.0) + 0.5;
+		[counterString drawInRect:counterStringRect];    
+    
+    }
+    
+}  // -drawObjectCounterWithFrame:inView:
+
+- (void)drawIndicatorWithFrame:(NSRect)frame inView:(NSView *)controlView {
+
+    id <PSMTabStyle> style = [(PSMTabBarControl *)controlView style];
+    if ([style respondsToSelector:@selector(drawIndicatorOfTabCell:withFrame:inView:)]) {
+        [style drawIndicatorOfTabCell:self withFrame:frame inView:controlView];
+    } else {
+    
+        // we do draw nothing by default
+    
+    }
+    
+}  // -drawIndicatorWithFrame:inView:
+
+- (void)drawCloseButtonWithFrame:(NSRect)frame inView:(NSView *)controlView {
+
+    id <PSMTabStyle> style = [(PSMTabBarControl *)controlView style];
+    if ([style respondsToSelector:@selector(drawCloseButtonOfTabCell:withFrame:inView:)]) {
+        [style drawCloseButtonOfTabCell:self withFrame:frame inView:controlView];
+    } else {
+    
+        // get type of close button to draw
+        PSMCloseButtonImageType imageType;
+        if ([self isEdited]) {
+            if ([self closeButtonOver])
+                imageType = PSMCloseButtonImageTypeDirtyRollover;
+            else if ([self closeButtonPressed])
+                imageType = PSMCloseButtonImageTypeDirtyPressed;
+            else
+                imageType = PSMCloseButtonImageTypeDirty;
+        } else {
+            if ([self closeButtonOver])
+                imageType = PSMCloseButtonImageTypeRollover;
+            else if ([self closeButtonPressed])
+                imageType = PSMCloseButtonImageTypePressed;
+            else
+                imageType = PSMCloseButtonImageTypeStandard;
+        }
+        
+        // ask style for image
+        NSImage *image = nil;
+        if ([style respondsToSelector:@selector(closeButtonImageOfType:forTabCell:)])
+            image = [style closeButtonImageOfType:imageType forTabCell:self];
+        // use standard image
+        else
+            image = [self closeButtonImageOfType:PSMCloseButtonImageTypeStandard];
+   
+        // draw close button
+        NSRect closeButtonRect = [self closeButtonRectForBounds:frame];
+    
+        [image drawInRect:closeButtonRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+    }
+
+}  // -drawCloseButtonWithFrame:inView:
 
 #pragma mark -
 #pragma mark Tracking
@@ -537,6 +964,20 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 
 - (id)accessibilityFocusedUIElement:(NSPoint)point {
 	return NSAccessibilityUnignoredAncestor(self);
+}
+
+@end
+
+@implementation PSMTabBarCell (DEPRECATED)
+
+- (NSRect)indicatorRectForFrame:(NSRect)cellFrame {
+
+    return [self indicatorRectForBounds:cellFrame];
+}
+
+- (NSRect)closeButtonRectForFrame:(NSRect)cellFrame {
+
+    return [self closeButtonRectForBounds:cellFrame];
 }
 
 @end

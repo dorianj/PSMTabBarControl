@@ -1039,7 +1039,7 @@
 
 			//highlight the cell if the mouse is over it
 			NSPoint mousePoint = [self convertPoint:[[self window] mouseLocationOutsideOfEventStream] fromView:nil];
-			NSRect closeRect = [currentCell closeButtonRectForFrame:cellFrame];
+			NSRect closeRect = [currentCell closeButtonRectForBounds:cellFrame];
 			[currentCell setHighlighted:NSMouseInRect(mousePoint, cellFrame, [self isFlipped])];
 			[currentCell setCloseButtonOver:NSMouseInRect(mousePoint, closeRect, [self isFlipped])];
 		}
@@ -1069,7 +1069,7 @@
 
 				//highlight the cell if the mouse is over it
 				NSPoint mousePoint = [self convertPoint:[[self window] mouseLocationOutsideOfEventStream] fromView:nil];
-				NSRect closeRect = [currentCell closeButtonRectForFrame:cellFrame];
+				NSRect closeRect = [currentCell closeButtonRectForBounds:cellFrame];
 				[currentCell setHighlighted:NSMouseInRect(mousePoint, cellFrame, [self isFlipped])];
 				[currentCell setCloseButtonOver:NSMouseInRect(mousePoint, closeRect, [self isFlipped])];
 			}
@@ -1195,7 +1195,7 @@
 	NSRect cellFrame;
 	PSMTabBarCell *cell = [self cellForPoint:mousePt cellFrame:&cellFrame];
 	if(cell) {
-		BOOL overClose = NSMouseInRect(mousePt, [cell closeButtonRectForFrame:cellFrame], [self isFlipped]);
+		BOOL overClose = NSMouseInRect(mousePt, [cell closeButtonRectForBounds:cellFrame], [self isFlipped]);
 		if(overClose &&
 		   ![self disableTabClose] &&
 		   ![cell isCloseButtonSuppressed] &&
@@ -1248,7 +1248,7 @@
 	if(cell) {
 		//check to see if the close button was the target in the clicked cell
 		//highlight/unhighlight the close button as necessary
-		NSRect iconRect = [cell closeButtonRectForFrame:cellFrame];
+		NSRect iconRect = [cell closeButtonRectForBounds:cellFrame];
 
 		if(_closeClicked && NSMouseInRect(trackingStartPoint, iconRect, [self isFlipped]) &&
 		   ([self allowsBackgroundTabClosing] || [[cell representedObject] isEqualTo:[tabView selectedTabViewItem]])) {
@@ -1282,7 +1282,7 @@
 		PSMTabBarCell *mouseDownCell = [self cellForPoint:[self convertPoint:[[self lastMouseDownEvent] locationInWindow] fromView:nil] cellFrame:&mouseDownCellFrame];
 		if(cell) {
 			NSPoint trackingStartPoint = [self convertPoint:[[self lastMouseDownEvent] locationInWindow] fromView:nil];
-			NSRect iconRect = [mouseDownCell closeButtonRectForFrame:mouseDownCellFrame];
+			NSRect iconRect = [mouseDownCell closeButtonRectForBounds:mouseDownCellFrame];
 
 			if((NSMouseInRect(mousePt, iconRect, [self isFlipped])) && ![self disableTabClose] && ![cell isCloseButtonSuppressed] && [mouseDownCell closeButtonPressed]) {
 				if(([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask) != 0) {
@@ -1303,7 +1303,7 @@
 					[self performSelector:@selector(closeTabClick:) withObject:cell];
 				}
 			} else if(NSMouseInRect(mousePt, mouseDownCellFrame, [self isFlipped]) &&
-					  (!NSMouseInRect(trackingStartPoint, [cell closeButtonRectForFrame:cellFrame], [self isFlipped]) || ![self allowsBackgroundTabClosing] || [self disableTabClose])) {
+					  (!NSMouseInRect(trackingStartPoint, [cell closeButtonRectForBounds:cellFrame], [self isFlipped]) || ![self allowsBackgroundTabClosing] || [self disableTabClose])) {
 				[mouseDownCell setCloseButtonPressed:NO];
 				// If -[self selectsTabsOnMouseDown] is TRUE, we already performed tabClick: on mouseDown.
 				if(![self selectsTabsOnMouseDown]) {

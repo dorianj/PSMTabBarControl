@@ -524,7 +524,7 @@ static NSInteger potentialMinimumForArray(NSArray *array, NSInteger minimum){
 			[_cellFrames addObject:[NSValue valueWithRect:cellRect]];
 
 			//add tracking rects to arrays
-			[_closeButtonTrackingRects addObject:[NSValue valueWithRect:[cell closeButtonRectForFrame:cellRect]]];
+			[_closeButtonTrackingRects addObject:[NSValue valueWithRect:[cell closeButtonRectForBounds:cellRect]]];
 			[_cellTrackingRects addObject:[NSValue valueWithRect:cellRect]];
 
 			if([[cell representedObject] isEqualTo:selectedTabViewItem]) {

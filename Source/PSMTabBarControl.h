@@ -26,6 +26,8 @@
 #define kPSMTabBarIndicatorWidth			16.0
 #define kPSMTabBarIconWidth					16.0
 #define kPSMHideAnimationSteps				3.0
+#define kPSMObjectCounterMinWidth           20.0
+#define kPSMObjectCounterRadius             7.0
 
 // Value used in _currentStep to indicate that resizing operation is not in progress
 #define kPSMIsNotBeingResized				-1
