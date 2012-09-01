@@ -11,10 +11,6 @@
 #import "PSMTabBarControl.h"
 #import "NSBezierPath_AMShading.h"
 
-@interface PSMLiveChatTabStyle (Private)
-- (void)drawInteriorWithTabCell:(PSMTabBarCell *)cell inView:(NSView*)controlView;
-@end
-
 @implementation PSMLiveChatTabStyle
 
 @synthesize leftMarginForTabBarControl = _leftMargin;
@@ -74,9 +70,6 @@
 
 - (CGFloat)topMarginForTabBarControl {
 	return 10.0f;
-}
-
-- (void)setOrientation:(PSMTabBarOrientation)value {
 }
 
 #pragma mark -
@@ -169,29 +162,25 @@
     NSRect constrainedDrawingRect = drawingRect;
         
     NSRect iconRect = [cell iconRectForBounds:theRect];
-    if (!NSEqualRects(iconRect, NSZeroRect))
-        {
+    if (!NSEqualRects(iconRect, NSZeroRect)) {
         constrainedDrawingRect.origin.x += NSWidth(iconRect)  + kPSMTabBarCellPadding;
         constrainedDrawingRect.size.width -= NSWidth(iconRect) + kPSMTabBarCellPadding;
-        }
+    }
         
     NSRect indicatorRect = [cell indicatorRectForBounds:theRect];
-    if (!NSEqualRects(indicatorRect, NSZeroRect))
-        {
+    if (!NSEqualRects(indicatorRect, NSZeroRect)) {
         constrainedDrawingRect.size.width -= NSWidth(indicatorRect) + kPSMTabBarCellPadding;
-        }
+    }
 
     NSRect counterBadgeRect = [cell objectCounterRectForBounds:theRect];
-    if (!NSEqualRects(counterBadgeRect, NSZeroRect))
-        {
+    if (!NSEqualRects(counterBadgeRect, NSZeroRect)) {
         constrainedDrawingRect.size.width -= NSWidth(counterBadgeRect) + kPSMTabBarCellPadding;
-        }
+    }
 
     NSRect closeButtonRect = [cell closeButtonRectForBounds:theRect];
-    if (!NSEqualRects(closeButtonRect, NSZeroRect))
-        {
+    if (!NSEqualRects(closeButtonRect, NSZeroRect)) {
         constrainedDrawingRect.size.width -= NSWidth(closeButtonRect) + kPSMTabBarCellPadding;        
-        }
+    }
                                     
     NSAttributedString *attrString = [cell attributedStringValue];
     if ([attrString length] == 0)
