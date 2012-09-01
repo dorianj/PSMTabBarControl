@@ -259,30 +259,32 @@
         NSRect constrainedDrawingRect = drawingRect;
 
         NSRect closeButtonRect = [self closeButtonRectForBounds:theRect];
-        if (!NSEqualRects(closeButtonRect, NSZeroRect))
-            {
+        if (!NSEqualRects(closeButtonRect, NSZeroRect)) {
             constrainedDrawingRect.origin.x += NSWidth(closeButtonRect)  + kPSMTabBarCellPadding;
             constrainedDrawingRect.size.width -= NSWidth(closeButtonRect) + kPSMTabBarCellPadding;
+        }
+
+        NSRect largeImageRect = [self largeImageRectForBounds:theRect];
+        if (!NSEqualRects(largeImageRect, NSZeroRect)) {
+            constrainedDrawingRect.origin.x += NSWidth(largeImageRect) + kPSMTabBarCellPadding;
+            constrainedDrawingRect.size.width -= NSWidth(largeImageRect) + kPSMTabBarCellPadding;
             }
-            
+                    
         NSRect iconRect = [self iconRectForBounds:theRect];
-        if (!NSEqualRects(iconRect, NSZeroRect))
-            {
+        if (!NSEqualRects(iconRect, NSZeroRect)) {
             constrainedDrawingRect.origin.x += NSWidth(iconRect)  + kPSMTabBarCellPadding;
             constrainedDrawingRect.size.width -= NSWidth(iconRect) + kPSMTabBarCellPadding;
-            }
+        }
             
         NSRect indicatorRect = [self indicatorRectForBounds:theRect];
-        if (!NSEqualRects(indicatorRect, NSZeroRect))
-            {
+        if (!NSEqualRects(indicatorRect, NSZeroRect)) {
             constrainedDrawingRect.size.width -= NSWidth(indicatorRect) + kPSMTabBarCellPadding;
-            }
+        }
 
         NSRect counterBadgeRect = [self objectCounterRectForBounds:theRect];
-        if (!NSEqualRects(counterBadgeRect, NSZeroRect))
-            {
+        if (!NSEqualRects(counterBadgeRect, NSZeroRect)) {
             constrainedDrawingRect.size.width -= NSWidth(counterBadgeRect) + kPSMTabBarCellPadding;
-            }
+        }
                                 
         NSAttributedString *attrString = [self attributedStringValue];
         if ([attrString length] == 0)
@@ -316,8 +318,7 @@
         NSRect constrainedDrawingRect = drawingRect;
 
         NSRect closeButtonRect = [self closeButtonRectForBounds:theRect];
-        if (!NSEqualRects(closeButtonRect, NSZeroRect))
-            {
+        if (!NSEqualRects(closeButtonRect, NSZeroRect)) {
             constrainedDrawingRect.origin.x += NSWidth(closeButtonRect)  + kPSMTabBarCellPadding;
             constrainedDrawingRect.size.width -= NSWidth(closeButtonRect) + kPSMTabBarCellPadding;
             }
@@ -348,10 +349,36 @@
         return NSZeroRect;
 
     id <PSMTabStyle> tabStyle = [(PSMTabBarControl *)_controlView style];
-    if ([tabStyle respondsToSelector:@selector(largeImageRectForBounds:ofTabCell:)])
+    if ([tabStyle respondsToSelector:@selector(largeImageRectForBounds:ofTabCell:)]) {
         return [tabStyle largeImageRectForBounds:theRect ofTabCell:self];
-    else
-        return theRect;
+    } else {
+   
+        if ([self hasLargeImage] == NO) {
+            return NSZeroRect;
+        }
+        
+        // calculate rect
+        NSRect drawingRect = [self drawingRectForBounds:theRect];
+        
+        NSImage *image = [[[self representedObject] identifier] largeImage];
+        if (!image)
+            return NSZeroRect;
+        
+        NSSize scaledImageSize = [self scaleImageWithSize:[image size] toFitInSize:NSMakeSize(kPSMTabBarLargeImageWidth, kPSMTabBarLargeImageHeight) scalingType:NSImageScaleProportionallyUpOrDown];
+        
+        NSRect result = NSMakeRect(drawingRect.origin.x,
+                                             drawingRect.origin.y - ((scaledImageSize.height - scaledImageSize.height) / 2),
+                                             scaledImageSize.width, scaledImageSize.height);
+
+        if(scaledImageSize.width < kPSMTabBarIconWidth) {
+            result.origin.x += (kPSMTabBarIconWidth - scaledImageSize.width) / 2.0;
+        }
+        if(scaledImageSize.height < drawingRect.size.height) {
+            result.origin.y += (drawingRect.size.height - scaledImageSize.height) / 2.0;
+        }
+        
+        return result;
+    }
 }
 
 - (NSRect)indicatorRectForBounds:(NSRect)theRect {
@@ -414,8 +441,7 @@
         NSRect constrainedDrawingRect = drawingRect;
 
         NSRect indicatorRect = [self indicatorRectForBounds:theRect];
-        if (!NSEqualRects(indicatorRect, NSZeroRect))
-            {
+        if (!NSEqualRects(indicatorRect, NSZeroRect)) {
             constrainedDrawingRect.size.width -= NSWidth(indicatorRect) + kPSMTabBarCellPadding;
             }
         
@@ -671,7 +697,31 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
         [style drawLargeImageOfTabCell:self withFrame:frame inView:controlView];
     } else {
     
+        PSMTabBarOrientation orientation = [(PSMTabBarControl *)controlView orientation];
+        
+        if ((orientation != PSMTabBarVerticalOrientation) || ![self hasLargeImage])
+            return;
     
+		NSImage *image = [[[self representedObject] identifier] largeImage];
+        if (!image)
+            return;
+        
+        NSRect imageDrawingRect = [self largeImageRectForBounds:frame];
+        
+		[NSGraphicsContext saveGraphicsState];
+                
+		//Create Rounding.
+		CGFloat userIconRoundingRadius = (kPSMTabBarLargeImageWidth / 4.0);
+		if(userIconRoundingRadius > 3.0) {
+			userIconRoundingRadius = 3.0;
+		}
+        
+        NSBezierPath *clipPath = [NSBezierPath bezierPathWithRoundedRect:imageDrawingRect xRadius:userIconRoundingRadius yRadius:userIconRoundingRadius];
+		[clipPath addClip];        
+  
+        [image drawInRect:imageDrawingRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
+    
+		[NSGraphicsContext restoreGraphicsState];
     }
     
 }  // -drawLargeImageWithFrame:inView:
