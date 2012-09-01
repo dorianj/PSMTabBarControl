@@ -10,20 +10,23 @@
 #import "PSMTabStyle.h"
 
 @interface PSMUnifiedTabStyle : NSObject <PSMTabStyle> {
-	NSImage									*unifiedCloseButton;
-	NSImage									*unifiedCloseButtonDown;
-	NSImage									*unifiedCloseButtonOver;
-	NSImage									*unifiedCloseDirtyButton;
-	NSImage									*unifiedCloseDirtyButtonDown;
-	NSImage									*unifiedCloseDirtyButtonOver;
-	NSImage									*_addTabButtonImage;
-	NSImage									*_addTabButtonPressedImage;
-	NSImage									*_addTabButtonRolloverImage;
 
-	NSDictionary								*_objectCountStringAttributes;
+	NSImage				*unifiedCloseButton;
+	NSImage				*unifiedCloseButtonDown;
+	NSImage				*unifiedCloseButtonOver;
+	NSImage				*unifiedCloseDirtyButton;
+	NSImage				*unifiedCloseDirtyButtonDown;
+	NSImage				*unifiedCloseDirtyButtonOver;
+	NSImage				*_addTabButtonImage;
+	NSImage				*_addTabButtonPressedImage;
+	NSImage				*_addTabButtonRolloverImage;
 
-	CGFloat									leftMargin;
-	PSMTabBarControl							*tabBar;
+	NSDictionary		*_objectCountStringAttributes;
+
+	CGFloat				_leftMargin;
+	PSMTabBarControl	*tabBar;
 }
-- (void)setLeftMarginForTabBarControl:(CGFloat)margin;
+
+@property (assign) CGFloat leftMarginForTabBarControl;
+
 @end
