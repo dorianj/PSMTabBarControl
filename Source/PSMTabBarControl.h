@@ -69,57 +69,57 @@ enum {
 	NSMutableArray							*_cells;								// the cells that draw the tabs
 	IBOutlet NSTabView						*tabView;								// the tab view being navigated
 	PSMOverflowPopUpButton					*_overflowPopUpButton;				// for too many tabs
-	PSMRolloverButton							*_addTabButton;
+	PSMRolloverButton						*_addTabButton;
 	PSMTabBarController						*_controller;
 
 	// Spring-loading.
 	NSTimer									*_springTimer;
-	NSTabViewItem								*_tabViewItemWithSpring;
+	NSTabViewItem							*_tabViewItemWithSpring;
 
 	// drawing style
 	id<PSMTabStyle>							style;
-	BOOL										_canCloseOnlyTab;
-	BOOL										_disableTabClose;
-	BOOL										_hideForSingleTab;
-	BOOL										_showAddTabButton;
-	BOOL										_sizeCellsToFit;
-	BOOL										_useOverflowMenu;
-	BOOL										_alwaysShowActiveTab;
-	BOOL										_allowsScrubbing;
-	NSInteger									_resizeAreaCompensation;
-	PSMTabBarOrientation						_orientation;
-	BOOL										_automaticallyAnimates;
+	BOOL									_canCloseOnlyTab;
+	BOOL									_disableTabClose;
+	BOOL									_hideForSingleTab;
+	BOOL									_showAddTabButton;
+	BOOL									_sizeCellsToFit;
+	BOOL									_useOverflowMenu;
+	BOOL									_alwaysShowActiveTab;
+	BOOL									_allowsScrubbing;
+	NSInteger								_resizeAreaCompensation;
+	PSMTabBarOrientation					_orientation;
+	BOOL									_automaticallyAnimates;
 	NSTimer									*_animationTimer;
 	PSMTabBarTearOffStyle					_tearOffStyle;
 
 	// behavior
-	BOOL										_allowsBackgroundTabClosing;
-	BOOL										_selectsTabsOnMouseDown;
+	BOOL									_allowsBackgroundTabClosing;
+	BOOL									_selectsTabsOnMouseDown;
 
 	// vertical tab resizing
-	BOOL										_allowsResizing;
-	BOOL										_resizing;
+	BOOL									_allowsResizing;
+	BOOL									_resizing;
 
 	// cell width
-	NSInteger									_cellMinWidth;
-	NSInteger									_cellMaxWidth;
-	NSInteger									_cellOptimumWidth;
+	NSInteger								_cellMinWidth;
+	NSInteger								_cellMaxWidth;
+	NSInteger								_cellOptimumWidth;
 
 	// animation for hide/show
-	NSInteger									_currentStep;
-	BOOL										_isHidden;
+	NSInteger								_currentStep;
+	BOOL									_isHidden;
 	IBOutlet id								partnerView;							// gets resized when hide/show
-	BOOL										_awakenedFromNib;
-	NSInteger									_tabBarWidth;
+	BOOL									_awakenedFromNib;
+	NSInteger								_tabBarWidth;
 	NSTimer									*_showHideAnimationTimer;
 
 	// drag and drop
 	NSEvent									*_lastMouseDownEvent;				// keep this for dragging reference
-	BOOL										_didDrag;
-	BOOL										_closeClicked;
+	BOOL									_didDrag;
+	BOOL									_closeClicked;
 
 	// MVC help
-	IBOutlet id<PSMTabBarControlDelegate>		delegate;
+	IBOutlet id<PSMTabBarControlDelegate>	delegate;
 }
 
 // control characteristics

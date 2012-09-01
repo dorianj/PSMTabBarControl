@@ -1620,9 +1620,6 @@
 
 	_awakenedFromNib = YES;
 	[self setNeedsDisplay:YES];
-
-	//we only need to do this once
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSWindowDidUpdateNotification object:nil];
 }
 
 #pragma mark -
