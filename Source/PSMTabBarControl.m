@@ -935,7 +935,17 @@
 }
 
 - (void)drawRect:(NSRect)rect {
-	[style drawTabBar:self inRect:rect];
+
+    if ([style respondsToSelector:@selector(drawTabBarControl:inRect:)]) {
+        [style drawTabBarControl:self inRect:rect];
+    } else {
+    
+        if ([style respondsToSelector:@selector(drawBezelOfTabBarControl:inRect:)])
+            [style drawBezelOfTabBarControl:self inRect:rect];
+
+        if ([style respondsToSelector:@selector(drawInteriorOfTabBarControl:inRect:)])
+            [style drawInteriorOfTabBarControl:self inRect:rect];
+    }
 }
 
 - (void)update {

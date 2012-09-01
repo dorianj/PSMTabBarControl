@@ -132,7 +132,6 @@ typedef enum PSMCloseButtonImageType : NSUInteger
 
 @end
 
-
 @interface PSMTabBarControl (CellAccessors)
 
 - (id<PSMTabStyle>)style;
