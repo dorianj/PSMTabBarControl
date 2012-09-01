@@ -41,12 +41,12 @@
 @class PSMTabBarController;
 @protocol PSMTabStyle;
 
-typedef enum {
+typedef enum PSMTabBarOrientation : NSUInteger {
 	PSMTabBarHorizontalOrientation,
 	PSMTabBarVerticalOrientation
 } PSMTabBarOrientation;
 
-typedef enum {
+typedef enum PSMTabBarTearOffStyle :NSUInteger {
 	PSMTabBarTearOffAlphaWindow,
 	PSMTabBarTearOffMiniwindow
 } PSMTabBarTearOffStyle;
