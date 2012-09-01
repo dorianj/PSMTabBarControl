@@ -11,14 +11,13 @@
 #import "PSMTabBarControl.h"
 #import "NSBezierPath_AMShading.h"
 
-#define kPSMLiveChatObjectCounterRadius 7.0
-#define kPSMLiveChatCounterMinWidth 20
-
 @interface PSMLiveChatTabStyle (Private)
 - (void)drawInteriorWithTabCell:(PSMTabBarCell *)cell inView:(NSView*)controlView;
 @end
 
 @implementation PSMLiveChatTabStyle
+
+@synthesize leftMarginForTabBarControl = _leftMargin;
 
 - (NSString *)name {
 	return @"LiveChat";
@@ -45,7 +44,7 @@
 										[[NSColor whiteColor] colorWithAlphaComponent:0.85], NSForegroundColorAttributeName,
 										[[NSFontManager sharedFontManager] convertFont:[NSFont fontWithName:@"Lucida Grande" size:11.0] toHaveTrait:NSBoldFontMask], NSFontAttributeName,
 										nil];
-		leftMargin = 5.0;
+		_leftMargin = 5.0;
 	}
 	return self;
 }
@@ -68,14 +67,6 @@
 
 #pragma mark -
 #pragma mark Control Specific
-
-- (void)setLeftMarginForTabBarControl:(CGFloat)margin {
-	leftMargin = margin;
-}
-
-- (CGFloat)leftMarginForTabBarControl {
-	return leftMargin;
-}
 
 - (CGFloat)rightMarginForTabBarControl {
 	return 24.0f;
@@ -104,7 +95,7 @@
 }
 
 #pragma mark -
-#pragma mark Cell Specific
+#pragma mark Drag Support
 
 - (NSRect)dragRectForTabCell:(PSMTabBarCell *)cell orientation:(PSMTabBarOrientation)orientation {
 	NSRect dragRect = [cell frame];
@@ -112,146 +103,189 @@
 	return dragRect;
 }
 
-- (NSRect)closeButtonRectForTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)cellFrame {
-	if([cell hasCloseButton] == NO) {
-		return NSZeroRect;
-	}
+#pragma mark -
+#pragma mark Providing Images
 
-	NSRect result;
-	result.size = [liveChatCloseButton size];
-	result.origin.x = cellFrame.origin.x + cellFrame.size.width - result.size.width - MARGIN_X;
-	result.origin.y = cellFrame.origin.y + MARGIN_Y + 2.0;
+- (NSImage *)closeButtonImageOfType:(PSMCloseButtonImageType)type forTabCell:(PSMTabBarCell *)cell
+{
+    switch (type) {
+        case PSMCloseButtonImageTypeStandard:
+            return liveChatCloseButton;
+        case PSMCloseButtonImageTypeRollover:
+            return liveChatCloseButtonOver;
+        case PSMCloseButtonImageTypePressed:
+            return liveChatCloseButtonDown;
+            
+        case PSMCloseButtonImageTypeDirty:
+            return liveChatCloseDirtyButton;
+        case PSMCloseButtonImageTypeDirtyRollover:
+            return liveChatCloseDirtyButtonOver;
+        case PSMCloseButtonImageTypeDirtyPressed:
+            return liveChatCloseDirtyButtonDown;
+            
+        default:
+            break;
+    }
+    
+}  // -closeButtonImageOfType:
 
-	return result;
+#pragma mark -
+#pragma mark Determining Cell Size
+
+- (NSRect)iconRectForBounds:(NSRect)theRect ofTabCell:(PSMTabBarCell *)cell {
+    
+    if (![cell hasIcon])
+        return NSZeroRect;
+
+    NSImage *icon = [[(NSTabViewItem*)[cell representedObject] identifier] icon];
+    if (!icon)
+        return NSZeroRect;
+
+    // calculate rect
+    NSRect drawingRect = [cell drawingRectForBounds:theRect];
+                
+    NSSize iconSize = [icon size];
+    
+    NSSize scaledIconSize = [cell scaleImageWithSize:iconSize toFitInSize:NSMakeSize(iconSize.width, drawingRect.size.height) scalingType:NSImageScaleProportionallyDown];
+
+    NSRect result = NSMakeRect(drawingRect.origin.x, drawingRect.origin.y, scaledIconSize.width, scaledIconSize.height);
+
+    // center in available space (in case icon image is smaller than kPSMTabBarIconWidth)
+    if(scaledIconSize.width < kPSMTabBarIconWidth) {
+        result.origin.x += ceil((kPSMTabBarIconWidth - scaledIconSize.width) / 2.0);
+    }
+
+    if(scaledIconSize.height < kPSMTabBarIconWidth) {
+        result.origin.y -= ceil((kPSMTabBarIconWidth - scaledIconSize.height) / 2.0 - 0.5);
+    }
+
+    return NSIntegralRect(result);
 }
 
-- (NSRect)iconRectForTabCell:(PSMTabBarCell *)cell {
-	NSRect cellFrame = [cell frame];
+- (NSRect)titleRectForBounds:(NSRect)theRect ofTabCell:(PSMTabBarCell *)cell {
+    
+    NSRect drawingRect = [cell drawingRectForBounds:theRect];
 
-	if([cell hasIcon] == NO) {
-		return NSZeroRect;
-	}
+    NSRect constrainedDrawingRect = drawingRect;
+        
+    NSRect iconRect = [cell iconRectForBounds:theRect];
+    if (!NSEqualRects(iconRect, NSZeroRect))
+        {
+        constrainedDrawingRect.origin.x += NSWidth(iconRect)  + kPSMTabBarCellPadding;
+        constrainedDrawingRect.size.width -= NSWidth(iconRect) + kPSMTabBarCellPadding;
+        }
+        
+    NSRect indicatorRect = [cell indicatorRectForBounds:theRect];
+    if (!NSEqualRects(indicatorRect, NSZeroRect))
+        {
+        constrainedDrawingRect.size.width -= NSWidth(indicatorRect) + kPSMTabBarCellPadding;
+        }
 
-	NSRect result;
-	result.size = NSMakeSize(kPSMTabBarIconWidth, kPSMTabBarIconWidth);
-	result.origin.x = cellFrame.origin.x + MARGIN_X;
-	result.origin.y = cellFrame.origin.y + MARGIN_Y;
+    NSRect counterBadgeRect = [cell objectCounterRectForBounds:theRect];
+    if (!NSEqualRects(counterBadgeRect, NSZeroRect))
+        {
+        constrainedDrawingRect.size.width -= NSWidth(counterBadgeRect) + kPSMTabBarCellPadding;
+        }
 
-	return result;
+    NSRect closeButtonRect = [cell closeButtonRectForBounds:theRect];
+    if (!NSEqualRects(closeButtonRect, NSZeroRect))
+        {
+        constrainedDrawingRect.size.width -= NSWidth(closeButtonRect) + kPSMTabBarCellPadding;        
+        }
+                                    
+    NSAttributedString *attrString = [cell attributedStringValue];
+    if ([attrString length] == 0)
+        return NSZeroRect;
+        
+    NSSize stringSize = [attrString size];
+    
+    NSRect result = NSMakeRect(constrainedDrawingRect.origin.x, drawingRect.origin.y+ceil((drawingRect.size.height-stringSize.height)/2), constrainedDrawingRect.size.width, stringSize.height);
+                    
+    return NSIntegralRect(result);
 }
 
-- (NSRect)indicatorRectForTabCell:(PSMTabBarCell *)cell {
-	NSRect cellFrame = [cell frame];
+- (NSRect)objectCounterRectForBounds:(NSRect)theRect ofTabCell:(PSMTabBarCell *)cell {
 
-	if([[cell indicator] isHidden]) {
-		return NSZeroRect;
-	}
+    if([cell count] == 0) {
+        return NSZeroRect;
+    }
 
-	NSRect result;
-	result.size = NSMakeSize(kPSMTabBarIndicatorWidth, kPSMTabBarIndicatorWidth);
-	result.origin.x = cellFrame.origin.x + cellFrame.size.width - MARGIN_X - kPSMTabBarIndicatorWidth;
-	result.origin.y = cellFrame.origin.y + MARGIN_Y;
+    NSRect drawingRect = [cell drawingRectForBounds:theRect];
 
-	return result;
+    NSRect constrainedDrawingRect = drawingRect;
+
+    NSRect indicatorRect = [cell indicatorRectForBounds:theRect];
+    if (!NSEqualRects(indicatorRect, NSZeroRect))
+        {
+        constrainedDrawingRect.size.width -= NSWidth(indicatorRect) + kPSMTabBarCellPadding;
+        }
+
+    NSRect closeButtonRect = [cell closeButtonRectForBounds:theRect];
+    if (!NSEqualRects(closeButtonRect, NSZeroRect))
+        {
+        constrainedDrawingRect.size.width -= NSWidth(closeButtonRect) + kPSMTabBarCellPadding;
+        }
+            
+    NSSize counterBadgeSize = [cell objectCounterSize];
+    
+    // calculate rect
+    NSRect result;
+    result.size = counterBadgeSize; // temp
+    result.origin.x = NSMaxX(constrainedDrawingRect)-counterBadgeSize.width;
+    result.origin.y = ceil(constrainedDrawingRect.origin.y+(constrainedDrawingRect.size.height-result.size.height)/2);
+                
+    return NSIntegralRect(result);
 }
 
-- (NSRect)objectCounterRectForTabCell:(PSMTabBarCell *)cell {
-	NSRect cellFrame = [cell frame];
+- (NSRect)indicatorRectForBounds:(NSRect)theRect ofTabCell:(PSMTabBarCell *)cell {
 
-	if([cell count] == 0) {
-		return NSZeroRect;
-	}
+    if([[cell indicator] isHidden]) {
+        return NSZeroRect;
+    }
 
-	CGFloat countWidth = [[self attributedObjectCountValueForTabCell:cell] size].width;
-	countWidth += (2 * kPSMLiveChatObjectCounterRadius - 6.0);
-	if(countWidth < kPSMLiveChatCounterMinWidth) {
-		countWidth = kPSMLiveChatCounterMinWidth;
-	}
+    // calculate rect
+    NSRect drawingRect = [cell drawingRectForBounds:theRect];
 
-	NSRect result;
-	result.size = NSMakeSize(countWidth, 2 * kPSMLiveChatObjectCounterRadius); // temp
-	result.origin.x = cellFrame.origin.x + cellFrame.size.width - MARGIN_X - result.size.width;
-	result.origin.y = cellFrame.origin.y + MARGIN_Y + 2.0;
-
-	if(![[cell indicator] isHidden]) {
-		result.origin.x -= kPSMTabBarIndicatorWidth + kPSMTabBarCellPadding;
-	}
-	if([cell hasCloseButton] == YES) {
-		result.origin.x -= [liveChatCloseButton size].width + kPSMTabBarCellPadding;
-	}
-
-	return result;
+    NSRect constrainedDrawingRect = drawingRect;
+    
+    NSRect closeButtonRect = [cell closeButtonRectForBounds:theRect];
+    if (!NSEqualRects(closeButtonRect, NSZeroRect))
+        {
+        constrainedDrawingRect.size.width -= NSWidth(closeButtonRect) + kPSMTabBarCellPadding;
+        }
+        
+    NSSize indicatorSize = NSMakeSize(kPSMTabBarIndicatorWidth, kPSMTabBarIndicatorWidth);
+    
+    NSRect result = NSMakeRect(NSMaxX(constrainedDrawingRect)-indicatorSize.width,NSMidY(constrainedDrawingRect)-ceil(indicatorSize.height/2),indicatorSize.width,indicatorSize.height);
+    
+    return NSIntegralRect(result);
 }
 
+- (NSRect)closeButtonRectForBounds:(NSRect)theRect ofTabCell:(PSMTabBarCell *)cell {
 
-- (CGFloat)minimumWidthOfTabCell:(PSMTabBarCell *)cell {
-	CGFloat resultWidth = 0.0;
+    if ([cell shouldDrawCloseButton] == NO) {
+        return NSZeroRect;
+    }
+    
+    // ask style for image
+    NSImage *image = [cell closeButtonImageOfType:PSMCloseButtonImageTypeStandard];
+    if (!image)
+        return NSZeroRect;
+    
+    // calculate rect
+    NSRect drawingRect = [cell drawingRectForBounds:theRect];
+        
+    NSSize imageSize = [image size];
+    
+    NSSize scaledImageSize = [cell scaleImageWithSize:imageSize toFitInSize:NSMakeSize(imageSize.width, drawingRect.size.height) scalingType:NSImageScaleProportionallyDown];
 
-	// left margin
-	resultWidth = MARGIN_X;
+    NSRect result = NSMakeRect(NSMaxX(drawingRect)-scaledImageSize.width, drawingRect.origin.y, scaledImageSize.width, scaledImageSize.height);
 
-	// close button?
-	if([cell hasCloseButton] && ![cell isCloseButtonSuppressed]) {
-		resultWidth += [liveChatCloseButton size].width + kPSMTabBarCellPadding;
-	}
+    if(scaledImageSize.height < drawingRect.size.height) {
+        result.origin.y += ceil((drawingRect.size.height - scaledImageSize.height) / 2.0);
+    }
 
-	// icon?
-	if([cell hasIcon]) {
-		resultWidth += kPSMTabBarIconWidth + kPSMTabBarCellPadding;
-	}
-
-	// the label
-	resultWidth += kPSMMinimumTitleWidth;
-
-	// object counter?
-	if([cell count] > 0) {
-		resultWidth += [self objectCounterRectForTabCell:cell].size.width + kPSMTabBarCellPadding;
-	}
-
-	// indicator?
-	if([[cell indicator] isHidden] == NO) {
-		resultWidth += kPSMTabBarCellPadding + kPSMTabBarIndicatorWidth;
-	}
-
-	// right margin
-	resultWidth += MARGIN_X;
-
-	return ceil(resultWidth);
-}
-
-- (CGFloat)desiredWidthOfTabCell:(PSMTabBarCell *)cell {
-	CGFloat resultWidth = 0.0;
-
-	// left margin
-	resultWidth = MARGIN_X;
-
-	// close button?
-	if([cell hasCloseButton] && ![cell isCloseButtonSuppressed]) {
-		resultWidth += [liveChatCloseButton size].width + kPSMTabBarCellPadding;
-	}
-
-	// icon?
-	if([cell hasIcon]) {
-		resultWidth += kPSMTabBarIconWidth + kPSMTabBarCellPadding;
-	}
-
-	// the label
-	resultWidth += [[cell attributedStringValue] size].width;
-
-	// object counter?
-	if([cell count] > 0) {
-		resultWidth += [self objectCounterRectForTabCell:cell].size.width + kPSMTabBarCellPadding;
-	}
-
-	// indicator?
-	if([[cell indicator] isHidden] == NO) {
-		resultWidth += kPSMTabBarCellPadding + kPSMTabBarIndicatorWidth;
-	}
-
-	// right margin
-	resultWidth += MARGIN_X;
-
-	return ceil(resultWidth);
+    return NSIntegralRect(result);
 }
 
 - (CGFloat)tabCellHeight {
@@ -286,10 +320,11 @@
 }
 
 #pragma mark -
-#pragma mark ---- drawing ----
+#pragma mark Drawing
 
-- (void)drawTabCell:(PSMTabBarCell *)cell {
-	NSRect cellFrame = [cell frame];
+- (void)drawBezelOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inView:(id)controlView {
+
+NSRect cellFrame = [cell frame];
 
 	NSToolbar *toolbar = [[[cell controlView] window] toolbar];
 	BOOL showsBaselineSeparator = (toolbar && [toolbar respondsToSelector:@selector(showsBaselineSeparator)] && [toolbar showsBaselineSeparator]);
@@ -368,94 +403,6 @@
 			 toPoint:NSMakePoint(NSMaxX(aRect) + 1.0, NSMaxY(aRect) - 2.5)];
 		}
 	}
-
-	[self drawInteriorWithTabCell:cell inView:[cell controlView]];
-}
-
-
-- (void)drawInteriorWithTabCell:(PSMTabBarCell *)cell inView:(NSView*)controlView {
-	NSRect cellFrame = [cell frame];
-	// label rect
-	NSRect labelRect;
-	labelRect.origin.x = cellFrame.origin.x + MARGIN_X;
-	labelRect.size.width = cellFrame.size.width - (labelRect.origin.x - cellFrame.origin.x) - kPSMTabBarCellPadding;
-	NSSize s = [[cell attributedStringValue] size];
-	labelRect.origin.y = cellFrame.origin.y + (cellFrame.size.height - s.height) / 2.0;
-	labelRect.size.height = s.height;
-
-	// close button
-	if([cell hasCloseButton] && ![cell isCloseButtonSuppressed]) {
-		NSSize closeButtonSize = NSZeroSize;
-		NSRect closeButtonRect = [cell closeButtonRectForFrame:cellFrame];
-		NSImage * closeButton = nil;
-
-		closeButton = [cell isEdited] ? liveChatCloseDirtyButton : liveChatCloseButton;
-
-		if([cell closeButtonOver]) {
-			closeButton = [cell isEdited] ? liveChatCloseDirtyButtonOver : liveChatCloseButtonOver;
-		}
-		if([cell closeButtonPressed]) {
-			closeButton = [cell isEdited] ? liveChatCloseDirtyButtonDown : liveChatCloseButtonDown;
-		}
-
-		closeButtonSize = [closeButton size];
-
-        [closeButton drawInRect:closeButtonRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
-
-		// scoot label over
-		labelRect.size.width -= closeButtonSize.width + kPSMTabBarCellPadding;
-	}
-
-	// icon
-	if([cell hasIcon]) {
-		NSRect iconRect = [self iconRectForTabCell:cell];
-		NSImage *icon = [[(NSTabViewItem*)[cell representedObject] identifier] icon];
-
-		// center in available space (in case icon image is smaller than kPSMTabBarIconWidth)
-		if([icon size].width < kPSMTabBarIconWidth) {
-			iconRect.origin.x += (kPSMTabBarIconWidth - [icon size].width) / 2.0;
-		}
-		if([icon size].height < kPSMTabBarIconWidth) {
-			iconRect.origin.y -= (kPSMTabBarIconWidth - [icon size].height) / 2.0;
-		}
-
-        [icon drawInRect:iconRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
-
-		// scoot label over
-		labelRect.size.width -= iconRect.size.width + kPSMTabBarCellPadding;
-		labelRect.origin.x += iconRect.size.width + kPSMTabBarCellPadding;
-	}
-
-	if(![[cell indicator] isHidden]) {
-		labelRect.size.width -= (kPSMTabBarIndicatorWidth + kPSMTabBarCellPadding);
-	}
-
-	// object counter
-	if([cell count] > 0) {
-		[[cell countColor] ?: [NSColor colorWithCalibratedWhite:0.3 alpha:0.6] set];
-		NSBezierPath *path = [NSBezierPath bezierPath];
-		NSRect myRect = [self objectCounterRectForTabCell:cell];
-		myRect.origin.y -= 1.0;
-		[path moveToPoint:NSMakePoint(myRect.origin.x + kPSMLiveChatObjectCounterRadius, myRect.origin.y)];
-		[path lineToPoint:NSMakePoint(myRect.origin.x + myRect.size.width - kPSMLiveChatObjectCounterRadius, myRect.origin.y)];
-		[path appendBezierPathWithArcWithCenter:NSMakePoint(myRect.origin.x + myRect.size.width - kPSMLiveChatObjectCounterRadius, myRect.origin.y + kPSMLiveChatObjectCounterRadius) radius:kPSMLiveChatObjectCounterRadius startAngle:270.0 endAngle:90.0];
-		[path lineToPoint:NSMakePoint(myRect.origin.x + kPSMLiveChatObjectCounterRadius, myRect.origin.y + myRect.size.height)];
-		[path appendBezierPathWithArcWithCenter:NSMakePoint(myRect.origin.x + kPSMLiveChatObjectCounterRadius, myRect.origin.y + kPSMLiveChatObjectCounterRadius) radius:kPSMLiveChatObjectCounterRadius startAngle:90.0 endAngle:270.0];
-		[path fill];
-
-		// draw attributed string centered in area
-		NSRect counterStringRect;
-		NSAttributedString *counterString = [self attributedObjectCountValueForTabCell:cell];
-		counterStringRect.size = [counterString size];
-		counterStringRect.origin.x = myRect.origin.x + ((myRect.size.width - counterStringRect.size.width) / 2.0) + 0.25;
-		counterStringRect.origin.y = myRect.origin.y + ((myRect.size.height - counterStringRect.size.height) / 2.0) + 0.5;
-		[counterString drawInRect:counterStringRect];
-
-		labelRect.size.width -= myRect.size.width + kPSMTabBarCellPadding;
-	}
-
-	// label
-	[[cell attributedStringValue] drawInRect:labelRect];
 }
 
 - (void)drawBackgroundInRect:(NSRect)rect {

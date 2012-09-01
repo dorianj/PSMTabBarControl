@@ -10,20 +10,22 @@
 #import "PSMTabStyle.h"
 
 @interface PSMLiveChatTabStyle : NSObject <PSMTabStyle> {
-	NSImage									*liveChatCloseButton;
-	NSImage									*liveChatCloseButtonDown;
-	NSImage									*liveChatCloseButtonOver;
-	NSImage									*liveChatCloseDirtyButton;
-	NSImage									*liveChatCloseDirtyButtonDown;
-	NSImage									*liveChatCloseDirtyButtonOver;
-	NSImage									*_addTabButtonImage;
-	NSImage									*_addTabButtonPressedImage;
-	NSImage									*_addTabButtonRolloverImage;
+	NSImage				*liveChatCloseButton;
+	NSImage				*liveChatCloseButtonDown;
+	NSImage				*liveChatCloseButtonOver;
+	NSImage				*liveChatCloseDirtyButton;
+	NSImage				*liveChatCloseDirtyButtonDown;
+	NSImage				*liveChatCloseDirtyButtonOver;
+	NSImage				*_addTabButtonImage;
+	NSImage				*_addTabButtonPressedImage;
+	NSImage				*_addTabButtonRolloverImage;
 
-	NSDictionary								*_objectCountStringAttributes;
+	NSDictionary		*_objectCountStringAttributes;
 
-	CGFloat									leftMargin;
-	PSMTabBarControl							*tabBar;
+	CGFloat				_leftMargin;
+	PSMTabBarControl	*tabBar;
 }
-- (void)setLeftMarginForTabBarControl:(CGFloat)margin;
+
+@property (assign) CGFloat leftMarginForTabBarControl;
+
 @end
