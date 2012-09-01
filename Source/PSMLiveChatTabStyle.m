@@ -313,7 +313,9 @@
 
 - (void)drawBezelOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inView:(id)controlView {
 
-NSRect cellFrame = [cell frame];
+    NSRect cellFrame = [cell frame];
+
+    PSMTabBarControl *tabBarControl = (PSMTabBarControl *)[cell controlView];
 
 	NSToolbar *toolbar = [[[cell controlView] window] toolbar];
 	BOOL showsBaselineSeparator = (toolbar && [toolbar respondsToSelector:@selector(showsBaselineSeparator)] && [toolbar showsBaselineSeparator]);
@@ -349,7 +351,7 @@ NSRect cellFrame = [cell frame];
 		cornerPoint = NSMakePoint(NSMaxX(aRect), NSMinY(aRect));
 		[bezier appendBezierPathWithPoints:&cornerPoint count:1];
 
-		if([[[tabBar tabView] window] isKeyWindow]) {
+		if([[[tabBarControl tabView] window] isKeyWindow]) {
 			if([cell state] == NSOnState) {
 				[bezier linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]
 				 endColor:[NSColor colorWithCalibratedWhite:0.95 alpha:1.0]];
@@ -394,11 +396,11 @@ NSRect cellFrame = [cell frame];
 	}
 }
 
-- (void)drawBackgroundInRect:(NSRect)rect {
+- (void)drawBezelOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect {
 	//Draw for our whole bounds; it'll be automatically clipped to fit the appropriate drawing area
-	rect = [tabBar bounds];
+	rect = [tabBarControl bounds];
 
-	if([[[tabBar tabView] window] isKeyWindow]) {
+	if([[[tabBarControl tabView] window] isKeyWindow]) {
 		NSRect gradientRect = rect;
 		gradientRect.origin.y += 1.0;
 		NSBezierPath *path = [NSBezierPath bezierPathWithRect:gradientRect];
@@ -410,12 +412,10 @@ NSRect cellFrame = [cell frame];
 							  toPoint:NSMakePoint(NSMaxX(rect), NSMinY(rect) + 0.5)];
 }
 
-- (void)drawTabBar:(PSMTabBarControl *)bar inRect:(NSRect)rect {
-	tabBar = bar;
-	[self drawBackgroundInRect:rect];
+- (void)drawInteriorOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect {
 
 	// no tab view == not connected
-	if(![bar tabView]) {
+	if(![tabBarControl tabView]) {
 		NSRect labelRect = rect;
 		labelRect.size.height -= 4.0;
 		labelRect.origin.y += 4.0;
@@ -435,11 +435,11 @@ NSRect cellFrame = [cell frame];
 	}
 
 	// draw cells
-	NSEnumerator *e = [[bar cells] objectEnumerator];
+	NSEnumerator *e = [[tabBarControl cells] objectEnumerator];
 	PSMTabBarCell *cell;
 	while((cell = [e nextObject])) {
-		if([bar isAnimating] || (![cell isInOverflowMenu] && NSIntersectsRect([cell frame], rect))) {
-			[cell drawWithFrame:[cell frame] inView:bar];
+		if([tabBarControl isAnimating] || (![cell isInOverflowMenu] && NSIntersectsRect([cell frame], rect))) {
+			[cell drawWithFrame:[cell frame] inView:tabBarControl];
 		}
 	}
 }

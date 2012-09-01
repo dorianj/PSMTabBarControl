@@ -243,24 +243,19 @@
 	}
 }
 
-- (void)drawBackgroundInRect:(NSRect)rect {
+- (void)drawBezelOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect {
 	if(rect.size.height <= 22.0) {
 		//Draw for our whole bounds; it'll be automatically clipped to fit the appropriate drawing area
-		rect = [tabBar bounds];
+		rect = [tabBarControl bounds];
 
 		[aquaTabBg drawInRect:rect fromRect:NSMakeRect(0.0, 0.0, 1.0, 22.0) operation:NSCompositeSourceOver fraction:1.0];
 	}
 }
 
-- (void)drawTabBar:(PSMTabBarControl *)bar inRect:(NSRect)rect {
-	if(tabBar != bar) {
-		tabBar = bar;
-	}
-
-	[self drawBackgroundInRect:rect];
+- (void)drawInteriorOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect {
 
 	// no tab view == not connected
-	if(![bar tabView]) {
+	if(![tabBarControl tabView]) {
 		NSRect labelRect = rect;
 		labelRect.size.height -= 4.0;
 		labelRect.origin.y += 4.0;
@@ -280,11 +275,11 @@
 	}
 
 	// Draw cells
-	NSEnumerator *e = [[bar cells] objectEnumerator];
+	NSEnumerator *e = [[tabBarControl cells] objectEnumerator];
 	PSMTabBarCell *cell;
 	while((cell = [e nextObject])) {
-		if([bar isAnimating] || (![cell isInOverflowMenu] && NSIntersectsRect([cell frame], rect))) {
-			[cell drawWithFrame:[cell frame] inView:bar];
+		if([tabBarControl isAnimating] || (![cell isInOverflowMenu] && NSIntersectsRect([cell frame], rect))) {
+			[cell drawWithFrame:[cell frame] inView:tabBarControl];
 		}
 	}
 }

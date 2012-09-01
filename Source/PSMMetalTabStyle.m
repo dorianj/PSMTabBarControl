@@ -327,13 +327,14 @@
 	[NSGraphicsContext restoreGraphicsState];
 }
 
-- (void)drawBackgroundInRect:(NSRect)rect {
-	//Draw for our whole bounds; it'll be automatically clipped to fit the appropriate drawing area
-	rect = [tabBar bounds];
-    
-    PSMTabBarOrientation orientation = [tabBar orientation];
+- (void)drawBezelOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect {
 
-	if(orientation == PSMTabBarVerticalOrientation && [tabBar frame].size.width < 2) {
+	//Draw for our whole bounds; it'll be automatically clipped to fit the appropriate drawing area
+	rect = [tabBarControl bounds];
+    
+    PSMTabBarOrientation orientation = [tabBarControl orientation];
+
+	if(orientation == PSMTabBarVerticalOrientation && [tabBarControl frame].size.width < 2) {
 		return;
 	}
 
@@ -346,7 +347,7 @@
 
 	if(orientation == PSMTabBarHorizontalOrientation) {
     
-        if ([self _shouldDrawHorizontalTopBorderLineInView:tabBar]) {
+        if ([self _shouldDrawHorizontalTopBorderLineInView:tabBarControl]) {
             [NSBezierPath strokeLineFromPoint:NSMakePoint(rect.origin.x, rect.origin.y + 0.5) toPoint:NSMakePoint(rect.origin.x + rect.size.width, rect.origin.y + 0.5)];
         }
         
@@ -359,16 +360,10 @@
 	[NSGraphicsContext restoreGraphicsState];
 }
 
-- (void)drawTabBar:(PSMTabBarControl *)bar inRect:(NSRect)rect {
-
-	if(tabBar != bar) {
-		tabBar = bar;
-	}
-
-	[self drawBackgroundInRect:rect];
+- (void)drawInteriorOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect {
 
 	// no tab view == not connected
-	if(![bar tabView]) {
+	if(![tabBarControl tabView]) {
 		NSRect labelRect = rect;
 		labelRect.size.height -= 4.0;
 		labelRect.origin.y += 4.0;
@@ -388,11 +383,11 @@
 	}
     
 	// draw cells
-	NSEnumerator *e = [[bar cells] objectEnumerator];
+	NSEnumerator *e = [[tabBarControl cells] objectEnumerator];
 	PSMTabBarCell *cell;
 	while((cell = [e nextObject])) {
-		if([bar isAnimating] || (![cell isInOverflowMenu] && NSIntersectsRect([cell frame], rect))) {
-			[cell drawWithFrame:[cell frame] inView:bar];
+		if([tabBarControl isAnimating] || (![cell isInOverflowMenu] && NSIntersectsRect([cell frame], rect))) {
+			[cell drawWithFrame:[cell frame] inView:tabBarControl];
 		}
 	}
 }

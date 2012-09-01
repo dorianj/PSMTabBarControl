@@ -24,8 +24,6 @@
 
 	NSDictionary            *_objectCountStringAttributes;
 
-	PSMTabBarControl		*tabBar;
-
 	BOOL					_drawsUnified;
 	BOOL					_drawsRight;
 }

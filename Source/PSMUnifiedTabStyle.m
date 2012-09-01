@@ -263,9 +263,9 @@
     }
 }  // -drawBezelOfTabCell:withFrame:inView:
 
-- (void)drawBackgroundInRect:(NSRect)rect {
+- (void)drawBezelOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect {
 	//Draw for our whole bounds; it'll be automatically clipped to fit the appropriate drawing area
-	rect = [tabBar bounds];
+	rect = [tabBarControl bounds];
 
 	NSRect gradientRect = rect;
 	gradientRect.size.height -= 1.0;
@@ -277,18 +277,16 @@
 	[NSBezierPath strokeLineFromPoint:NSMakePoint(rect.origin.x, NSMaxY(rect) - 0.5)
 	 toPoint:NSMakePoint(NSMaxX(rect), NSMaxY(rect) - 0.5)];
 
-	if(![[[tabBar tabView] window] isKeyWindow]) {
+	if(![[[tabBarControl tabView] window] isKeyWindow]) {
 		[[NSColor windowBackgroundColor] set];
 		NSRectFill(gradientRect);
 	}
 }
 
-- (void)drawTabBar:(PSMTabBarControl *)bar inRect:(NSRect)rect {
-	tabBar = bar;
-	[self drawBackgroundInRect:rect];
+- (void)drawInteriorOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect {
 
 	// no tab view == not connected
-	if(![bar tabView]) {
+	if(![tabBarControl tabView]) {
 		NSRect labelRect = rect;
 		labelRect.size.height -= 4.0;
 		labelRect.origin.y += 4.0;
@@ -308,11 +306,11 @@
 	}
 
 	// draw cells
-	NSEnumerator *e = [[bar cells] objectEnumerator];
+	NSEnumerator *e = [[tabBarControl cells] objectEnumerator];
 	PSMTabBarCell *cell;
 	while((cell = [e nextObject])) {
-		if([bar isAnimating] || (![cell isInOverflowMenu] && NSIntersectsRect([cell frame], rect))) {
-			[cell drawWithFrame:[cell frame] inView:bar];
+		if([tabBarControl isAnimating] || (![cell isInOverflowMenu] && NSIntersectsRect([cell frame], rect))) {
+			[cell drawWithFrame:[cell frame] inView:tabBarControl];
 		}
 	}
 }

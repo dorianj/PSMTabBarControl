@@ -169,9 +169,13 @@
 
 - (CGFloat)tabCellHeight {
 
+#warning Needs refactoring
+    return kPSMTabBarControlHeight;
+/*
     PSMTabBarOrientation orientation = [tabBar orientation];
 
 	return((orientation == PSMTabBarHorizontalOrientation) ? kPSMTabBarControlHeight : kPSMTabBarControlSourceListHeight);
+*/
 }
 
 - (NSRect)drawingRectForBounds:(NSRect)theRect ofTabCell:(PSMTabBarCell *)cell {
@@ -343,9 +347,6 @@
     if([[cell indicator] isHidden]) {
         return NSZeroRect;
     }
-
-    PSMTabBarControl *tabBarControl = [cell controlView];
-    PSMTabBarOrientation orientation = [tabBarControl orientation];
     
     // calculate rect
     NSRect drawingRect = [cell drawingRectForBounds:theRect];
@@ -947,7 +948,8 @@
 	NSBezierPath *bezier = [NSBezierPath bezierPath];
 	lineColor = [NSColor grayColor];
     
-    PSMTabBarOrientation orientation = [(PSMTabBarControl *)[cell controlView] orientation];
+    PSMTabBarControl *tabBarControl = (PSMTabBarControl *)[cell controlView];
+    PSMTabBarOrientation orientation = [tabBarControl orientation];
 
 	[bezier setLineWidth:1.0];
 
@@ -967,7 +969,7 @@
 
 			// background
 			if(_drawsUnified) {
-				if([[[tabBar tabView] window] isKeyWindow]) {
+				if([[[tabBarControl tabView] window] isKeyWindow]) {
 					NSBezierPath *path = [NSBezierPath bezierPathWithRect:aRect];
 					[path linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.835 alpha:1.0]
 					 endColor:[NSColor colorWithCalibratedWhite:0.843 alpha:1.0]];
@@ -1015,7 +1017,7 @@
 
 			// background
 			if(_drawsUnified) {
-				if([[[tabBar tabView] window] isKeyWindow]) {
+				if([[[tabBarControl tabView] window] isKeyWindow]) {
 					NSBezierPath *path = [NSBezierPath bezierPathWithRect:aRect];
 					[path linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.835 alpha:1.0]
 					 endColor:[NSColor colorWithCalibratedWhite:0.843 alpha:1.0]];
@@ -1247,16 +1249,18 @@
 	[self drawInteriorWithTabCell:cell inView:[cell controlView]];
 }
 */
-- (void)drawBackgroundInRect:(NSRect)rect {
-	//Draw for our whole bounds; it'll be automatically clipped to fit the appropriate drawing area
-	rect = [tabBar bounds];
 
-    PSMTabBarOrientation orientation = [tabBar orientation];
+- (void)drawBezelOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect {
+
+	//Draw for our whole bounds; it'll be automatically clipped to fit the appropriate drawing area
+	rect = [tabBarControl bounds];
+
+    PSMTabBarOrientation orientation = [tabBarControl orientation];
 
 	switch(orientation) {
 	case PSMTabBarHorizontalOrientation :
-		if(_drawsUnified && [[[tabBar tabView] window] isKeyWindow]) {
-			if([[[tabBar tabView] window] isKeyWindow]) {
+		if(_drawsUnified && [[[tabBarControl tabView] window] isKeyWindow]) {
+			if([[[tabBarControl tabView] window] isKeyWindow]) {
 				NSBezierPath *backgroundPath = [NSBezierPath bezierPathWithRect:rect];
 				[backgroundPath linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.835 alpha:1.0]
 				 endColor:[NSColor colorWithCalibratedWhite:0.843 alpha:1.0]];
@@ -1352,17 +1356,10 @@
 	[NSGraphicsContext restoreGraphicsState];
 }
 
-- (void)drawTabBar:(PSMTabBarControl *)bar inRect:(NSRect)rect {
-
-	if(tabBar != bar) {
-		[tabBar release];
-		tabBar = [bar retain];
-	}
-
-	[self drawBackgroundInRect:rect];
+- (void)drawInteriorOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect {
 
 	// no tab view == not connected
-	if(![bar tabView]) {
+	if(![tabBarControl tabView]) {
 		NSRect labelRect = rect;
 		labelRect.size.height -= 4.0;
 		labelRect.origin.y += 4.0;
@@ -1382,11 +1379,11 @@
 	}
 
 	// draw cells
-	NSEnumerator *e = [[bar cells] objectEnumerator];
+	NSEnumerator *e = [[tabBarControl cells] objectEnumerator];
 	PSMTabBarCell *cell;
 	while((cell = [e nextObject])) {
-		if([bar isAnimating] || (![cell isInOverflowMenu] && NSIntersectsRect([cell frame], rect))) {
-			[cell drawWithFrame:[cell frame] inView:bar];
+		if([tabBarControl isAnimating] || (![cell isInOverflowMenu] && NSIntersectsRect([cell frame], rect))) {
+			[cell drawWithFrame:[cell frame] inView:tabBarControl];
 		}
 	}
 }
