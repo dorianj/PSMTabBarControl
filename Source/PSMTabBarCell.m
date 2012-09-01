@@ -290,9 +290,9 @@
             
         NSSize stringSize = [attrString size];
         
-        NSRect result = NSMakeRect(constrainedDrawingRect.origin.x, drawingRect.origin.y+(drawingRect.size.height-stringSize.height)/2, constrainedDrawingRect.size.width, stringSize.height);
+        NSRect result = NSMakeRect(constrainedDrawingRect.origin.x, drawingRect.origin.y+ceil((drawingRect.size.height-stringSize.height)/2), constrainedDrawingRect.size.width, stringSize.height);
                         
-        return result;
+        return NSIntegralRect(result);
         }
 }
 
@@ -330,14 +330,14 @@
     
 		// center in available space (in case icon image is smaller than kPSMTabBarIconWidth)
 		if(scaledIconSize.width < kPSMTabBarIconWidth) {
-			result.origin.x += (kPSMTabBarIconWidth - scaledIconSize.width) / 2.0;
+			result.origin.x += ceil((kPSMTabBarIconWidth - scaledIconSize.width) / 2.0);
 		}
 
 		if(scaledIconSize.height < kPSMTabBarIconWidth) {
-			result.origin.y -= (kPSMTabBarIconWidth - scaledIconSize.height) / 2.0;
+			result.origin.y -= ceil((kPSMTabBarIconWidth - scaledIconSize.height) / 2.0 - 0.5);
 		}
 
-        return result;
+        return NSIntegralRect(result);
     }
 }
 
@@ -370,9 +370,9 @@
 
         NSSize indicatorSize = NSMakeSize(kPSMTabBarIndicatorWidth, kPSMTabBarIndicatorWidth);
         
-        NSRect result = NSMakeRect(NSMaxX(drawingRect)-indicatorSize.width,NSMidY(drawingRect)-indicatorSize.height/2,indicatorSize.width,indicatorSize.height);
+        NSRect result = NSMakeRect(NSMaxX(drawingRect)-indicatorSize.width,NSMidY(drawingRect)-ceil(indicatorSize.height/2),indicatorSize.width,indicatorSize.height);
         
-        return result;
+        return NSIntegralRect(result);
         }
 }
 
@@ -425,13 +425,13 @@
         NSRect result;
         result.size = counterBadgeSize; // temp
         result.origin.x = NSMaxX(constrainedDrawingRect)-counterBadgeSize.width;
-        result.origin.y = constrainedDrawingRect.origin.y+(constrainedDrawingRect.size.height-result.size.height)/2;
+        result.origin.y = ceil(constrainedDrawingRect.origin.y+(constrainedDrawingRect.size.height-result.size.height)/2);
 
         if(![[self indicator] isHidden]) {
             result.origin.x -= kPSMTabBarCellPadding;
         }
                     
-        return result;
+        return NSIntegralRect(result);
     }
 }
 
@@ -463,10 +463,10 @@
         NSRect result = NSMakeRect(drawingRect.origin.x, drawingRect.origin.y, scaledImageSize.width, scaledImageSize.height);
 
         if(scaledImageSize.height < drawingRect.size.height) {
-            result.origin.y += (drawingRect.size.height - scaledImageSize.height) / 2.0;
+            result.origin.y += ceil((drawingRect.size.height - scaledImageSize.height) / 2.0);
         }
     
-        return result;
+        return NSIntegralRect(result);
     }
 }
 
@@ -576,7 +576,7 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
         imageSize.width *= ratio;
         imageSize.height *= ratio;
         }
-
+    
     return imageSize;
 } 
 
@@ -620,11 +620,17 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 
     id <PSMTabStyle> style = [(PSMTabBarControl *)controlView style];
     
+    // legacy support
+    if ([style respondsToSelector:@selector(drawTabCell:)]) {
+        [(id < PSMTabStyle >)[(PSMTabBarControl *)_controlView style] drawTabCell:self];
+        return;
+    }
+    
+    // draw bezel
     if ([style respondsToSelector:@selector(drawBezelOfTabCell:withFrame:inView:)])
         [style drawBezelOfTabCell:self withFrame:cellFrame inView:controlView];
-    else
-        [(id < PSMTabStyle >)[(PSMTabBarControl *)_controlView style] drawTabCell:self];
         
+    // draw interior
     [self drawInteriorWithFrame:cellFrame inView:controlView];
 }  // -drawWithFrame:inView:
 
@@ -728,7 +734,8 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 		NSAttributedString *counterString = [style attributedObjectCountValueForTabCell:self];
 		counterStringRect.size = [counterString size];
 		counterStringRect.origin.x = myRect.origin.x + ((myRect.size.width - counterStringRect.size.width) / 2.0) + 0.25;
-		counterStringRect.origin.y = myRect.origin.y + ((myRect.size.height - counterStringRect.size.height) / 2.0) + 0.5;
+        counterStringRect.origin.y = NSMidY(myRect)-counterStringRect.size.height/2;
+//		counterStringRect.origin.y = myRect.origin.y + ((myRect.size.height - counterStringRect.size.height) / 2.0) +1;//+ 0.5;
 		[counterString drawInRect:counterStringRect];    
     
     }
