@@ -426,10 +426,6 @@
         result.size = counterBadgeSize; // temp
         result.origin.x = NSMaxX(constrainedDrawingRect)-counterBadgeSize.width;
         result.origin.y = ceil(constrainedDrawingRect.origin.y+(constrainedDrawingRect.size.height-result.size.height)/2);
-
-        if(![[self indicator] isHidden]) {
-            result.origin.x -= kPSMTabBarCellPadding;
-        }
                     
         return NSIntegralRect(result);
     }
