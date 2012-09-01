@@ -10,23 +10,21 @@
 #import "PSMTabStyle.h"
 
 @interface PSMMetalTabStyle : NSObject <PSMTabStyle> {
-	NSImage									*metalCloseButton;
-	NSImage									*metalCloseButtonDown;
-	NSImage									*metalCloseButtonOver;
-	NSImage									*metalCloseDirtyButton;
-	NSImage									*metalCloseDirtyButtonDown;
-	NSImage									*metalCloseDirtyButtonOver;
-	NSImage									*_addTabButtonImage;
-	NSImage									*_addTabButtonPressedImage;
-	NSImage									*_addTabButtonRolloverImage;
+	NSImage					*metalCloseButton;
+	NSImage					*metalCloseButtonDown;
+	NSImage					*metalCloseButtonOver;
+	NSImage					*metalCloseDirtyButton;
+	NSImage					*metalCloseDirtyButtonDown;
+	NSImage					*metalCloseDirtyButtonOver;
+	NSImage					*_addTabButtonImage;
+	NSImage					*_addTabButtonPressedImage;
+	NSImage					*_addTabButtonRolloverImage;
 
-	NSDictionary								*_objectCountStringAttributes;
+	NSDictionary			*_objectCountStringAttributes;
 
-	PSMTabBarOrientation						orientation;
-	PSMTabBarControl							*tabBar;
+	PSMTabBarOrientation	_orientation;
+	PSMTabBarControl		*tabBar;
 }
-
-- (void)drawInteriorWithTabCell:(PSMTabBarCell *)cell inView:(NSView*)controlView;
 
 - (void)encodeWithCoder:(NSCoder *)aCoder;
 - (id)initWithCoder:(NSCoder *)aDecoder;

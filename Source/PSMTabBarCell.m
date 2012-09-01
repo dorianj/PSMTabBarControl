@@ -455,7 +455,6 @@
         
         // calculate rect
         NSRect drawingRect = [self drawingRectForBounds:theRect];
-        
         NSSize imageSize = [image size];
         
         NSSize scaledImageSize = [self scaleImageWithSize:imageSize toFitInSize:NSMakeSize(imageSize.width, drawingRect.size.height) scalingType:NSImageScaleProportionallyDown];

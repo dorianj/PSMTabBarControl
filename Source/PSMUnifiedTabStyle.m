@@ -129,7 +129,6 @@
     
 }  // -closeButtonImageOfType:
 
-
 #pragma mark -
 #pragma mark Determining Cell Size
 
