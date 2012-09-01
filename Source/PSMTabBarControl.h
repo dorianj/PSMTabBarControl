@@ -15,10 +15,10 @@
 #define PSMTabDragDidEndNotification		@ "PSMTabDragDidEndNotification"
 #define PSMTabDragDidBeginNotification	@ "PSMTabDragDidBeginNotification"
 
-#define kPSMTabBarControlHeight			22
+#define kPSMTabBarControlHeight             22
 // internal cell border
-#define MARGIN_X								6
-#define MARGIN_Y								3
+#define MARGIN_X							6
+#define MARGIN_Y							3
 // padding between objects
 #define kPSMTabBarCellPadding				4
 // fixed size objects
@@ -28,6 +28,9 @@
 #define kPSMHideAnimationSteps				3.0
 #define kPSMObjectCounterMinWidth           20.0
 #define kPSMObjectCounterRadius             7.0
+#define kPSMTabBarControlSourceListHeight   28
+#define kPSMTabBarLargeImageHeight          kPSMTabBarControlSourceListHeight - 4
+#define kPSMTabBarLargeImageWidth           kPSMTabBarLargeImageHeight
 
 // Value used in _currentStep to indicate that resizing operation is not in progress
 #define kPSMIsNotBeingResized				-1

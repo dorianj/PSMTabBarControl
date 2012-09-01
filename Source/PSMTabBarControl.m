@@ -378,8 +378,6 @@
 	}
 
 	if(lastOrientation != _orientation) {
-		[[self style] setOrientation:_orientation];
-
 		[self _positionOverflowMenu]; //move the overflow popup button to the right place
 		[self update:NO];
 	}
