@@ -36,10 +36,6 @@
 - (NSAttributedString *)attributedObjectCountValueForTabCell:(PSMTabBarCell *)cell;
 - (NSAttributedString *)attributedStringValueForTabCell:(PSMTabBarCell *)cell;
 
-// drawing
-- (void)drawBackgroundInRect:(NSRect)rect;
-- (void)drawTabBar:(PSMTabBarControl *)bar inRect:(NSRect)rect;
-
 @optional
 
 // Constraints
@@ -60,6 +56,11 @@
 - (NSRect)closeButtonRectForBounds:(NSRect)theRect ofTabCell:(PSMTabBarCell *)cell;
 
 // Drawing
+
+- (void)drawTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect;
+- (void)drawBezelOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect;
+- (void)drawInteriorOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect;
+
 - (void)drawBezelOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inView:controlView;
 - (void)drawInteriorOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inView:controlView;
 - (void)drawTitleOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inView:controlView;
@@ -77,6 +78,9 @@
 - (NSRect)indicatorRectForTabCell:(PSMTabBarCell *)cell DEPRECATED_ATTRIBUTE;
 - (NSRect)objectCounterRectForTabCell:(PSMTabBarCell *)cell DEPRECATED_ATTRIBUTE;
 - (void)setOrientation:(PSMTabBarOrientation)value DEPRECATED_ATTRIBUTE;
+- (void)drawBackgroundInRect:(NSRect)rect DEPRECATED_ATTRIBUTE;
+- (void)drawTabBar:(PSMTabBarControl *)bar inRect:(NSRect)rect DEPRECATED_ATTRIBUTE;
+
 @end
 
 @interface PSMTabBarControl (StyleAccessors)
