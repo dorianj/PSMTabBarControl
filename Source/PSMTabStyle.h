@@ -22,7 +22,6 @@
 - (CGFloat)leftMarginForTabBarControl;
 - (CGFloat)rightMarginForTabBarControl;
 - (CGFloat)topMarginForTabBarControl;
-- (void)setOrientation:(PSMTabBarOrientation)value;
 
 // add tab button
 - (NSImage *)addTabButtonImage;
@@ -77,7 +76,7 @@
 - (NSRect)iconRectForTabCell:(PSMTabBarCell *)cell DEPRECATED_ATTRIBUTE;
 - (NSRect)indicatorRectForTabCell:(PSMTabBarCell *)cell DEPRECATED_ATTRIBUTE;
 - (NSRect)objectCounterRectForTabCell:(PSMTabBarCell *)cell DEPRECATED_ATTRIBUTE;
-
+- (void)setOrientation:(PSMTabBarOrientation)value DEPRECATED_ATTRIBUTE;
 @end
 
 @interface PSMTabBarControl (StyleAccessors)
