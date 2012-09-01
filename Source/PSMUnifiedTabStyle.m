@@ -76,9 +76,6 @@
 	return 10.0f;
 }
 
-- (void)setOrientation:(PSMTabBarOrientation)value {
-}
-
 #pragma mark -
 #pragma mark Add Tab Button
 
