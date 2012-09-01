@@ -71,10 +71,6 @@
 	return 10.0f;
 }
 
-- (void)setOrientation:(PSMTabBarOrientation)value {
-	_orientation = value;
-}
-
 #pragma mark -
 #pragma mark Add Tab Button
 
@@ -225,6 +221,8 @@
 	NSColor *lineColor = nil;
 	NSBezierPath *bezier = [NSBezierPath bezierPath];
 	lineColor = [NSColor darkGrayColor];
+    
+    PSMTabBarOrientation orientation = [(PSMTabBarControl *)[cell controlView] orientation];
 
 	//disable antialiasing of bezier paths
 	[NSGraphicsContext saveGraphicsState];
@@ -232,7 +230,7 @@
 
 	if([cell state] == NSOnState) {
 		// selected tab
-		if(_orientation == PSMTabBarHorizontalOrientation) {
+		if(orientation == PSMTabBarHorizontalOrientation) {
 			NSRect aRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y, cellFrame.size.width, cellFrame.size.height - 2.5);
 
 			// background
@@ -295,7 +293,7 @@
 
 		[lineColor set];
 
-		if(_orientation == PSMTabBarHorizontalOrientation) {
+		if(orientation == PSMTabBarHorizontalOrientation) {
 			aRect.origin.x -= 1;
 			aRect.size.width += 1;
 
@@ -332,8 +330,10 @@
 - (void)drawBackgroundInRect:(NSRect)rect {
 	//Draw for our whole bounds; it'll be automatically clipped to fit the appropriate drawing area
 	rect = [tabBar bounds];
+    
+    PSMTabBarOrientation orientation = [tabBar orientation];
 
-	if(_orientation == PSMTabBarVerticalOrientation && [tabBar frame].size.width < 2) {
+	if(orientation == PSMTabBarVerticalOrientation && [tabBar frame].size.width < 2) {
 		return;
 	}
 
@@ -344,7 +344,7 @@
 	NSRectFillUsingOperation(rect, NSCompositeSourceAtop);
 	[[NSColor darkGrayColor] set];
 
-	if(_orientation == PSMTabBarHorizontalOrientation) {
+	if(orientation == PSMTabBarHorizontalOrientation) {
     
         if ([self _shouldDrawHorizontalTopBorderLineInView:tabBar]) {
             [NSBezierPath strokeLineFromPoint:NSMakePoint(rect.origin.x, rect.origin.y + 0.5) toPoint:NSMakePoint(rect.origin.x + rect.size.width, rect.origin.y + 0.5)];
@@ -360,9 +360,6 @@
 }
 
 - (void)drawTabBar:(PSMTabBarControl *)bar inRect:(NSRect)rect {
-	if(_orientation != [bar orientation]) {
-		_orientation = [bar orientation];
-	}
 
 	if(tabBar != bar) {
 		tabBar = bar;

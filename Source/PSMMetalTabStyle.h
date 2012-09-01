@@ -22,7 +22,6 @@
 
 	NSDictionary			*_objectCountStringAttributes;
 
-	PSMTabBarOrientation	_orientation;
 	PSMTabBarControl		*tabBar;
 }
 
