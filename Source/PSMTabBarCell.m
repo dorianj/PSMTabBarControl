@@ -31,6 +31,8 @@
 - (CGFloat)_minimumWidthOfCell;
 - (CGFloat)_desiredWidthOfCell;
 - (NSImage *)_closeButtonImageOfType:(PSMCloseButtonImageType)type;
+- (NSAttributedString *)_attributedStringValue;
+- (NSAttributedString *)_attributedObjectCountStringValue;
 - (void)_drawWithFrame:(NSRect)cellFrame inTabBarControl:(PSMTabBarControl *)tabBarControl;
 - (void)_drawBezelWithFrame:(NSRect)cellFrame inTabBarControl:(PSMTabBarControl *)tabBarControl;
 - (void)_drawInteriorWithFrame:(NSRect)cellFrame inTabBarControl:(PSMTabBarControl *)tabBarControl;
@@ -161,7 +163,23 @@
 }
 
 - (NSAttributedString *)attributedStringValue {
-	return [(id < PSMTabStyle >)[[self controlView] style] attributedStringValueForTabCell:self];
+    PSMTabBarControl *tabBarControl = (PSMTabBarControl *)[self controlView];
+    id <PSMTabStyle> tabStyle = [tabBarControl style];
+
+    if ([tabStyle respondsToSelector:@selector(attributedStringValueForTabCell:)])
+        return [tabStyle attributedStringValueForTabCell:self];
+    else
+        return [self _attributedStringValue];
+}
+
+- (NSAttributedString *)attributedObjectCountStringValue {
+    PSMTabBarControl *tabBarControl = (PSMTabBarControl *)[self controlView];
+    id <PSMTabStyle> tabStyle = [tabBarControl style];
+
+    if ([tabStyle respondsToSelector:@selector(attributedStringValueForTabCell:)])
+        return [tabStyle attributedObjectCountStringValueForTabCell:self];
+    else
+        return [self _attributedObjectCountStringValue];
 }
 
 - (NSProgressIndicator *)indicator {
@@ -832,16 +850,13 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 }
 
 - (NSSize)_objectCounterSize {
-
-    PSMTabBarControl *tabBarControl = (PSMTabBarControl *)[self controlView];
-    id <PSMTabStyle> tabStyle = [tabBarControl style];
     
     if([self count] == 0) {
         return NSZeroSize;
     }
     
     // get badge width
-    CGFloat countWidth = [[tabStyle attributedObjectCountValueForTabCell:self] size].width;
+    CGFloat countWidth = [[self attributedObjectCountStringValue] size].width;
         countWidth += (2 * kPSMObjectCounterRadius - 6.0);
         if(countWidth < kPSMObjectCounterMinWidth) {
             countWidth = kPSMObjectCounterMinWidth;
@@ -981,6 +996,40 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
     return nil;
 }
 
+- (NSAttributedString *)_attributedStringValue {
+
+	NSMutableAttributedString *attrStr;
+	NSString *contents = [self stringValue];
+	attrStr = [[[NSMutableAttributedString alloc] initWithString:contents] autorelease];
+	NSRange range = NSMakeRange(0, [contents length]);
+
+	[attrStr addAttribute:NSFontAttributeName value:[NSFont systemFontOfSize:11.0] range:range];
+	[attrStr addAttribute:NSForegroundColorAttributeName value:[NSColor controlTextColor] range:range];
+    
+	// Paragraph Style for Truncating Long Text
+	static NSMutableParagraphStyle *truncatingTailParagraphStyle = nil;
+	if(!truncatingTailParagraphStyle) {
+		truncatingTailParagraphStyle = [[[NSParagraphStyle defaultParagraphStyle] mutableCopy] retain];
+		[truncatingTailParagraphStyle setLineBreakMode:NSLineBreakByTruncatingTail];
+		[truncatingTailParagraphStyle setAlignment:NSCenterTextAlignment];
+	}
+	[attrStr addAttribute:NSParagraphStyleAttributeName value:truncatingTailParagraphStyle range:range];
+
+	return attrStr;
+}
+
+- (NSAttributedString *)_attributedObjectCountStringValue {
+
+    static NSDictionary *objectCountStringAttributes = nil;
+    
+    if (objectCountStringAttributes == nil) {
+        objectCountStringAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[[NSFontManager sharedFontManager] convertFont:[NSFont fontWithName:@"Helvetica" size:11.0] toHaveTrait:NSBoldFontMask], NSFontAttributeName, [[NSColor whiteColor] colorWithAlphaComponent:0.85], NSForegroundColorAttributeName, nil, nil];
+    }
+
+	NSString *contents = [NSString stringWithFormat:@"%lu", (unsigned long)[self count]];
+	return [[[NSMutableAttributedString alloc] initWithString:contents attributes:objectCountStringAttributes] autorelease];
+}
+
 - (void)_drawWithFrame:(NSRect)cellFrame inTabBarControl:(PSMTabBarControl *)tabBarControl {
 
 	if(_isPlaceholder) {
@@ -1062,15 +1111,26 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 }
 
 - (void)_drawTitleWithFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl {
+
     NSRect rect = [self titleRectForBounds:frame];
+
+    [NSGraphicsContext saveGraphicsState];
+    
+    NSShadow *shadow = [[NSShadow alloc] init];
+    [shadow setShadowColor:[[NSColor whiteColor] colorWithAlphaComponent:0.4]];
+    [shadow setShadowBlurRadius:1.0];
+    [shadow setShadowOffset:NSMakeSize(0.0, -1.0)];
+    [shadow set];
 
     // draw title
     [[self attributedStringValue] drawInRect:rect];
+
+    [NSGraphicsContext restoreGraphicsState];
+        
+    [shadow release];
 }
 
 - (void)_drawObjectCounterWithFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl {
-
-    id <PSMTabStyle> tabStyle = [tabBarControl style];
 
     // set color
     [[self countColor] ?: [NSColor colorWithCalibratedWhite:0.3 alpha:0.45] set];
@@ -1086,7 +1146,7 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 
     // draw attributed string centered in area
     NSRect counterStringRect;
-    NSAttributedString *counterString = [tabStyle attributedObjectCountValueForTabCell:self];
+    NSAttributedString *counterString = [self attributedObjectCountStringValue];
     counterStringRect.size = [counterString size];
     counterStringRect.origin.x = myRect.origin.x + ((myRect.size.width - counterStringRect.size.width) / 2.0) + 0.25;
     counterStringRect.origin.y = NSMidY(myRect)-counterStringRect.size.height/2;

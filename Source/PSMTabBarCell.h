@@ -72,6 +72,7 @@ typedef enum PSMCloseButtonImageType : NSUInteger
 - (void)setStringValue:(NSString *)aString;
 - (NSSize)stringSize;
 - (NSAttributedString *)attributedStringValue;
+- (NSAttributedString *)attributedObjectCountStringValue;
 - (NSProgressIndicator *)indicator;
 - (BOOL)isInOverflowMenu;
 - (void)setIsInOverflowMenu:(BOOL)value;
