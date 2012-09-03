@@ -403,7 +403,8 @@
 	[transform scaleXBy:1.0 yBy:-1.0];
 	[transform concat];
 	tabFrame.origin.y = -tabFrame.origin.y - tabFrame.size.height;
-	[(id < PSMTabStyle >)[(PSMTabBarControl*)[aTabView delegate] style] drawBackgroundInRect:tabFrame];
+    PSMTabBarControl *tabBarControl = (PSMTabBarControl*)[aTabView delegate];
+	[[tabBarControl style] drawBezelOfTabBarControl:tabBarControl inRect:tabFrame];
 	[transform invert];
 	[transform concat];
 
