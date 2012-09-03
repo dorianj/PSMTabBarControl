@@ -31,11 +31,11 @@
 // cell specific parameters
 - (NSRect)dragRectForTabCell:(PSMTabBarCell *)cell ofTabBarControl:(PSMTabBarControl *)tabBarControl;
 
-// cell values
-- (NSAttributedString *)attributedObjectCountValueForTabCell:(PSMTabBarCell *)cell;
-- (NSAttributedString *)attributedStringValueForTabCell:(PSMTabBarCell *)cell;
-
 @optional
+
+// cell values
+- (NSAttributedString *)attributedObjectCountStringValueForTabCell:(PSMTabBarCell *)cell;
+- (NSAttributedString *)attributedStringValueForTabCell:(PSMTabBarCell *)cell;
 
 // Constraints
 - (CGFloat)minimumWidthOfTabCell:(PSMTabBarCell *)cell;
@@ -83,7 +83,7 @@
 - (void)drawTabBar:(PSMTabBarControl *)bar inRect:(NSRect)rect DEPRECATED_ATTRIBUTE;
 - (CGFloat)tabCellHeight DEPRECATED_ATTRIBUTE;
 - (NSRect)dragRectForTabCell:(PSMTabBarCell *)cell orientation:(PSMTabBarOrientation)orientation DEPRECATED_ATTRIBUTE;
-
+- (NSAttributedString *)attributedObjectCountValueForTabCell:(PSMTabBarCell *)cell DEPRECATED_ATTRIBUTE;
 @end
 
 @interface PSMTabBarControl (StyleAccessors)
