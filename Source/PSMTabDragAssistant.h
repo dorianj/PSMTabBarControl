@@ -82,17 +82,6 @@
 
 @end
 
-@interface PSMTabBarControl (DragAccessors)
-
-- (id<PSMTabStyle>)style;
-- (NSMutableArray *)cells;
-- (void)setControlView:(id)view;
-- (id)cellForPoint:(NSPoint) point cellFrame:(NSRectPointer)outFrame;
-- (PSMTabBarCell *)lastVisibleTab;
-- (NSInteger)numberOfVisibleTabs;
-
-@end
-
 void CGContextCopyWindowCaptureContentsToRect(void *grafport, CGRect rect, NSInteger cid, NSInteger wid, NSInteger zero);
 OSStatus CGSSetWindowTransform(NSInteger cid, NSInteger wid, CGAffineTransform transform);
 

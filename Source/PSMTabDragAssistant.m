@@ -11,8 +11,9 @@
 #import "PSMTabStyle.h"
 #import "PSMTabDragWindowController.h"
 
-@interface PSMTabBarControl (Private)
+@interface PSMTabBarControl (SharedPrivate)
 - (void)update:(BOOL)animate;
+- (id)cellForPoint:(NSPoint) point cellFrame:(NSRectPointer)outFrame;
 @end
 
 @interface PSMTabDragAssistant (Private)
@@ -303,7 +304,7 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 		destinationIndex = [[[self destinationTabBar] cells] count] - 1;
 	}
 
-	[[[self destinationTabBar] cells] replaceObjectAtIndex:destinationIndex withObject:[self draggedCell]];
+	[[self destinationTabBar] replaceCellAtIndex:destinationIndex withCell:[self draggedCell]];
 	[[self draggedCell] setControlView:[self destinationTabBar]];
 
 	// move actual NSTabViewItem
@@ -391,7 +392,7 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 
 			if(control) {
 				//add the dragged tab to the new window
-				[[control cells] insertObject:[self draggedCell] atIndex:0];
+				[control insertCell:[self draggedCell] atIndex:0];
 
 				//remove the tracking rects and bindings registered on the old tab
 				[[self sourceTabBar] removeTrackingRect:[[self draggedCell] closeButtonTrackingTag]];
@@ -420,11 +421,11 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 				}
 			} else {
 				NSLog(@"Delegate returned no control to add to.");
-				[[[self sourceTabBar] cells] insertObject:[self draggedCell] atIndex:[self draggedCellIndex]];
+				[[self sourceTabBar] insertCell:[self draggedCell] atIndex:[self draggedCellIndex]];
 			}
 		} else {
 			// put cell back
-			[[[self sourceTabBar] cells] insertObject:[self draggedCell] atIndex:[self draggedCellIndex]];
+			[[self sourceTabBar] insertCell:[self draggedCell] atIndex:[self draggedCellIndex]];
 		}
 
 		[[NSNotificationCenter defaultCenter] postNotificationName:PSMTabDragDidEndNotification object:nil];
@@ -655,7 +656,7 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 
 - (void)calculateDragAnimationForTabBarControl:(PSMTabBarControl *)tabBarControl {
 	BOOL removeFlag = YES;
-	NSMutableArray *cells = [tabBarControl cells];
+	NSArray *cells = [tabBarControl cells];
 	NSInteger i, cellCount = [cells count];
 	CGFloat position = [tabBarControl orientation] == PSMTabBarHorizontalOrientation ?[[tabBarControl style] leftMarginForTabBarControl] :[[tabBarControl style] topMarginForTabBarControl];
 
@@ -750,15 +751,15 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 	// called upon first drag - must distribute placeholders
 	[self distributePlaceholdersInTabBarControl:tabBarControl];
 
-	NSMutableArray *cells = [tabBarControl cells];
+	NSArray *cells = [tabBarControl cells];
 
 	// replace dragged cell with a placeholder, and clean up surrounding cells
 	NSInteger cellIndex = [cells indexOfObject:cell];
 	PSMTabBarCell *pc = [[[PSMTabBarCell alloc] initPlaceholderWithFrame:[[self draggedCell] frame] expanded:YES inTabBarControl:tabBarControl] autorelease];
     [pc setControlView:tabBarControl];
-	[cells replaceObjectAtIndex:cellIndex withObject:pc];
-	[cells removeObjectAtIndex:(cellIndex + 1)];
-	[cells removeObjectAtIndex:(cellIndex - 1)];
+	[tabBarControl replaceCellAtIndex:cellIndex withCell:pc];
+	[tabBarControl removeCellAtIndex:(cellIndex + 1)];
+	[tabBarControl removeCellAtIndex:(cellIndex - 1)];
 
 	if(cellIndex - 2 >= 0) {
 		pc = [cells objectAtIndex:cellIndex - 2];
@@ -771,15 +772,15 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 	for(i = 0; i < numVisibleTabs; i++) {
 		PSMTabBarCell *pc = [[[PSMTabBarCell alloc] initPlaceholderWithFrame:[[self draggedCell] frame] expanded:NO inTabBarControl:tabBarControl] autorelease];
         [pc setControlView:tabBarControl];
-		[[tabBarControl cells] insertObject:pc atIndex:(2 * i)];
+		[tabBarControl insertCell:pc atIndex:(2 * i)];
 	}
 
 	PSMTabBarCell *pc = [[[PSMTabBarCell alloc] initPlaceholderWithFrame:[[self draggedCell] frame] expanded:NO inTabBarControl:tabBarControl] autorelease];
     [pc setControlView:tabBarControl];
 	if([[tabBarControl cells] count] > (2 * numVisibleTabs)) {
-		[[tabBarControl cells] insertObject:pc atIndex:(2 * numVisibleTabs)];
+		[tabBarControl insertCell:pc atIndex:(2 * numVisibleTabs)];
 	} else {
-		[[tabBarControl cells] addObject:pc];
+		[tabBarControl addCell:pc];
 	}
 }
 
