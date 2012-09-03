@@ -16,6 +16,7 @@
 @protocol PSMTabStyle <NSObject>
 
 // identity
++ (NSString *)name;
 - (NSString *)name;
 
 // control specific parameters
