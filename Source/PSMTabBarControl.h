@@ -142,6 +142,7 @@ enum {
 - (NSArray *)cells;
 - (void)addCell:(PSMTabBarCell *)aCell;
 - (void)insertCell:(PSMTabBarCell *)aCell atIndex:(NSUInteger)index;
+- (void)removeCellAtIndex:(NSUInteger)index;
 - (void)replaceCellAtIndex:(NSUInteger)index withCell:(PSMTabBarCell *)aCell;
 
 #pragma mark Control Configuration

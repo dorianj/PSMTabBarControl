@@ -1406,9 +1406,10 @@ static NSMutableDictionary *registeredStyleClasses;
 						if(otherCell != cell) {
 							[self performSelector:@selector(closeTabClick:) withObject:otherCell];
 						}
-                    [tmpCellArray release], tmpCellArray = nil;
 					}
-
+                    
+                    [tmpCellArray release], tmpCellArray = nil;
+                    
 					//Fix the close button for the clicked tab not to be pressed
 					[cell setCloseButtonPressed:NO];
 				} else {
