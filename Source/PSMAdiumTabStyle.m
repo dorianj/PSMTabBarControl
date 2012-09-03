@@ -433,11 +433,11 @@
 
 	switch(orientation) {
 	case PSMTabBarHorizontalOrientation :
-		if(_drawsUnified && [[[tabBarControl tabView] window] isKeyWindow]) {
+		if(_drawsUnified) {
 			if([[[tabBarControl tabView] window] isKeyWindow]) {
-				NSBezierPath *backgroundPath = [NSBezierPath bezierPathWithRect:rect];
-				[backgroundPath linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.835 alpha:1.0]
-				 endColor:[NSColor colorWithCalibratedWhite:0.843 alpha:1.0]];
+                NSGradient *gradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.835 alpha:1.0] endingColor:[NSColor colorWithCalibratedWhite:0.843 alpha:1.0]];
+                [gradient drawInRect:rect angle:90.0];
+                [gradient release];
 			} else {
 				[[NSColor windowBackgroundColor] set];
 				NSRectFill(rect);
@@ -558,9 +558,10 @@
 			// background
 			if(_drawsUnified) {
 				if([[[tabBarControl tabView] window] isKeyWindow]) {
-					NSBezierPath *path = [NSBezierPath bezierPathWithRect:aRect];
-					[path linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.835 alpha:1.0]
-					 endColor:[NSColor colorWithCalibratedWhite:0.843 alpha:1.0]];
+                
+                    NSGradient *gradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.835 alpha:1.0] endingColor:[NSColor colorWithCalibratedWhite:0.843 alpha:1.0]];
+                    [gradient drawInRect:aRect angle:90.0];
+                    [gradient release];                
 				} else {
 					[[NSColor windowBackgroundColor] set];
 					NSRectFill(aRect);
@@ -606,9 +607,10 @@
 			// background
 			if(_drawsUnified) {
 				if([[[tabBarControl tabView] window] isKeyWindow]) {
-					NSBezierPath *path = [NSBezierPath bezierPathWithRect:aRect];
-					[path linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.835 alpha:1.0]
-					 endColor:[NSColor colorWithCalibratedWhite:0.843 alpha:1.0]];
+                
+                    NSGradient *gradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.835 alpha:1.0] endingColor:[NSColor colorWithCalibratedWhite:0.843 alpha:1.0]];
+                    [gradient drawInRect:aRect angle:90.0];
+                    [gradient release];
 				} else {
 					[[NSColor windowBackgroundColor] set];
 					NSRectFill(aRect);

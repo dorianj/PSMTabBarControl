@@ -345,18 +345,26 @@
 		cornerPoint = NSMakePoint(NSMaxX(aRect), NSMinY(aRect));
 		[bezier appendBezierPathWithPoints:&cornerPoint count:1];
 
+        NSColor *startColor = nil;
+        NSColor *endColor = nil;
+
 		if([[[tabBarControl tabView] window] isKeyWindow]) {
 			if([cell state] == NSOnState) {
-				[bezier linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]
-				 endColor:[NSColor colorWithCalibratedWhite:0.95 alpha:1.0]];
+                startColor = [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
+                endColor = [NSColor colorWithCalibratedWhite:0.95 alpha:1.0];
 			} else if([cell isHighlighted]) {
-				[bezier linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.80 alpha:1.0]
-				 endColor:[NSColor colorWithCalibratedWhite:0.80 alpha:1.0]];
+  
+                startColor = [NSColor colorWithCalibratedWhite:0.80 alpha:1.0];
+                endColor = [NSColor colorWithCalibratedWhite:0.80 alpha:1.0];
 			}
 		} else if([cell state] == NSOnState) {
-			[bezier linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]
-											endColor:[NSColor colorWithCalibratedWhite:0.95 alpha:1.0]];
+            startColor = [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
+            endColor = [NSColor colorWithCalibratedWhite:0.95 alpha:1.0];
 		}
+        
+        NSGradient *gradient = [[NSGradient alloc] initWithStartingColor:startColor endingColor:endColor];
+        [gradient drawInBezierPath:bezier angle:90.0];
+        [gradient release];
 
 		[lineColor set];
 		[bezier stroke];
@@ -398,9 +406,11 @@
 		NSRect gradientRect = rect;
 		gradientRect.origin.y += 1.0;
 		NSBezierPath *path = [NSBezierPath bezierPathWithRect:gradientRect];
-		[path linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.75 alpha:1.0]
-									  endColor:[NSColor colorWithCalibratedWhite:0.75 alpha:0.0]];
+        NSGradient *gradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.75 alpha:1.0] endingColor:[NSColor colorWithCalibratedWhite:0.75 alpha:0.0]];
+        [gradient drawInBezierPath:path angle:90.0];
+        [gradient release];
 	}
+    
 	[[NSColor colorWithCalibratedWhite:0.576 alpha:1.0] set];
 	[NSBezierPath strokeLineFromPoint:NSMakePoint(rect.origin.x, NSMinY(rect) + 0.5)
 							  toPoint:NSMakePoint(NSMaxX(rect), NSMinY(rect) + 0.5)];
