@@ -86,9 +86,3 @@
 - (NSRect)dragRectForTabCell:(PSMTabBarCell *)cell orientation:(PSMTabBarOrientation)orientation DEPRECATED_ATTRIBUTE;
 - (NSAttributedString *)attributedObjectCountValueForTabCell:(PSMTabBarCell *)cell DEPRECATED_ATTRIBUTE;
 @end
-
-@interface PSMTabBarControl (StyleAccessors)
-
-- (NSMutableArray *)cells;
-
-@end
