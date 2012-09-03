@@ -163,6 +163,13 @@
     if (toolbar && [toolbar isVisible]) {
 
         NSRect aRect = NSMakeRect(frame.origin.x + 0.5, frame.origin.y - 0.5, frame.size.width, frame.size.height);
+        
+        if ([cell isHighlighted] && [cell state] == NSOffState)
+            {
+            aRect.origin.y += 1;
+            aRect.size.height -= 1;
+            }
+        
         CGFloat radius = MIN(6.0, 0.5f * MIN(NSWidth(aRect), NSHeight(aRect)));
         NSRect rect = NSInsetRect(aRect, radius, radius);
         
