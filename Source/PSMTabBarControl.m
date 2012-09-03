@@ -398,21 +398,12 @@ static NSMutableDictionary *registeredStyleClasses;
 }
 
 - (void)setStyleNamed:(NSString *)name {
-	id <PSMTabStyle> newStyle;
-	if([name isEqualToString:@"Aqua"]) {
-		newStyle = [[PSMAquaTabStyle alloc] init];
-	} else if([name isEqualToString:@"Unified"]) {
-		newStyle = [[PSMUnifiedTabStyle alloc] init];
-	} else if([name isEqualToString:@"Adium"]) {
-		newStyle = [[PSMAdiumTabStyle alloc] init];
-	} else if([name isEqualToString:@"LiveChat"]) {
-		newStyle = [[PSMLiveChatTabStyle alloc] init];
-	} else if([name isEqualToString:@"Card"]) {
-		newStyle = [[PSMCardTabStyle alloc] init];
-	} else {
-		newStyle = [[PSMMetalTabStyle alloc] init];
-	}
 
+    Class <PSMTabStyle> styleClass = [[self class] registeredClassForStyleName:name];
+    if (styleClass == NULL)
+        return;
+
+    id <PSMTabStyle> newStyle = [[(Class)styleClass alloc] init];
 	[self setStyle:newStyle];
 	[newStyle release];
 }
