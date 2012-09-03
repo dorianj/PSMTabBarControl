@@ -120,7 +120,7 @@
             break;
     }
     
-}  // -closeButtonImageOfType:
+}
 
 #pragma mark -
 #pragma mark Determining Cell Size
@@ -277,10 +277,6 @@
     return NSIntegralRect(result);
 }
 
-- (CGFloat)tabCellHeight {
-	return kPSMTabBarControlHeight;
-}
-
 #pragma mark -
 #pragma mark Cell Values
 
@@ -311,11 +307,9 @@
 #pragma mark -
 #pragma mark Drawing
 
-- (void)drawBezelOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inView:(id)controlView {
+- (void)drawBezelOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl {
 
-    NSRect cellFrame = [cell frame];
-
-    PSMTabBarControl *tabBarControl = (PSMTabBarControl *)[cell controlView];
+    NSRect cellFrame = frame;
 
 	NSToolbar *toolbar = [[[cell controlView] window] toolbar];
 	BOOL showsBaselineSeparator = (toolbar && [toolbar respondsToSelector:@selector(showsBaselineSeparator)] && [toolbar showsBaselineSeparator]);
@@ -439,7 +433,7 @@
 	PSMTabBarCell *cell;
 	while((cell = [e nextObject])) {
 		if([tabBarControl isAnimating] || (![cell isInOverflowMenu] && NSIntersectsRect([cell frame], rect))) {
-			[cell drawWithFrame:[cell frame] inView:tabBarControl];
+			[cell drawWithFrame:[cell frame] inTabBarControl:tabBarControl];
 		}
 	}
 }

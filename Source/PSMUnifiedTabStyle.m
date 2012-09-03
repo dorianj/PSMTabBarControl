@@ -11,10 +11,6 @@
 #import "PSMTabBarControl.h"
 #import "NSBezierPath_AMShading.h"
 
-@interface PSMUnifiedTabStyle (Private)
-- (void)drawInteriorWithTabCell:(PSMTabBarCell *)cell inView:(NSView*)controlView;
-@end
-
 @implementation PSMUnifiedTabStyle
 
 @synthesize leftMarginForTabBarControl = _leftMargin;
@@ -124,13 +120,6 @@
             break;
     }
     
-}  // -closeButtonImageOfType:
-
-#pragma mark -
-#pragma mark Determining Cell Size
-
-- (CGFloat)tabCellHeight {
-	return kPSMTabBarControlHeight;
 }
 
 #pragma mark -
@@ -163,9 +152,9 @@
 #pragma mark -
 #pragma mark Drawing
 
--(void)drawBezelOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inView:(id)controlView
+-(void)drawBezelOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl
 {
-    NSWindow *window = [controlView window];
+    NSWindow *window = [tabBarControl window];
     NSToolbar *toolbar = [window toolbar];
     
 	NSBezierPath *bezier = [NSBezierPath bezierPath];
@@ -187,7 +176,7 @@
         cornerPoint = NSMakePoint(NSMinX(aRect), NSMinY(aRect));
         [bezier appendBezierPathWithPoints:&cornerPoint count:1];    
 
-        if ([[controlView window] isKeyWindow]) {
+        if ([[tabBarControl window] isKeyWindow]) {
             if ([cell state] == NSOnState) {
                 NSColor *startColor = [NSColor colorWithDeviceWhite:0.698 alpha:1.000];
                 NSColor *endColor = [NSColor colorWithDeviceWhite:0.663 alpha:1.000];
@@ -261,7 +250,7 @@
 			 toPoint:NSMakePoint(aRect.origin.x + 1.0, NSMaxY(aRect) - 2.5)];
 		}    
     }
-}  // -drawBezelOfTabCell:withFrame:inView:
+}
 
 - (void)drawBezelOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect {
 	//Draw for our whole bounds; it'll be automatically clipped to fit the appropriate drawing area
@@ -310,7 +299,7 @@
 	PSMTabBarCell *cell;
 	while((cell = [e nextObject])) {
 		if([tabBarControl isAnimating] || (![cell isInOverflowMenu] && NSIntersectsRect([cell frame], rect))) {
-			[cell drawWithFrame:[cell frame] inView:tabBarControl];
+			[cell drawWithFrame:[cell frame] inTabBarControl:tabBarControl];
 		}
 	}
 }

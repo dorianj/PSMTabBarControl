@@ -133,13 +133,6 @@
             break;
     }
     
-}  // -closeButtonImageOfType:
-
-#pragma mark -
-#pragma mark Determining Cell Size
-
-- (CGFloat)tabCellHeight {
-	return kPSMTabBarControlHeight;
 }
 
 #pragma mark -
@@ -197,7 +190,7 @@
         return NO;
     
     return YES;
-}  // -_shouldDrawHorizontalTopBorderLineInView:
+}
 
 - (NSRect)drawingRectForBounds:(NSRect)theRect ofTabCell:(PSMTabBarCell *)cell
 {
@@ -213,9 +206,9 @@
     }
     
     return resultRect;
-}  // -drawingRectForBounds:ofTabCell:
+}
 
-- (void)drawBezelOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inView:(id)controlView {
+- (void)drawBezelOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl {
 
 	NSRect cellFrame = [cell frame];
 	NSColor *lineColor = nil;
@@ -298,7 +291,7 @@
 			aRect.size.width += 1;
 
 			// frame
-            if ([self _shouldDrawHorizontalTopBorderLineInView:controlView]) {
+            if ([self _shouldDrawHorizontalTopBorderLineInView:tabBarControl]) {
                 [bezier moveToPoint:NSMakePoint(aRect.origin.x, aRect.origin.y)];
                 [bezier lineToPoint:NSMakePoint(aRect.origin.x + aRect.size.width, aRect.origin.y)];
             } else {
@@ -387,7 +380,7 @@
 	PSMTabBarCell *cell;
 	while((cell = [e nextObject])) {
 		if([tabBarControl isAnimating] || (![cell isInOverflowMenu] && NSIntersectsRect([cell frame], rect))) {
-			[cell drawWithFrame:[cell frame] inView:tabBarControl];
+			[cell drawWithFrame:[cell frame] inTabBarControl:tabBarControl];
 		}
 	}
 }
