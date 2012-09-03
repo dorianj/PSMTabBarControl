@@ -16,6 +16,8 @@
 
 @implementation PSMCardTabStyle
 
+@synthesize leftMarginForTabBarControl = _leftMargin;
+
 + (NSString *)name {
     return @"Card";
 }
