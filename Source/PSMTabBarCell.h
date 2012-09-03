@@ -57,13 +57,13 @@ typedef enum PSMCloseButtonImageType : NSUInteger
 @property (assign) NSTrackingRectTag cellTrackingTag;
 
 #pragma mark Creation/Destruction
-- (id)initWithControlView:(PSMTabBarControl *)controlView;
-- (id)initPlaceholderWithFrame:(NSRect) frame expanded:(BOOL) value inControlView:(PSMTabBarControl *)controlView;
+- (id)init;
+- (id)initPlaceholderWithFrame:(NSRect) frame expanded:(BOOL) value inTabBarControl:(PSMTabBarControl *)tabBarControl;
 - (void)dealloc;
 
 #pragma mark Accessors
-- (id)controlView;
-- (void)setControlView:(id)view;
+- (PSMTabBarControl *)controlView;
+- (void)setControlView:(PSMTabBarControl *)newControl;
 - (NSTrackingRectTag)cellTrackingTag;
 - (void)setCellTrackingTag:(NSTrackingRectTag)tag;
 - (CGFloat)width;
@@ -103,14 +103,15 @@ typedef enum PSMCloseButtonImageType : NSUInteger
 
 #pragma mark Drawing
 - (BOOL)shouldDrawCloseButton;
-- (void)drawWithFrame:(NSRect) cellFrame inView:(NSView *)controlView;
-- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
-- (void)drawLargeImageWithFrame:(NSRect)frame inView:(NSView *)controlView;
-- (void)drawIconWithFrame:(NSRect)frame inView:(NSView *)controlView;
-- (void)drawTitleWithFrame:(NSRect)frame inView:(NSView *)controlView;
-- (void)drawObjectCounterWithFrame:(NSRect)frame inView:(NSView *)controlView;
-- (void)drawIndicatorWithFrame:(NSRect)frame inView:(NSView *)controlView;
-- (void)drawCloseButtonWithFrame:(NSRect)frame inView:(NSView *)controlView;
+- (BOOL)shouldDrawObjectCounter;
+- (void)drawWithFrame:(NSRect) cellFrame inTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (void)drawInteriorWithFrame:(NSRect)cellFrame inTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (void)drawLargeImageWithFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (void)drawIconWithFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (void)drawTitleWithFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (void)drawObjectCounterWithFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (void)drawIndicatorWithFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (void)drawCloseButtonWithFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
 
 #pragma mark Tracking
 - (void)mouseEntered:(NSEvent *)theEvent;
@@ -122,13 +123,6 @@ typedef enum PSMCloseButtonImageType : NSUInteger
 #pragma mark Archiving
 - (void)encodeWithCoder:(NSCoder *)aCoder;
 - (id)initWithCoder:(NSCoder *)aDecoder;
-
-@end
-
-@interface PSMTabBarCell (DEPRECATED)
-
-- (NSRect)indicatorRectForFrame:(NSRect)cellFrame DEPRECATED_ATTRIBUTE;
-- (NSRect)closeButtonRectForFrame:(NSRect)cellFrame DEPRECATED_ATTRIBUTE;
 
 @end
 
