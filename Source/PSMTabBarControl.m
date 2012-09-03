@@ -1086,6 +1086,7 @@
 			//animate the add tab button
 			NSRect target = [_controller addButtonRect], frame = [_addTabButton frame];
 			frame.origin.x += (target.origin.x - frame.origin.x) * [animation currentProgress];
+			frame.origin.y += (target.origin.y - frame.origin.y) * [animation currentProgress]            ;
 			[_addTabButton setFrame:frame];
 		}
 	} else {
@@ -1115,9 +1116,7 @@
 
 		//set the frame for the add tab button
 		if(_showAddTabButton) {
-			NSRect frame = [_addTabButton frame];
-			frame.origin.x = [_controller addButtonRect].origin.x;
-			[_addTabButton setFrame:frame];
+            [_addTabButton setFrame:[_controller addButtonRect]];
 		}
 
 		[_animationTimer invalidate];
@@ -1855,23 +1854,6 @@
 	}
 	[self setTarget:self];
 	return self;
-}
-
-#pragma mark -
-#pragma mark IB Palette
-
-- (NSSize)minimumFrameSizeFromKnobPosition:(NSInteger)position {
-	return NSMakeSize(100.0, 22.0);
-}
-
-- (NSSize)maximumFrameSizeFromKnobPosition:(NSInteger)knobPosition {
-	return NSMakeSize(10000.0, 22.0);
-}
-
-- (void)placeView:(NSRect)newFrame {
-	// this is called any time the view is resized in IB
-	[self setFrame:newFrame];
-	[self update:NO];
 }
 
 #pragma mark -

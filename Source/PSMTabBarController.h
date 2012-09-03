@@ -10,17 +10,14 @@
 
 @class PSMTabBarControl, PSMTabBarCell;
 
-@interface PSMTabBarController : NSObject
-#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1060
-	<NSMenuDelegate>
-#endif
+@interface PSMTabBarController : NSObject <NSMenuDelegate>
 {
-	PSMTabBarControl						*_control;
-	NSMutableArray						*_cellTrackingRects;
-	NSMutableArray						*_closeButtonTrackingRects;
-	NSMutableArray						*_cellFrames;
-	NSRect									_addButtonRect;
-	NSMenu									*_overflowMenu;
+	PSMTabBarControl	*_control;
+	NSMutableArray		*_cellTrackingRects;
+	NSMutableArray		*_closeButtonTrackingRects;
+	NSMutableArray		*_cellFrames;
+	NSRect				_addButtonRect;
+	NSMenu				*_overflowMenu;
 }
 
 - (id)initWithTabBarControl:(PSMTabBarControl *)control;

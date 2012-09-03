@@ -204,8 +204,14 @@
 		_addButtonRect.origin.y = MARGIN_Y;
 		_addButtonRect.origin.x += [[cellWidths valueForKeyPath:@"@sum.floatValue"] doubleValue] + 2;
 	} else {
-		_addButtonRect.origin.x = 0;
-		_addButtonRect.origin.y = [[cellWidths lastObject] doubleValue];
+        if ([cells count] > 0) {
+            id <PSMTabStyle> style = [_control style];
+            _addButtonRect.origin.x = kPSMTabBarCellPadding;
+            _addButtonRect.origin.y = [[cellWidths lastObject] doubleValue] + NSHeight([self cellFrameAtIndex:[cells count]-1]);
+        } else {
+            _addButtonRect.origin.x = 0.0;
+            _addButtonRect.origin.y = 0.0;
+        }
 	}
 }
 

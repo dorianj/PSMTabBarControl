@@ -976,26 +976,8 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 }
 
 - (NSImage *)_closeButtonImageOfType:(PSMCloseButtonImageType)type {
-
-    switch (type) {
-        case PSMCloseButtonImageTypeStandard:
-            return [NSImage imageNamed:@"TabClose_Front"];
-        case PSMCloseButtonImageTypeRollover:
-            return [NSImage imageNamed:@"TabClose_Front_Rollover"];
-        case PSMCloseButtonImageTypePressed:
-            return [NSImage imageNamed:@"TabClose_Front_Pressed"];
-            
-        case PSMCloseButtonImageTypeDirty:
-            return [NSImage imageNamed:@"TabClose_Dirty"];
-        case PSMCloseButtonImageTypeDirtyRollover:
-            return [NSImage imageNamed:@"TabClose_Dirty_Rollover"];
-        case PSMCloseButtonImageTypeDirtyPressed:
-            return [NSImage imageNamed:@"TabClose_Dirty_Pressed"];
-            
-        default:
-            break;
-    }
-    
+        
+    // we currently have no default images
     return nil;
 }
 
