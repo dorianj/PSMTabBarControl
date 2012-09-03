@@ -30,7 +30,6 @@
 
 // cell specific parameters
 - (NSRect)dragRectForTabCell:(PSMTabBarCell *)cell orientation:(PSMTabBarOrientation)orientation;
-- (CGFloat)tabCellHeight;
 
 // cell values
 - (NSAttributedString *)attributedObjectCountValueForTabCell:(PSMTabBarCell *)cell;
@@ -46,6 +45,7 @@
 - (NSImage *)closeButtonImageOfType:(PSMCloseButtonImageType)type forTabCell:(PSMTabBarCell *)cell;
 
 // Determining Cell Size
+- (CGFloat)heightOfTabCellsForTabBarControl:(PSMTabBarControl *)tabBarControl;
 - (NSRect)drawingRectForBounds:(NSRect)theRect ofTabCell:(PSMTabBarCell *)cell;
 - (NSRect)titleRectForBounds:(NSRect)theRect ofTabCell:(PSMTabBarCell *)cell;
 - (NSRect)iconRectForBounds:(NSRect)theRect ofTabCell:(PSMTabBarCell *)cell;
@@ -61,14 +61,15 @@
 - (void)drawBezelOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect;
 - (void)drawInteriorOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect;
 
-- (void)drawBezelOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inView:controlView;
-- (void)drawInteriorOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inView:controlView;
-- (void)drawTitleOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inView:controlView;
-- (void)drawIconOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inView:controlView;
-- (void)drawLargeImageOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inView:controlView;
-- (void)drawIndicatorOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inView:controlView;
-- (void)drawObjectCounterOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inView:controlView;
-- (void)drawCloseButtonOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inView:controlView;
+- (void)drawTabBarCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (void)drawBezelOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (void)drawInteriorOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (void)drawTitleOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (void)drawIconOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;;
+- (void)drawLargeImageOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (void)drawIndicatorOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (void)drawObjectCounterOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (void)drawCloseButtonOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
 
 // Deprecated Stuff
 
@@ -80,6 +81,7 @@
 - (void)setOrientation:(PSMTabBarOrientation)value DEPRECATED_ATTRIBUTE;
 - (void)drawBackgroundInRect:(NSRect)rect DEPRECATED_ATTRIBUTE;
 - (void)drawTabBar:(PSMTabBarControl *)bar inRect:(NSRect)rect DEPRECATED_ATTRIBUTE;
+- (CGFloat)tabCellHeight;
 
 @end
 
