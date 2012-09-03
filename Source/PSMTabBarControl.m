@@ -19,6 +19,12 @@
 #import "PSMTabDragAssistant.h"
 #import "PSMTabBarController.h"
 
+@interface PSMTabBarControl (/*Private*/)
+
+- (CGFloat)_heightOfTabCells;
+
+@end
+
 @interface PSMTabBarControl (Private)
 
 // constructor/destructor
@@ -104,7 +110,7 @@
 	aRect.origin.x = [style leftMarginForTabBarControl];
 	aRect.origin.y = 0.0;
 	aRect.size.width = [self availableCellWidth];
-	aRect.size.height = [style tabCellHeight];
+	aRect.size.height = [self heightOfTabCells];
 	return aRect;
 }
 
@@ -537,12 +543,21 @@
 	_tearOffStyle = tearOffStyle;
 }
 
+-(CGFloat)heightOfTabCells
+{
+    if ([style respondsToSelector:@selector(heightOfTabCellsForTabBarControl:)])
+        return [style heightOfTabCellsForTabBarControl:self];
+    
+    return [self _heightOfTabCells];
+}
+
 #pragma mark -
 #pragma mark Functionality
 
 - (void)addTabViewItem:(NSTabViewItem *)item atIndex:(NSUInteger)index {
 	// create cell
-	PSMTabBarCell *cell = [[PSMTabBarCell alloc] initWithControlView:self];
+	PSMTabBarCell *cell = [[PSMTabBarCell alloc] init];
+    [cell setControlView:self];
 	NSRect cellRect = NSZeroRect, lastCellFrame = NSZeroRect;
 	if([_cells lastObject] != nil) {
 		lastCellFrame = [[_cells lastObject] frame];
@@ -1138,7 +1153,7 @@
 
 - (void)_positionOverflowMenu {
 	NSRect cellRect, frame = [self frame];
-	cellRect.size.height = [style tabCellHeight];
+	cellRect.size.height = [self heightOfTabCells];
 	cellRect.size.width = [style rightMarginForTabBarControl];
 
 	if([self orientation] == PSMTabBarHorizontalOrientation) {
@@ -1147,7 +1162,7 @@
 		[_overflowPopUpButton setAutoresizingMask:NSViewNotSizable | NSViewMinXMargin];
 	} else {
 		cellRect.origin.x = 0;
-		cellRect.origin.y = frame.size.height - [style tabCellHeight];
+		cellRect.origin.y = frame.size.height - [self heightOfTabCells];
 		cellRect.size.width = frame.size.width;
 		[_overflowPopUpButton setAutoresizingMask:NSViewNotSizable | NSViewMinXMargin | NSViewMinYMargin];
 	}
@@ -1273,7 +1288,7 @@
 		   [self delegate] && [[self delegate] respondsToSelector:@selector(tabView:shouldDragTabViewItem:fromTabBar:)] &&
 		   [[self delegate] tabView:tabView shouldDragTabViewItem:[cell representedObject] fromTabBar:self]) {
 			_didDrag = YES;
-			[[PSMTabDragAssistant sharedDragAssistant] startDraggingCell:cell fromTabBar:self withMouseDownEvent:[self lastMouseDownEvent]];
+			[[PSMTabDragAssistant sharedDragAssistant] startDraggingCell:cell fromTabBarControl:self withMouseDownEvent:[self lastMouseDownEvent]];
 		}
 	}
 }
@@ -1369,7 +1384,7 @@
 			return NSDragOperationNone;
 		}
 
-		[[PSMTabDragAssistant sharedDragAssistant] draggingEnteredTabBar:self atPoint:[self convertPoint:[sender draggingLocation] fromView:nil]];
+		[[PSMTabDragAssistant sharedDragAssistant] draggingEnteredTabBarControl:self atPoint:[self convertPoint:[sender draggingLocation] fromView:nil]];
 		return NSDragOperationMove;
 	}
 
@@ -1385,7 +1400,7 @@
 			return NSDragOperationNone;
 		}
 
-		[[PSMTabDragAssistant sharedDragAssistant] draggingUpdatedInTabBar:self atPoint:[self convertPoint:[sender draggingLocation] fromView:nil]];
+		[[PSMTabDragAssistant sharedDragAssistant] draggingUpdatedInTabBarControl:self atPoint:[self convertPoint:[sender draggingLocation] fromView:nil]];
 		return NSDragOperationMove;
 	} else if(cell) {
 		//something that was accepted by the delegate was dragged on
@@ -1433,7 +1448,7 @@
 	[_springTimer invalidate];
 	[_springTimer release]; _springTimer = nil;
 
-	[[PSMTabDragAssistant sharedDragAssistant] draggingExitedTabBar:self];
+	[[PSMTabDragAssistant sharedDragAssistant] draggingExitedTabBarControl:self];
 }
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender {
@@ -2017,5 +2032,13 @@
 
 	return hitTestResult;
 }
+
+#pragma mark -
+#pragma mark Private Methods
+
+- (CGFloat)_heightOfTabCells {
+    return kPSMTabBarControlHeight;
+}
+
 
 @end

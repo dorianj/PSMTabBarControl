@@ -169,6 +169,7 @@ enum {
 - (void)setAllowsScrubbing:(BOOL)value;
 - (PSMTabBarTearOffStyle)tearOffStyle;
 - (void)setTearOffStyle:(PSMTabBarTearOffStyle)tearOffStyle;
+- (CGFloat)heightOfTabCells;
 
 // accessors
 - (NSTabView *)tabView;
