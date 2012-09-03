@@ -29,8 +29,6 @@
 #define kPSMObjectCounterMinWidth           20.0
 #define kPSMObjectCounterRadius             7.0
 #define kPSMTabBarControlSourceListHeight   28
-#define kPSMTabBarLargeImageHeight          kPSMTabBarControlSourceListHeight - 4
-#define kPSMTabBarLargeImageWidth           kPSMTabBarLargeImageHeight
 
 // Value used in _currentStep to indicate that resizing operation is not in progress
 #define kPSMIsNotBeingResized				-1
