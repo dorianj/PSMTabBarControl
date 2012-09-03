@@ -385,6 +385,37 @@
     return NSIntegralRect(result);
 }
 
+-(NSRect)largeImageRectForBounds:(NSRect)theRect ofTabCell:(PSMTabBarCell *)cell
+{
+    if ([cell hasLargeImage] == NO) {
+        return NSZeroRect;
+    }
+    
+    // calculate rect
+    NSRect drawingRect = [cell drawingRectForBounds:theRect];
+
+    NSRect constrainedDrawingRect = drawingRect;
+            
+    NSImage *image = [[[cell representedObject] identifier] largeImage];
+    if (!image)
+        return NSZeroRect;
+    
+    NSSize scaledImageSize = [cell scaleImageWithSize:[image size] toFitInSize:NSMakeSize(constrainedDrawingRect.size.width, constrainedDrawingRect.size.height) scalingType:NSImageScaleProportionallyUpOrDown];
+    
+    NSRect result = NSMakeRect(constrainedDrawingRect.origin.x,
+                                         constrainedDrawingRect.origin.y - ((constrainedDrawingRect.size.height - scaledImageSize.height) / 2),
+                                         scaledImageSize.width, scaledImageSize.height);
+
+    if(scaledImageSize.width < kPSMTabBarIconWidth) {
+        result.origin.x += (kPSMTabBarIconWidth - scaledImageSize.width) / 2.0;
+    }
+    if(scaledImageSize.height < constrainedDrawingRect.size.height) {
+        result.origin.y += (constrainedDrawingRect.size.height - scaledImageSize.height) / 2.0;
+    }
+        
+    return result;    
+}  // -largeImageRectForBounds:ofTabCell:
+
 #pragma mark -
 #pragma mark Cell Drawing
 

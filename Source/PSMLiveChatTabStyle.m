@@ -133,6 +133,12 @@
     if (!icon)
         return NSZeroRect;
 
+    PSMTabBarControl *tabBarControl = [cell controlView];
+    PSMTabBarOrientation orientation = [tabBarControl orientation];
+    
+    if ([cell hasLargeImage] && orientation == PSMTabBarVerticalOrientation)
+        return NSZeroRect;
+        
     // calculate rect
     NSRect drawingRect = [cell drawingRectForBounds:theRect];
                 
@@ -159,13 +165,19 @@
     NSRect drawingRect = [cell drawingRectForBounds:theRect];
 
     NSRect constrainedDrawingRect = drawingRect;
-        
-    NSRect iconRect = [cell iconRectForBounds:theRect];
-    if (!NSEqualRects(iconRect, NSZeroRect)) {
-        constrainedDrawingRect.origin.x += NSWidth(iconRect)  + kPSMTabBarCellPadding;
-        constrainedDrawingRect.size.width -= NSWidth(iconRect) + kPSMTabBarCellPadding;
+
+    NSRect largeImageRect = [cell largeImageRectForBounds:theRect];
+    if (!NSEqualRects(largeImageRect, NSZeroRect)) {
+        constrainedDrawingRect.origin.x += NSWidth(largeImageRect)  + kPSMTabBarCellPadding;
+        constrainedDrawingRect.size.width -= NSWidth(largeImageRect) + kPSMTabBarCellPadding;
+    } else {
+        NSRect iconRect = [cell iconRectForBounds:theRect];
+        if (!NSEqualRects(iconRect, NSZeroRect)) {
+            constrainedDrawingRect.origin.x += NSWidth(iconRect)  + kPSMTabBarCellPadding;
+            constrainedDrawingRect.size.width -= NSWidth(iconRect) + kPSMTabBarCellPadding;
+        }
     }
-        
+            
     NSRect indicatorRect = [cell indicatorRectForBounds:theRect];
     if (!NSEqualRects(indicatorRect, NSZeroRect)) {
         constrainedDrawingRect.size.width -= NSWidth(indicatorRect) + kPSMTabBarCellPadding;
@@ -275,6 +287,37 @@
 
     return NSIntegralRect(result);
 }
+
+-(NSRect)largeImageRectForBounds:(NSRect)theRect ofTabCell:(PSMTabBarCell *)cell
+{
+    if ([cell hasLargeImage] == NO) {
+        return NSZeroRect;
+    }
+    
+    // calculate rect
+    NSRect drawingRect = [cell drawingRectForBounds:theRect];
+
+    NSRect constrainedDrawingRect = drawingRect;
+            
+    NSImage *image = [[[cell representedObject] identifier] largeImage];
+    if (!image)
+        return NSZeroRect;
+    
+    NSSize scaledImageSize = [cell scaleImageWithSize:[image size] toFitInSize:NSMakeSize(constrainedDrawingRect.size.width, constrainedDrawingRect.size.height) scalingType:NSImageScaleProportionallyUpOrDown];
+    
+    NSRect result = NSMakeRect(constrainedDrawingRect.origin.x,
+                                         constrainedDrawingRect.origin.y - ((constrainedDrawingRect.size.height - scaledImageSize.height) / 2),
+                                         scaledImageSize.width, scaledImageSize.height);
+
+    if(scaledImageSize.width < kPSMTabBarIconWidth) {
+        result.origin.x += (kPSMTabBarIconWidth - scaledImageSize.width) / 2.0;
+    }
+    if(scaledImageSize.height < constrainedDrawingRect.size.height) {
+        result.origin.y += (constrainedDrawingRect.size.height - scaledImageSize.height) / 2.0;
+    }
+        
+    return result;    
+}  // -largeImageRectForBounds:ofTabCell:
 
 #pragma mark -
 #pragma mark Cell Values
