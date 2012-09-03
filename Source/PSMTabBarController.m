@@ -205,7 +205,6 @@
 		_addButtonRect.origin.x += [[cellWidths valueForKeyPath:@"@sum.floatValue"] doubleValue] + 2;
 	} else {
         if ([cells count] > 0) {
-            id <PSMTabStyle> style = [_control style];
             _addButtonRect.origin.x = kPSMTabBarCellPadding;
             _addButtonRect.origin.y = [[cellWidths lastObject] doubleValue] + NSHeight([self cellFrameAtIndex:[cells count]-1]);
         } else {
