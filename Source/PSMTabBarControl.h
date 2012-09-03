@@ -123,12 +123,29 @@ enum {
 	IBOutlet id<PSMTabBarControlDelegate>	delegate;
 }
 
-// control characteristics
+#pragma mark Control Characteristics
+
 + (NSBundle *)bundle;
 - (CGFloat)availableCellWidth;
 - (NSRect)genericCellRect;
 
-// control configuration
+#pragma mark Style Class Registry
+
++ (void)registerDefaultTabStyleClasses;
++ (void)registerTabStyleClass:(Class <PSMTabStyle>)aStyleClass;
++ (void)unregisterTabStyleClass:(Class <PSMTabStyle>)aStyleClass;
++ (NSArray *)registeredTabStyleClasses;
++ (Class <PSMTabStyle>)registeredClassForStyleName:(NSString *)name;
+
+#pragma mark Cell Management (KVC Compliant)
+
+- (NSArray *)cells;
+- (void)addCell:(PSMTabBarCell *)aCell;
+- (void)insertCell:(PSMTabBarCell *)aCell atIndex:(NSUInteger)index;
+- (void)replaceCellAtIndex:(NSUInteger)index withCell:(PSMTabBarCell *)aCell;
+
+#pragma mark Control Configuration
+
 - (PSMTabBarOrientation)orientation;
 - (void)setOrientation:(PSMTabBarOrientation)value;
 - (BOOL)canCloseOnlyTab;
@@ -169,7 +186,8 @@ enum {
 - (void)setTearOffStyle:(PSMTabBarTearOffStyle)tearOffStyle;
 - (CGFloat)heightOfTabCells;
 
-// accessors
+#pragma mark Accessors 
+
 - (NSTabView *)tabView;
 - (void)setTabView:(NSTabView *)view;
 - (id<PSMTabBarControlDelegate>)delegate;
@@ -177,16 +195,19 @@ enum {
 - (id)partnerView;
 - (void)setPartnerView:(id)view;
 
-// the buttons
+#pragma mark The Buttons
+
 - (PSMRolloverButton *)addTabButton;
 - (PSMOverflowPopUpButton *)overflowPopUpButton;
 
-// tab information
+#pragma mark Tab Information
+
 - (NSMutableArray *)representedTabViewItems;
 - (NSInteger)numberOfVisibleTabs;
 - (PSMTabBarCell *)lastVisibleTab;
 
-// special effects
+#pragma mark Special Effects
+
 - (void)hideTabBar:(BOOL) hide animate:(BOOL)animate;
 - (BOOL)isTabBarHidden;
 - (BOOL)isAnimating;

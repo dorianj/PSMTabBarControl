@@ -316,11 +316,58 @@ static NSMutableDictionary *registeredStyleClasses;
 }
 
 #pragma mark -
-#pragma mark Accessors
+#pragma mark Cell Management (KVC Compliant)
 
-- (NSMutableArray *)cells {
-	return _cells;
+- (NSArray *)cells {
+    return [[_cells copy] autorelease];
 }
+
+// ---- KVC primitives ----
+
+- (void)insertObject:(PSMTabBarCell *)aCell inCellsAtIndex:(NSUInteger)cellIndex {
+    [_cells insertObject:aCell atIndex:cellIndex];
+}
+
+- (void)insertCells:(NSArray *)aCellArray atIndexes:(NSIndexSet *)indexes {
+    [_cells insertObjects:aCellArray atIndexes:indexes];
+}
+
+-(void)removeObjectFromCellsAtIndex:(NSUInteger)anIndex {
+    [_cells removeObjectAtIndex:anIndex];
+}
+
+-(void)removeCellsAtIndexes:(NSIndexSet *)indexes {
+    [_cells removeObjectsAtIndexes:indexes];
+}
+
+-(void)replaceObjectInCellsAtIndex:(NSUInteger)anIndex withObject:(PSMTabBarCell *)aCell {
+    [_cells replaceObjectAtIndex:anIndex withObject:aCell];
+}
+
+-(void)replaceCellsAtIndexes:(NSIndexSet *)indexes withCells:(NSArray *)cellArray {
+    [_cells replaceObjectsAtIndexes:indexes withObjects:cellArray];
+}
+
+// ---- Highlevel methods using KVC compliant primitives ----
+
+- (void)addCell:(PSMTabBarCell *)aCell {
+    [self insertObject:aCell inCellsAtIndex:[[self cells] count]];
+}
+
+- (void)insertCell:(PSMTabBarCell *)aCell atIndex:(NSUInteger)index {
+    [self insertObject:aCell inCellsAtIndex:index];
+}
+
+- (void)removeCellAtIndex:(NSUInteger)index {
+    [self removeObjectFromCellsAtIndex:index];
+}
+
+- (void)replaceCellAtIndex:(NSUInteger)index withCell:(PSMTabBarCell *)aCell {
+    [self replaceObjectInCellsAtIndex:index withObject:aCell];
+}
+
+#pragma mark -
+#pragma mark Accessors
 
 - (NSEvent *)lastMouseDownEvent {
 	return _lastMouseDownEvent;
