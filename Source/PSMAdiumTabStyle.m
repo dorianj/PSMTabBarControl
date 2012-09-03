@@ -133,11 +133,13 @@
 #pragma mark -
 #pragma mark Drag Support
 
-- (NSRect)dragRectForTabCell:(PSMTabBarCell *)cell orientation:(PSMTabBarOrientation)tabOrientation {
+- (NSRect)dragRectForTabCell:(PSMTabBarCell *)cell ofTabBarControl:(PSMTabBarControl *)tabBarControl {
 	NSRect dragRect = [cell frame];
 
+    PSMTabBarOrientation orientation = [tabBarControl orientation];
+
 	if([cell tabState] & PSMTab_SelectedMask) {
-		if(tabOrientation == PSMTabBarHorizontalOrientation) {
+		if(orientation == PSMTabBarHorizontalOrientation) {
 			dragRect.size.width++;
 			dragRect.size.height -= 2.0;
 		}
@@ -526,38 +528,6 @@
 
 	[shadow release];
 	[NSGraphicsContext restoreGraphicsState];
-}
-
-- (void)drawInteriorOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect {
-
-	// no tab view == not connected
-	if(![tabBarControl tabView]) {
-		NSRect labelRect = rect;
-		labelRect.size.height -= 4.0;
-		labelRect.origin.y += 4.0;
-		NSMutableAttributedString *attrStr;
-		NSString *contents = @"PSMTabBarControl";
-		attrStr = [[[NSMutableAttributedString alloc] initWithString:contents] autorelease];
-		NSRange range = NSMakeRange(0, [contents length]);
-		[attrStr addAttribute:NSFontAttributeName value:[NSFont systemFontOfSize:11.0] range:range];
-		NSMutableParagraphStyle *centeredParagraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-        [centeredParagraphStyle setAlignment:NSCenterTextAlignment];
-
-		[attrStr addAttribute:NSParagraphStyleAttributeName value:centeredParagraphStyle range:range];
-		[attrStr drawInRect:labelRect];
-        
-        [centeredParagraphStyle release];
-		return;
-	}
-
-	// draw cells
-	NSEnumerator *e = [[tabBarControl cells] objectEnumerator];
-	PSMTabBarCell *cell;
-	while((cell = [e nextObject])) {
-		if([tabBarControl isAnimating] || (![cell isInOverflowMenu] && NSIntersectsRect([cell frame], rect))) {
-			[cell drawWithFrame:[cell frame] inTabBarControl:tabBarControl];
-		}
-	}
 }
 
 - (void)drawBezelOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl {

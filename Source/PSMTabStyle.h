@@ -29,7 +29,7 @@
 - (NSImage *)addTabButtonRolloverImage;
 
 // cell specific parameters
-- (NSRect)dragRectForTabCell:(PSMTabBarCell *)cell orientation:(PSMTabBarOrientation)orientation;
+- (NSRect)dragRectForTabCell:(PSMTabBarCell *)cell ofTabBarControl:(PSMTabBarControl *)tabBarControl;
 
 // cell values
 - (NSAttributedString *)attributedObjectCountValueForTabCell:(PSMTabBarCell *)cell;
@@ -81,7 +81,8 @@
 - (void)setOrientation:(PSMTabBarOrientation)value DEPRECATED_ATTRIBUTE;
 - (void)drawBackgroundInRect:(NSRect)rect DEPRECATED_ATTRIBUTE;
 - (void)drawTabBar:(PSMTabBarControl *)bar inRect:(NSRect)rect DEPRECATED_ATTRIBUTE;
-- (CGFloat)tabCellHeight;
+- (CGFloat)tabCellHeight DEPRECATED_ATTRIBUTE;
+- (NSRect)dragRectForTabCell:(PSMTabBarCell *)cell orientation:(PSMTabBarOrientation)orientation DEPRECATED_ATTRIBUTE;
 
 @end
 

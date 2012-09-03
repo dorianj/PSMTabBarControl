@@ -116,7 +116,7 @@
 #pragma mark -
 #pragma mark Drag Support
 
-- (NSRect)dragRectForTabCell:(PSMTabBarCell *)cell orientation:(PSMTabBarOrientation)orientation {
+- (NSRect)dragRectForTabCell:(PSMTabBarCell *)cell ofTabBarControl:(PSMTabBarControl *)tabBarControl {
 	return [cell frame];
 }
 
@@ -241,38 +241,6 @@
 		rect = [tabBarControl bounds];
 
 		[aquaTabBg drawInRect:rect fromRect:NSMakeRect(0.0, 0.0, 1.0, 22.0) operation:NSCompositeSourceOver fraction:1.0];
-	}
-}
-
-- (void)drawInteriorOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect {
-
-	// no tab view == not connected
-	if(![tabBarControl tabView]) {
-		NSRect labelRect = rect;
-		labelRect.size.height -= 4.0;
-		labelRect.origin.y += 4.0;
-		NSMutableAttributedString *attrStr;
-		NSString *contents = @"PSMTabBarControl";
-		attrStr = [[[NSMutableAttributedString alloc] initWithString:contents] autorelease];
-		NSRange range = NSMakeRange(0, [contents length]);
-		[attrStr addAttribute:NSFontAttributeName value:[NSFont systemFontOfSize:11.0] range:range];
-		NSMutableParagraphStyle *centeredParagraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-        [centeredParagraphStyle setAlignment:NSCenterTextAlignment];
-
-		[attrStr addAttribute:NSParagraphStyleAttributeName value:centeredParagraphStyle range:range];
-		[attrStr drawInRect:labelRect];
-        
-        [centeredParagraphStyle release];
-		return;
-	}
-
-	// Draw cells
-	NSEnumerator *e = [[tabBarControl cells] objectEnumerator];
-	PSMTabBarCell *cell;
-	while((cell = [e nextObject])) {
-		if([tabBarControl isAnimating] || (![cell isInOverflowMenu] && NSIntersectsRect([cell frame], rect))) {
-			[cell drawWithFrame:[cell frame] inTabBarControl:tabBarControl];
-		}
 	}
 }
 

@@ -22,6 +22,9 @@
 @interface PSMTabBarControl (/*Private*/)
 
 - (CGFloat)_heightOfTabCells;
+- (void)_drawTabBarControlInRect:(NSRect)aRect;
+- (void)_drawBezelInRect:(NSRect)rect;
+- (void)_drawInteriorInRect:(NSRect)rect;
 
 @end
 
@@ -954,12 +957,24 @@
     if ([style respondsToSelector:@selector(drawTabBarControl:inRect:)]) {
         [style drawTabBarControl:self inRect:rect];
     } else {
-    
-        if ([style respondsToSelector:@selector(drawBezelOfTabBarControl:inRect:)])
-            [style drawBezelOfTabBarControl:self inRect:rect];
+        [self _drawTabBarControlInRect:rect];
+    }
+}
 
-        if ([style respondsToSelector:@selector(drawInteriorOfTabBarControl:inRect:)])
-            [style drawInteriorOfTabBarControl:self inRect:rect];
+- (void)drawBezelInRect:(NSRect)rect {
+
+    if ([style respondsToSelector:@selector(drawBezelOfTabBarControl:inRect:)]) {
+        [style drawBezelOfTabBarControl:self inRect:rect];
+    } else {
+        [self _drawBezelInRect:rect];
+    }
+}
+
+- (void)drawInteriorInRect:(NSRect)rect {
+    if ([style respondsToSelector:@selector(drawInteriorOfTabBarControl:inRect:)]) {
+        [style drawInteriorOfTabBarControl:self inRect:rect];
+    } else {
+        [self _drawInteriorInRect:rect];
     }
 }
 
@@ -2040,5 +2055,46 @@
     return kPSMTabBarControlHeight;
 }
 
+- (void)_drawTabBarControlInRect:(NSRect)aRect {
+
+    [self drawBezelInRect:aRect];
+    [self drawInteriorInRect:aRect];
+}
+
+- (void)_drawBezelInRect:(NSRect)rect {
+    // default implementation draws nothing
+}
+
+- (void)_drawInteriorInRect:(NSRect)rect {
+
+	// no tab view == not connected
+	if(![self tabView]) {
+		NSRect labelRect = rect;
+		labelRect.size.height -= 4.0;
+		labelRect.origin.y += 4.0;
+		NSMutableAttributedString *attrStr;
+		NSString *contents = @"PSMTabBarControl";
+		attrStr = [[[NSMutableAttributedString alloc] initWithString:contents] autorelease];
+		NSRange range = NSMakeRange(0, [contents length]);
+		[attrStr addAttribute:NSFontAttributeName value:[NSFont systemFontOfSize:11.0] range:range];
+		NSMutableParagraphStyle *centeredParagraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        [centeredParagraphStyle setAlignment:NSCenterTextAlignment];
+        
+		[attrStr addAttribute:NSParagraphStyleAttributeName value:centeredParagraphStyle range:range];
+		[attrStr drawInRect:labelRect];
+        
+        [centeredParagraphStyle release];
+		return;
+	}
+
+	// draw cells
+	NSEnumerator *e = [[self cells] objectEnumerator];
+	PSMTabBarCell *cell;
+	while((cell = [e nextObject])) {
+		if([self isAnimating] || (![cell isInOverflowMenu] && NSIntersectsRect([cell frame], rect))) {
+			[cell drawWithFrame:[cell frame] inTabBarControl:self];
+		}
+	}
+}
 
 @end

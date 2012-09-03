@@ -557,8 +557,7 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 #pragma mark Drag Support
 
 - (NSImage *)dragImage {
-	NSRect cellFrame = [(id < PSMTabStyle >)[[self controlView] style] dragRectForTabCell:self orientation:(PSMTabBarOrientation)[[self controlView] orientation]];
-	//NSRect cellFrame = [self frame];
+	NSRect cellFrame = [(id < PSMTabStyle >)[[self controlView] style] dragRectForTabCell:self ofTabBarControl:[self controlView]];
 
     PSMTabBarControl *tabBarControl = [self controlView];
 
