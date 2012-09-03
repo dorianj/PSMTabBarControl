@@ -279,7 +279,7 @@
 #pragma mark -
 #pragma mark Cell Values
 
-- (NSAttributedString *)attributedObjectCountValueForTabCell:(PSMTabBarCell *)cell {
+- (NSAttributedString *)attributedObjectCountStringValueForTabCell:(PSMTabBarCell *)cell {
 	NSString *contents = [NSString stringWithFormat:@"%lu", (unsigned long)[cell count]];
 	return [[[NSMutableAttributedString alloc] initWithString:contents attributes:_objectCountStringAttributes] autorelease];
 }

@@ -21,8 +21,6 @@
 	NSImage				*_addTabButtonPressedImage;
 	NSImage				*_addTabButtonRolloverImage;
 
-	NSDictionary		*_objectCountStringAttributes;
-
 	CGFloat				_leftMargin;
 }
 

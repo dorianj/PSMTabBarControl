@@ -37,10 +37,6 @@
 		[self loadImages];
 		_drawsUnified = NO;
 		_drawsRight = NO;
-
-		_objectCountStringAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[[NSFontManager sharedFontManager] convertFont:[NSFont fontWithName:@"Helvetica" size:11.0] toHaveTrait:NSBoldFontMask], NSFontAttributeName,
-										[[NSColor whiteColor] colorWithAlphaComponent:0.85], NSForegroundColorAttributeName,
-										nil, nil];
 	}
 	return self;
 }
@@ -75,8 +71,6 @@
 	[_addTabButtonRolloverImage release];
 
 	[_gradientImage release];
-
-	[_objectCountStringAttributes release];
 
 	[super dealloc];
 }
@@ -389,36 +383,6 @@
     result.origin.y = ceil(constrainedDrawingRect.origin.y+(constrainedDrawingRect.size.height-result.size.height)/2);
                 
     return NSIntegralRect(result);
-}
-
-
-#pragma mark -
-#pragma mark Cell Values
-
-- (NSAttributedString *)attributedObjectCountValueForTabCell:(PSMTabBarCell *)cell {
-	NSString *contents = [NSString stringWithFormat:@"%lu", (unsigned long)[cell count]];
-	return [[[NSMutableAttributedString alloc] initWithString:contents attributes:_objectCountStringAttributes] autorelease];
-}
-
-- (NSAttributedString *)attributedStringValueForTabCell:(PSMTabBarCell *)cell {
-	NSMutableAttributedString *attrStr;
-	NSString *contents = [cell stringValue];
-	attrStr = [[[NSMutableAttributedString alloc] initWithString:contents] autorelease];
-	NSRange range = NSMakeRange(0, [contents length]);
-
-	// Add font attribute
-	[attrStr addAttribute:NSFontAttributeName value:[NSFont systemFontOfSize:11.0] range:range];
-	[attrStr addAttribute:NSForegroundColorAttributeName value:[NSColor controlTextColor] range:range];
-
-	// Paragraph Style for Truncating Long Text
-	static NSMutableParagraphStyle *TruncatingTailParagraphStyle = nil;
-	if(!TruncatingTailParagraphStyle) {
-		TruncatingTailParagraphStyle = [[[NSParagraphStyle defaultParagraphStyle] mutableCopy] retain];
-		[TruncatingTailParagraphStyle setLineBreakMode:NSLineBreakByTruncatingTail];
-	}
-	[attrStr addAttribute:NSParagraphStyleAttributeName value:TruncatingTailParagraphStyle range:range];
-
-	return attrStr;
 }
 
 #pragma mark -

@@ -22,8 +22,6 @@
 	NSImage					*_addTabButtonRolloverImage;
 	NSImage					*_gradientImage;
 
-	NSDictionary            *_objectCountStringAttributes;
-
 	BOOL					_drawsUnified;
 	BOOL					_drawsRight;
 }
