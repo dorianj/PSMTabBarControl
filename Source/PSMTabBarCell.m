@@ -812,22 +812,29 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
     
     // calculate rect
     NSRect drawingRect = [self drawingRectForBounds:theRect];
-    
+
+    NSRect constrainedDrawingRect = drawingRect;
+
+    NSRect closeButtonRect = [self closeButtonRectForBounds:theRect];
+    if (!NSEqualRects(closeButtonRect, NSZeroRect)) {
+        constrainedDrawingRect.origin.x += NSWidth(closeButtonRect) + kPSMTabBarCellPadding;
+        }
+            
     NSImage *image = [[[self representedObject] identifier] largeImage];
     if (!image)
         return NSZeroRect;
     
-    NSSize scaledImageSize = [self scaleImageWithSize:[image size] toFitInSize:NSMakeSize(kPSMTabBarLargeImageWidth, drawingRect.size.height) scalingType:NSImageScaleProportionallyUpOrDown];
+    NSSize scaledImageSize = [self scaleImageWithSize:[image size] toFitInSize:NSMakeSize(constrainedDrawingRect.size.width, constrainedDrawingRect.size.height) scalingType:NSImageScaleProportionallyUpOrDown];
     
-    NSRect result = NSMakeRect(drawingRect.origin.x,
-                                         drawingRect.origin.y - ((drawingRect.size.height - scaledImageSize.height) / 2),
+    NSRect result = NSMakeRect(constrainedDrawingRect.origin.x,
+                                         constrainedDrawingRect.origin.y - ((constrainedDrawingRect.size.height - scaledImageSize.height) / 2),
                                          scaledImageSize.width, scaledImageSize.height);
 
     if(scaledImageSize.width < kPSMTabBarIconWidth) {
         result.origin.x += (kPSMTabBarIconWidth - scaledImageSize.width) / 2.0;
     }
-    if(scaledImageSize.height < drawingRect.size.height) {
-        result.origin.y += (drawingRect.size.height - scaledImageSize.height) / 2.0;
+    if(scaledImageSize.height < constrainedDrawingRect.size.height) {
+        result.origin.y += (constrainedDrawingRect.size.height - scaledImageSize.height) / 2.0;
     }
         
     return result;
@@ -1089,7 +1096,7 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
     [NSGraphicsContext saveGraphicsState];
             
     //Create Rounding.
-    CGFloat userIconRoundingRadius = (kPSMTabBarLargeImageWidth / 4.0);
+    CGFloat userIconRoundingRadius = (imageDrawingRect.size.width / 4.0);
     if(userIconRoundingRadius > 3.0) {
         userIconRoundingRadius = 3.0;
     }
