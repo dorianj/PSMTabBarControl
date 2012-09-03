@@ -236,7 +236,7 @@
     id <PSMTabStyle> tabStyle = [[self controlView] style];
     
     if ([tabStyle respondsToSelector:@selector(closeButtonImageOfType:forTabCell:)]) {
-        return [tabStyle closeButtonImageOfType:PSMCloseButtonImageTypeStandard forTabCell:self];
+        return [tabStyle closeButtonImageOfType:type forTabCell:self];
     // use standard image
     } else {
         return [self _closeButtonImageOfType:type];
@@ -1135,7 +1135,7 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
     
     // ask style for image
     NSImage *image = nil;
-    image = [self closeButtonImageOfType:PSMCloseButtonImageTypeStandard];
+    image = [self closeButtonImageOfType:imageType];
     if (!image)
         return;
         
