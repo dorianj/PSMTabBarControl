@@ -232,11 +232,11 @@ static NSMutableDictionary *registeredStyleClasses;
 	//unbind all the items to prevent crashing
 	//not sure if this is necessary or not
 	// http://code.google.com/p/maccode/issues/detail?id=35
-	NSEnumerator *enumerator = [[[_cells copy] autorelease] objectEnumerator];
-	PSMTabBarCell *nextCell;
-	while((nextCell = [enumerator nextObject])) {
-		[self removeTabForCell:nextCell];
+    NSArray *tmpCellArray = [_cells copy];
+    for (PSMTabBarCell *aCell in tmpCellArray) {
+		[self removeTabForCell:aCell];
 	}
+    [tmpCellArray release];
 
 	[_overflowPopUpButton release];
 	[_cells release];
@@ -254,10 +254,7 @@ static NSMutableDictionary *registeredStyleClasses;
 
 - (void)awakeFromNib {
 	// build cells from existing tab view items
-	NSArray *existingItems = [tabView tabViewItems];
-	NSEnumerator *e = [existingItems objectEnumerator];
-	NSTabViewItem *item;
-	while((item = [e nextObject])) {
+    for (NSTabViewItem *item in [tabView tabViewItems]) {
 		if(![[self representedTabViewItems] containsObject:item]) {
 			[self addTabViewItem:item];
 		}
@@ -711,9 +708,8 @@ static NSMutableDictionary *registeredStyleClasses;
 	// did the tab's identifier change?
 	if([keyPath isEqualToString:@"identifier"]) {
         id oldIdentifier = [change objectForKey: NSKeyValueChangeOldKey];
-		NSEnumerator *e = [_cells objectEnumerator];
-		PSMTabBarCell *cell;
-		while((cell = [e nextObject])) {
+        
+        for (PSMTabBarCell *cell in _cells) {
 			if([cell representedObject] == object) {
                 // unbind the old value first
                 NSArray *selectors = [NSArray arrayWithObjects: @"isProcessing", @"icon", @"objectCount", @"countColor", @"largeImage", @"isEdited", nil];
@@ -1358,13 +1354,12 @@ static NSMutableDictionary *registeredStyleClasses;
 			if((NSMouseInRect(mousePt, iconRect, [self isFlipped])) && ![self disableTabClose] && ![cell isCloseButtonSuppressed] && [mouseDownCell closeButtonPressed]) {
 				if(([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask) != 0) {
 					//If the user is holding Option, close all other tabs
-					NSEnumerator    *enumerator = [[[[self cells] copy] autorelease] objectEnumerator];
-					PSMTabBarCell   *otherCell;
-
-					while((otherCell = [enumerator nextObject])) {
+                    NSArray *tmpCellArray = [[self cells] copy];
+                    for (PSMTabBarCell *otherCell in tmpCellArray) {
 						if(otherCell != cell) {
 							[self performSelector:@selector(closeTabClick:) withObject:otherCell];
 						}
+                    [tmpCellArray release], tmpCellArray = nil;
 					}
 
 					//Fix the close button for the clicked tab not to be pressed
@@ -1582,9 +1577,7 @@ static NSMutableDictionary *registeredStyleClasses;
 
 	// trying to address the drawing artifacts for the progress indicators - hackery follows
 	// this one fixes the "blanking" effect when the control hides and shows itself
-	NSEnumerator *e = [_cells objectEnumerator];
-	PSMTabBarCell *cell;
-	while((cell = [e nextObject])) {
+    for (PSMTabBarCell *cell in _cells) {
 		[[cell indicator] stopAnimation:self];
 
 		[[cell indicator] performSelector:@selector(startAnimation:)
@@ -1600,18 +1593,14 @@ static NSMutableDictionary *registeredStyleClasses;
 }
 
 - (void)viewWillStartLiveResize {
-	NSEnumerator *e = [_cells objectEnumerator];
-	PSMTabBarCell *cell;
-	while((cell = [e nextObject])) {
+    for (PSMTabBarCell *cell in _cells) {
 		[[cell indicator] stopAnimation:self];
 	}
 	[self setNeedsDisplay:YES];
 }
 
 -(void)viewDidEndLiveResize {
-	NSEnumerator *e = [_cells objectEnumerator];
-	PSMTabBarCell *cell;
-	while((cell = [e nextObject])) {
+    for (PSMTabBarCell *cell in _cells) {
 		[[cell indicator] startAnimation:self];
 	}
 
@@ -1763,9 +1752,8 @@ static NSMutableDictionary *registeredStyleClasses;
 - (void)tabViewDidChangeNumberOfTabViewItems:(NSTabView *)aTabView {
 	NSArray *tabItems = [tabView tabViewItems];
 	// go through cells, remove any whose representedObjects are not in [tabView tabViewItems]
-	NSEnumerator *e = [[[_cells copy] autorelease] objectEnumerator];
-	PSMTabBarCell *cell;
-	while((cell = [e nextObject])) {
+    NSArray *tmpCellArray = [_cells copy];
+    for (PSMTabBarCell *cell in tmpCellArray) {
 		//remove the observer binding
 		if([cell representedObject] && ![tabItems containsObject:[cell representedObject]]) {
 			if([[self delegate] respondsToSelector:@selector(tabView:didCloseTabViewItem:)]) {
@@ -1775,14 +1763,12 @@ static NSMutableDictionary *registeredStyleClasses;
 			[self removeTabForCell:cell];
 		}
 	}
+    [tmpCellArray release], tmpCellArray = nil;
 
 	// go through tab view items, add cell for any not present
-	NSMutableArray *cellItems = [self representedTabViewItems];
-	NSEnumerator *ex = [tabItems objectEnumerator];
-	NSTabViewItem *item;
-  
-  NSUInteger i = 0;
-	while((item = [ex nextObject])) {
+	NSMutableArray *cellItems = [self representedTabViewItems];  
+    NSUInteger i = 0;
+    for (NSTabViewItem *item in tabItems) {
 		if(![cellItems containsObject:item]) {
 			[self addTabViewItem:item atIndex:i];
 		}
@@ -1967,9 +1953,7 @@ static NSMutableDictionary *registeredStyleClasses;
 
 - (NSMutableArray *)representedTabViewItems {
 	NSMutableArray *temp = [NSMutableArray arrayWithCapacity:[_cells count]];
-	NSEnumerator *e = [_cells objectEnumerator];
-	PSMTabBarCell *cell;
-	while((cell = [e nextObject])) {
+    for (PSMTabBarCell *cell in _cells) {
 		if([cell representedObject]) {
 			[temp addObject:[cell representedObject]];
 		}
@@ -2104,9 +2088,7 @@ static NSMutableDictionary *registeredStyleClasses;
 	}
 
 	// draw cells
-	NSEnumerator *e = [[self cells] objectEnumerator];
-	PSMTabBarCell *cell;
-	while((cell = [e nextObject])) {
+    for (PSMTabBarCell *cell in [self cells]) {
 		if([self isAnimating] || (![cell isInOverflowMenu] && NSIntersectsRect([cell frame], rect))) {
 			[cell drawWithFrame:[cell frame] inTabBarControl:self];
 		}

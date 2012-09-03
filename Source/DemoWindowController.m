@@ -48,10 +48,7 @@
 	[[tabBar addTabButton] setAction:@selector(addNewTab:)];
 
 	// remove any tabs present in the nib
-	NSArray *existingItems = [tabView tabViewItems];
-	NSEnumerator *e = [existingItems objectEnumerator];
-	NSTabViewItem *item;
-	while( (item = [e nextObject]) ) {
+    for (NSTabViewItem *item in [tabView tabViewItems]) {
 		[tabView removeTabViewItem:item];
 	}
 
@@ -390,7 +387,8 @@
 	NSPoint tabOrigin = [tabView frame].origin;
 	tabOrigin.x += 10;
 	tabOrigin.y += 13;
-	[tabViewImage compositeToPoint:tabOrigin operation:NSCompositeSourceOver];
+    [tabViewImage drawAtPoint:tabOrigin fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+//	[tabViewImage compositeToPoint:tabOrigin operation:NSCompositeSourceOver];
 	[viewImage unlockFocus];
 
 	//draw over where the tab bar would usually be
