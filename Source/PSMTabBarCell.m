@@ -770,8 +770,8 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
     
     NSSize scaledIconSize = [self scaleImageWithSize:iconSize toFitInSize:NSMakeSize(iconSize.width, constrainedDrawingRect.size.height) scalingType:NSImageScaleProportionallyDown];
 
-    NSRect result = NSMakeRect(drawingRect.origin.x,
-                                         drawingRect.origin.y - ((drawingRect.size.height - scaledIconSize.height) / 2),
+    NSRect result = NSMakeRect(constrainedDrawingRect.origin.x,
+                                         constrainedDrawingRect.origin.y - ((constrainedDrawingRect.size.height - scaledIconSize.height) / 2),
                                          scaledIconSize.width, scaledIconSize.height);
                                          
     // center in available space (in case icon image is smaller than kPSMTabBarIconWidth)
