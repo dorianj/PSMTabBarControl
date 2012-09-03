@@ -770,8 +770,10 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
     
     NSSize scaledIconSize = [self scaleImageWithSize:iconSize toFitInSize:NSMakeSize(iconSize.width, constrainedDrawingRect.size.height) scalingType:NSImageScaleProportionallyDown];
 
-    NSRect result = NSMakeRect(constrainedDrawingRect.origin.x, constrainedDrawingRect.origin.y, scaledIconSize.width, scaledIconSize.height);
-
+    NSRect result = NSMakeRect(drawingRect.origin.x,
+                                         drawingRect.origin.y - ((drawingRect.size.height - scaledIconSize.height) / 2),
+                                         scaledIconSize.width, scaledIconSize.height);
+                                         
     // center in available space (in case icon image is smaller than kPSMTabBarIconWidth)
     if(scaledIconSize.width < kPSMTabBarIconWidth) {
         result.origin.x += ceil((kPSMTabBarIconWidth - scaledIconSize.width) / 2.0);
@@ -797,10 +799,10 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
     if (!image)
         return NSZeroRect;
     
-    NSSize scaledImageSize = [self scaleImageWithSize:[image size] toFitInSize:NSMakeSize(kPSMTabBarLargeImageWidth, kPSMTabBarLargeImageHeight) scalingType:NSImageScaleProportionallyUpOrDown];
+    NSSize scaledImageSize = [self scaleImageWithSize:[image size] toFitInSize:NSMakeSize(kPSMTabBarLargeImageWidth, drawingRect.size.height) scalingType:NSImageScaleProportionallyUpOrDown];
     
     NSRect result = NSMakeRect(drawingRect.origin.x,
-                                         drawingRect.origin.y - ((scaledImageSize.height - scaledImageSize.height) / 2),
+                                         drawingRect.origin.y - ((drawingRect.size.height - scaledImageSize.height) / 2),
                                          scaledImageSize.width, scaledImageSize.height);
 
     if(scaledImageSize.width < kPSMTabBarIconWidth) {
@@ -809,7 +811,7 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
     if(scaledImageSize.height < drawingRect.size.height) {
         result.origin.y += (drawingRect.size.height - scaledImageSize.height) / 2.0;
     }
-    
+        
     return result;
 }
 
