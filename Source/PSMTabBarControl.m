@@ -16,6 +16,7 @@
 #import "PSMUnifiedTabStyle.h"
 #import "PSMAdiumTabStyle.h"
 #import "PSMLiveChatTabStyle.h"
+#import "PSMCardTabStyle.h"
 #import "PSMTabDragAssistant.h"
 #import "PSMTabBarController.h"
 
@@ -366,6 +367,8 @@
 		newStyle = [[PSMAdiumTabStyle alloc] init];
 	} else if([name isEqualToString:@"LiveChat"]) {
 		newStyle = [[PSMLiveChatTabStyle alloc] init];
+	} else if([name isEqualToString:@"Card"]) {
+		newStyle = [[PSMCardTabStyle alloc] init];
 	} else {
 		newStyle = [[PSMMetalTabStyle alloc] init];
 	}

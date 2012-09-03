@@ -22,6 +22,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		0694F10D15F4EB91000FBC15 /* PSMCardTabStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 0694F10B15F4EB90000FBC15 /* PSMCardTabStyle.h */; };
+		0694F10E15F4EB91000FBC15 /* PSMCardTabStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0694F10C15F4EB90000FBC15 /* PSMCardTabStyle.m */; };
 		069DFB2915EFBDF500FB9F1C /* largeImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B3987D51184F19D004462EE /* largeImage.png */; };
 		13F8B89007B43554008AE28D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92D38A0106425D02CA0E72 /* Cocoa.framework */; };
 		8B3988671184F64C004462EE /* NSBezierPath_AMShading.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B39880C1184F40E004462EE /* NSBezierPath_AMShading.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -151,6 +153,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0694F10B15F4EB90000FBC15 /* PSMCardTabStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSMCardTabStyle.h; path = Source/PSMCardTabStyle.h; sourceTree = "<group>"; };
+		0694F10C15F4EB90000FBC15 /* PSMCardTabStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PSMCardTabStyle.m; path = Source/PSMCardTabStyle.m; sourceTree = "<group>"; };
 		13F8B88807B434F6008AE28D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		13F8B88907B434F6008AE28D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		13F8B88A07B434F6008AE28D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -431,6 +435,8 @@
 				8B3988151184F40E004462EE /* PSMMetalTabStyle.m */,
 				8B39882B1184F40E004462EE /* PSMLiveChatTabStyle.h */,
 				8B39882C1184F40E004462EE /* PSMLiveChatTabStyle.m */,
+				0694F10B15F4EB90000FBC15 /* PSMCardTabStyle.h */,
+				0694F10C15F4EB90000FBC15 /* PSMCardTabStyle.m */,
 			);
 			name = Styles;
 			sourceTree = "<group>";
@@ -506,6 +512,7 @@
 				8B3988831184F65B004462EE /* PSMTabDragWindowController.h in Headers */,
 				8B3988851184F65B004462EE /* PSMTabStyle.h in Headers */,
 				97FF179D11EB5938004FA751 /* PSMUnifiedTabStyle.h in Headers */,
+				0694F10D15F4EB91000FBC15 /* PSMCardTabStyle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -662,6 +669,7 @@
 				8B3988841184F65B004462EE /* PSMTabDragWindowController.m in Sources */,
 				8B3988871184F65C004462EE /* PSMLiveChatTabStyle.m in Sources */,
 				97FF179E11EB5938004FA751 /* PSMUnifiedTabStyle.m in Sources */,
+				0694F10E15F4EB91000FBC15 /* PSMCardTabStyle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
