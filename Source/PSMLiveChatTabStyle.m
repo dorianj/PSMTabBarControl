@@ -15,8 +15,12 @@
 
 @synthesize leftMarginForTabBarControl = _leftMargin;
 
++ (NSString *)name {
+    return @"LiveChat";
+}
+
 - (NSString *)name {
-	return @"LiveChat";
+	return [[self class] name];
 }
 
 #pragma mark -

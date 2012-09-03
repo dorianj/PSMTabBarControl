@@ -12,8 +12,12 @@
 
 @implementation PSMAquaTabStyle
 
++ (NSString *)name {
+    return @"Aqua";
+}
+
 - (NSString *)name {
-	return @"Aqua";
+	return [[self class] name];
 }
 
 #pragma mark -

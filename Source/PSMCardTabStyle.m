@@ -16,8 +16,12 @@
 
 @implementation PSMCardTabStyle
 
-- (NSString *)name {
++ (NSString *)name {
     return @"Card";
+}
+
+- (NSString *)name {
+	return [[self class] name];
 }
 
 #pragma mark -

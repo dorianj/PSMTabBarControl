@@ -25,8 +25,12 @@
 
 @implementation PSMAdiumTabStyle
 
++ (NSString *)name {
+    return @"Adium";
+}
+
 - (NSString *)name {
-	return @"Adium";
+	return [[self class] name];
 }
 
 #pragma mark -

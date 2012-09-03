@@ -15,8 +15,12 @@
 
 @synthesize leftMarginForTabBarControl = _leftMargin;
 
++ (NSString *)name {
+    return @"Unified";
+}
+
 - (NSString *)name {
-	return @"Unified";
+	return [[self class] name];
 }
 
 #pragma mark -

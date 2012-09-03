@@ -12,8 +12,12 @@
 
 @implementation PSMMetalTabStyle
 
++ (NSString *)name {
+    return @"Metal";
+}
+
 - (NSString *)name {
-	return @"Metal";
+	return [[self class] name];
 }
 
 #pragma mark -

@@ -80,6 +80,17 @@
 
 @implementation PSMTabBarControl
 
+static NSMutableDictionary *registeredStyleClasses;
+
++(void)initialize {
+
+    if (registeredStyleClasses == nil) {
+        registeredStyleClasses = [[NSMutableDictionary dictionaryWithCapacity:10] retain];
+        
+        [self registerDefaultTabStyleClasses];
+    }
+}
+
 #pragma mark -
 #pragma mark Characteristics
 + (NSBundle *)bundle;
@@ -276,6 +287,35 @@
 
 - (void)windowStatusDidChange:(NSNotification *)notification {
 	[self setNeedsDisplay:YES];
+}
+
+#pragma mark -
+#pragma mark Style Class Registry
+
++ (void)registerDefaultTabStyleClasses {
+
+    [self registerTabStyleClass:[PSMAquaTabStyle class]];
+    [self registerTabStyleClass:[PSMUnifiedTabStyle class]];
+    [self registerTabStyleClass:[PSMAdiumTabStyle class]];
+    [self registerTabStyleClass:[PSMMetalTabStyle class]];
+    [self registerTabStyleClass:[PSMCardTabStyle class]];
+    [self registerTabStyleClass:[PSMLiveChatTabStyle class]];
+}
+
++ (void)registerTabStyleClass:(Class <PSMTabStyle>)aStyleClass {
+    [registeredStyleClasses setObject:aStyleClass forKey:[aStyleClass name]];
+}
+
++ (void)unregisterTabStyleClass:(Class <PSMTabStyle>)aStyleClass {
+    [registeredStyleClasses removeObjectForKey:[aStyleClass name]];
+}
+
++ (NSArray *)registeredTabStyleClasses {
+    return [registeredStyleClasses allValues];
+}
+
++ (Class <PSMTabStyle>)registeredClassForStyleName:(NSString *)name {
+    return [registeredStyleClasses objectForKey:name];
 }
 
 #pragma mark -
