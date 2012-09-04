@@ -9,7 +9,6 @@
 #import "PSMUnifiedTabStyle.h"
 #import "PSMTabBarCell.h"
 #import "PSMTabBarControl.h"
-#import "NSBezierPath_AMShading.h"
 
 @implementation PSMUnifiedTabStyle
 
@@ -241,15 +240,12 @@
 		[[NSColor windowBackgroundColor] set];
 		NSRectFill(gradientRect);
 	} else {
-        NSBezierPath *path = [NSBezierPath bezierPathWithRect:gradientRect];
-        [path linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.835 alpha:1.0]
-        endColor:[NSColor colorWithCalibratedWhite:0.843 alpha:1.0]];
-        [[NSColor colorWithCalibratedWhite:0.576 alpha:1.0] set];
+        NSGradient *gradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.835 alpha:1.0] endingColor:[NSColor colorWithCalibratedWhite:0.843 alpha:1.0]];
+        [gradient drawInRect:gradientRect angle:90.0];
+        [gradient release];
     }
 
-	NSColor *lineColor = [NSColor colorWithCalibratedWhite:0.576 alpha:1.0];
-        
-    [lineColor set];
+	[[NSColor colorWithCalibratedWhite:0.576 alpha:1.0] set];
 	[NSBezierPath strokeLineFromPoint:NSMakePoint(rect.origin.x, NSMinY(rect) + 0.5)
 	 toPoint:NSMakePoint(NSMaxX(rect), NSMinY(rect) + 0.5)];
 }

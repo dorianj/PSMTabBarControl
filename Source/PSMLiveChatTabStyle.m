@@ -9,7 +9,6 @@
 #import "PSMLiveChatTabStyle.h"
 #import "PSMTabBarCell.h"
 #import "PSMTabBarControl.h"
-#import "NSBezierPath_AMShading.h"
 
 @implementation PSMLiveChatTabStyle
 

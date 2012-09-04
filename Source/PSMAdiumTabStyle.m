@@ -9,7 +9,6 @@
 #import "PSMAdiumTabStyle.h"
 #import "PSMTabBarCell.h"
 #import "PSMTabBarControl.h"
-#import "NSBezierPath_AMShading.h"
 
 // #define Adium_CellPadding 2
 #define Adium_MARGIN_X 4
@@ -615,14 +614,16 @@
 					NSRectFill(aRect);
 				}
 			} else {
-				NSBezierPath *path = [NSBezierPath bezierPathWithRect:aRect];
-				if(_drawsRight) {
-					[path linearVerticalGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.92 alpha:1.0]
-					 endColor:[NSColor colorWithCalibratedWhite:0.98 alpha:1.0]];
-				} else {
-					[path linearVerticalGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.98 alpha:1.0]
-					 endColor:[NSColor colorWithCalibratedWhite:0.92 alpha:1.0]];
-				}
+            
+                NSGradient *gradient = nil;
+                if (_drawsRight) {
+                    gradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.92 alpha:1.0] endingColor:[NSColor colorWithCalibratedWhite:0.98 alpha:1.0]];
+                } else {
+                    gradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.98 alpha:1.0] endingColor:[NSColor colorWithCalibratedWhite:0.92 alpha:1.0]];
+                }
+                
+                [gradient drawInRect:aRect angle:0.0];
+                [gradient release];
 			}
 
 			// frame
