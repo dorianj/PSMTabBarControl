@@ -662,7 +662,7 @@ static NSMutableDictionary *registeredStyleClasses;
 	[self bindPropertiesForCell:cell andTabViewItem:item];
 
 	// add to collection
-    [self insertCell:cell atIndex:index];
+	[_cells insertObject:cell atIndex:index];
 	[cell release];
 	if([_cells count] == [tabView numberOfTabViewItems]) {
 		[self update]; // don't update unless all are accounted for!
@@ -746,8 +746,7 @@ static NSMutableDictionary *registeredStyleClasses;
 	}
 
 	// pull from collection
-    NSUInteger index = [_cells indexOfObjectIdenticalTo:cell];
-	[self removeCellAtIndex:index];
+	[_cells removeObject:cell];
 
 	[self update];
 }
@@ -1761,8 +1760,8 @@ static NSMutableDictionary *registeredStyleClasses;
 			[thisCell retain];
 			[aTabView removeTabViewItem:tabViewItem];
 			[aTabView insertTabViewItem:tabViewItem atIndex:0];
-            [self removeCellAtIndex:tabIndex];
-            [self insertCell:thisCell atIndex:0];
+			[_cells removeObjectAtIndex:tabIndex];
+			[_cells insertObject:thisCell atIndex:0];
 			[thisCell setIsInOverflowMenu:NO];                  //very important else we get a fun recursive loop going
 			[[_cells objectAtIndex:[_cells count] - 1] setIsInOverflowMenu:YES];             //these 2 lines are pretty uncool and this logic needs to be updated
 			[thisCell release];
