@@ -1355,7 +1355,7 @@ static NSMutableDictionary *registeredStyleClasses;
 			_closeClicked = YES;
 		} else {
 			[cell setCloseButtonPressed:NO];
-			if(_selectsTabsOnMouseDown) {
+			if(_selectsTabsOnMouseDown || _tearOffStyle == PSMTabBarTearOffMiniwindow) {
 				[self performSelector:@selector(tabClick:) withObject:cell];
 			}
 		}
