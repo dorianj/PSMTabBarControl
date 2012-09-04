@@ -1625,26 +1625,33 @@ static NSMutableDictionary *registeredStyleClasses;
 }
 
 - (void)closeTabClick:(id)sender {
-	NSTabViewItem *item = [sender representedObject];
-	[sender retain];
-	if(([_cells count] == 1) && (![self canCloseOnlyTab])) {
-    [sender release];
+
+    if (([_cells count] == 1) && (![self canCloseOnlyTab])) {
 		return;
 	}
 
-	if([[self delegate] respondsToSelector:@selector(tabView:shouldCloseTabViewItem:)]) {
-		if(![[self delegate] tabView:tabView shouldCloseTabViewItem:item]) {
-			// fix mouse downed close button
-			[sender setCloseButtonPressed:NO];
-      [sender release];
-			return;
-		}
-	}
+	[sender retain];
 
-	[item retain];
+    if (([self delegate]) && ([[self delegate] respondsToSelector:@selector(tabView:shouldCloseTabViewItem:)])) {
+        if (![[self delegate] tabView:tabView shouldCloseTabViewItem:[sender representedObject]]) {
+             // fix mouse downed close button
+             [sender setCloseButtonPressed:NO];
+             return;
+         }
+    }
 
-	[tabView removeTabViewItem:item];
-	[item release];
+    if (([self delegate]) && ([[self delegate] respondsToSelector:@selector(tabView:willCloseTabViewItem:)])) {
+         [[self delegate] tabView:tabView willCloseTabViewItem:[sender representedObject]];
+    }
+     
+    [[sender representedObject] retain];
+    [tabView removeTabViewItem:[sender representedObject]];
+     
+    if (([self delegate]) && ([[self delegate] respondsToSelector:@selector(tabView:didCloseTabViewItem:)])) {
+         [[self delegate] tabView:tabView didCloseTabViewItem:[sender representedObject]];
+    }
+    [[sender representedObject] release];
+
 	[sender release];
 }
 
@@ -1840,8 +1847,8 @@ static NSMutableDictionary *registeredStyleClasses;
     for (PSMTabBarCell *cell in tmpCellArray) {
 		//remove the observer binding
 		if([cell representedObject] && ![tabItems containsObject:[cell representedObject]]) {
-			if([[self delegate] respondsToSelector:@selector(tabView:didCloseTabViewItem:)]) {
-				[[self delegate] tabView:aTabView didCloseTabViewItem:[cell representedObject]];
+			if ([[self delegate] respondsToSelector:@selector(tabView:didDetachTabViewItem:)]) {
+				[[self delegate] tabView:aTabView didDetachTabViewItem:[cell representedObject]];
 			}
 
 			[self removeTabForCell:cell];

@@ -225,7 +225,9 @@ typedef enum PSMTabStateMask : NSUInteger {
 
 //Standard NSTabView methods
 - (BOOL)tabView:(NSTabView *)aTabView shouldCloseTabViewItem:(NSTabViewItem *)tabViewItem;
+- (void)tabView:(NSTabView *)aTabView willCloseTabViewItem:(NSTabViewItem *)tabViewItem;
 - (void)tabView:(NSTabView *)aTabView didCloseTabViewItem:(NSTabViewItem *)tabViewItem;
+- (void)tabView:(NSTabView *)aTabView didDetachTabViewItem:(NSTabViewItem *)tabViewItem;
 
 //"Spring-loaded" tabs methods
 - (NSArray *)allowedDraggedTypesForTabView:(NSTabView *)aTabView;
