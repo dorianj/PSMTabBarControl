@@ -544,7 +544,7 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
     }
     
     enrichedUserInfo = [userInfo mutableCopy];
-    [enrichedUserInfo setObject:[NSNumber numberWithInteger:PSMTabBarCellTrackingRectCellFrameType] forKey:@"type"];
+    [enrichedUserInfo setObject:[NSNumber numberWithInteger:PSMTabBarCellTrackingAreaCellFrameType] forKey:@"type"];
 
     // We make the view the owner, and it delegates the calls back to the cell after it is properly setup for the corresponding row/column in the outlineview
     area = [[NSTrackingArea alloc] initWithRect:cellFrame options:options owner:controlView userInfo:enrichedUserInfo];
@@ -565,7 +565,7 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
         }
 
         enrichedUserInfo = [userInfo mutableCopy];
-        [enrichedUserInfo setObject:[NSNumber numberWithInteger:PSMTabBarCellTrackingRectCloseButtonType] forKey:@"type"];
+        [enrichedUserInfo setObject:[NSNumber numberWithInteger:PSMTabBarCellTrackingAreaCloseButtonType] forKey:@"type"];
         
         // We make the view the owner, and it delegates the calls back to the cell after it is properly setup for the corresponding row/column in the outlineview
         area = [[NSTrackingArea alloc] initWithRect:closeButtonRect options:options owner:controlView userInfo:enrichedUserInfo];
@@ -583,7 +583,7 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
             
     NSUInteger type = [[userInfo objectForKey:@"type"] unsignedIntegerValue];
     switch (type) {
-        case PSMTabBarCellTrackingRectCellFrameType:
+        case PSMTabBarCellTrackingAreaCellFrameType:
 
             [self setHighlighted:YES];
             
@@ -594,7 +594,7 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
             
             break;
 
-        case PSMTabBarCellTrackingRectCloseButtonType:
+        case PSMTabBarCellTrackingAreaCloseButtonType:
             _closeButtonOver = YES;
             [tabBarControl updateCell:self];            
             break;
@@ -612,13 +612,13 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
     NSUInteger type = [[userInfo objectForKey:@"type"] unsignedIntegerValue];
         
     switch (type) {
-        case PSMTabBarCellTrackingRectCellFrameType:
+        case PSMTabBarCellTrackingAreaCellFrameType:
 
             [self setHighlighted:NO];
             
             break;
 
-        case PSMTabBarCellTrackingRectCloseButtonType:
+        case PSMTabBarCellTrackingAreaCloseButtonType:
             _closeButtonOver = NO;
             [tabBarControl updateCell:self];
             break;

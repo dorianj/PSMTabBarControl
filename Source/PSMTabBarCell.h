@@ -20,11 +20,11 @@ typedef enum PSMCloseButtonImageType : NSUInteger
     PSMCloseButtonImageTypeDirtyPressed
 } PSMCloseButtonImageType;
 
-typedef enum PSMTabBarCellTrackingRectType : NSUInteger
+typedef enum PSMTabBarCellTrackingAreaType : NSUInteger
 {
-    PSMTabBarCellTrackingRectCellFrameType   = 0,
-    PSMTabBarCellTrackingRectCloseButtonType = 1
-} PSMTabBarCellTrackingRectType;
+    PSMTabBarCellTrackingAreaCellFrameType   = 0,
+    PSMTabBarCellTrackingAreaCloseButtonType = 1
+} PSMTabBarCellTrackingAreaType;
 
 @interface PSMTabBarCell : NSActionCell {
 	// sizing
