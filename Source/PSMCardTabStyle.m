@@ -66,7 +66,7 @@
 #pragma mark Control Specific
 
 - (CGFloat)rightMarginForTabBarControl {
-	return 5.0f;
+	return 24.0f;
 }
 
 - (CGFloat)topMarginForTabBarControl {

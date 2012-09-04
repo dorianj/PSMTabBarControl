@@ -56,22 +56,6 @@
 
 - (PSMTabBarControl *)tabBar;
 
-// tab bar config
-- (void)configStyle:(id)sender;
-- (void)configOrientation:(id)sender;
-- (void)configCanCloseOnlyTab:(id)sender;
-- (void)configDisableTabClose:(id)sender;
-- (void)configHideForSingleTab:(id)sender;
-- (void)configAddTabButton:(id)sender;
-- (void)configTabMinWidth:(id)sender;
-- (void)configTabMaxWidth:(id)sender;
-- (void)configTabOptimumWidth:(id)sender;
-- (void)configTabSizeToFit:(id)sender;
-- (void)configTearOffStyle:(id)sender;
-- (void)configUseOverflowMenu:(id)sender;
-- (void)configAutomaticallyAnimates:(id)sender;
-- (void)configAllowsScrubbing:(id)sender;
-
 // delegate
 - (void)tabView:(NSTabView *)aTabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem;
 - (BOOL)tabView:(NSTabView *)aTabView shouldCloseTabViewItem:(NSTabViewItem *)tabViewItem;

@@ -309,9 +309,7 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 
 	// move actual NSTabViewItem
 	if([self sourceTabBar] != [self destinationTabBar]) {
-		//remove the tracking rects and bindings registered on the old tab
-		[[self sourceTabBar] removeTrackingRect:[[self draggedCell] closeButtonTrackingTag]];
-		[[self sourceTabBar] removeTrackingRect:[[self draggedCell] cellTrackingTag]];
+		//remove bindings registered on the old tab
 		[[self sourceTabBar] removeTabForCell:[self draggedCell]];
 
 		NSInteger i, insertIndex;
@@ -394,9 +392,7 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 				//add the dragged tab to the new window
 				[control insertCell:[self draggedCell] atIndex:0];
 
-				//remove the tracking rects and bindings registered on the old tab
-				[[self sourceTabBar] removeTrackingRect:[[self draggedCell] closeButtonTrackingTag]];
-				[[self sourceTabBar] removeTrackingRect:[[self draggedCell] cellTrackingTag]];
+				//remove bindings registered on the old tab
 				[[self sourceTabBar] removeTabForCell:[self draggedCell]];
 
 				//rebind the cell to the new control

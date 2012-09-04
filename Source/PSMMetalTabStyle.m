@@ -236,7 +236,10 @@
 			aRect.origin.x += 1.0;
 			aRect.size.width--;
 			aRect.size.height -= 0.5;
-			NSDrawWindowBackground(aRect);
+            
+            [[NSColor windowBackgroundColor] set];
+            NSRectFill(aRect);
+
 			aRect.size.width++;
 			aRect.size.height += 0.5;
 
@@ -261,7 +264,10 @@
 			// background
 			aRect.origin.x++;
 			aRect.size.height--;
-			NSDrawWindowBackground(aRect);
+            
+            [[NSColor windowBackgroundColor] set];
+            NSRectFill(aRect);
+            
 			aRect.origin.x--;
 			aRect.size.height++;
 

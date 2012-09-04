@@ -20,17 +20,21 @@ typedef enum PSMCloseButtonImageType : NSUInteger
     PSMCloseButtonImageTypeDirtyPressed
 } PSMCloseButtonImageType;
 
+typedef enum PSMTabBarCellTrackingAreaType : NSUInteger
+{
+    PSMTabBarCellTrackingAreaCellFrameType   = 0,
+    PSMTabBarCellTrackingAreaCloseButtonType = 1
+} PSMTabBarCellTrackingAreaType;
+
 @interface PSMTabBarCell : NSActionCell {
 	// sizing
 	NSRect					_frame;
-	NSSize					_stringSize;
+	NSSize					_attributedStringSize;
 	NSInteger				_currentStep;
 	BOOL					_isPlaceholder;
 
 	// state
-	NSInteger				_tabState;
-	NSTrackingRectTag		_closeButtonTrackingTag; // left side tracking, if dragging
-	NSTrackingRectTag		_cellTrackingTag;		 // right side tracking, if dragging
+	PSMTabStateMask		    _tabState;
 	BOOL					_closeButtonOver;
 	BOOL					_closeButtonPressed;
 	PSMProgressIndicator	*_indicator;
@@ -44,7 +48,7 @@ typedef enum PSMCloseButtonImageType : NSUInteger
 	BOOL					_isEdited;
 }
 
-@property (assign) NSInteger tabState;
+@property (assign) PSMTabStateMask tabState;
 @property (assign) BOOL hasCloseButton;
 @property (assign) BOOL hasIcon;
 @property (assign) BOOL hasLargeImage;
@@ -53,8 +57,6 @@ typedef enum PSMCloseButtonImageType : NSUInteger
 @property (assign) BOOL isPlaceholder;
 @property (assign) BOOL isEdited;
 @property (assign) BOOL closeButtonPressed;
-@property (assign) NSTrackingRectTag closeButtonTrackingTag;
-@property (assign) NSTrackingRectTag cellTrackingTag;
 
 #pragma mark Creation/Destruction
 - (id)init;
@@ -64,13 +66,10 @@ typedef enum PSMCloseButtonImageType : NSUInteger
 #pragma mark Accessors
 - (PSMTabBarControl *)controlView;
 - (void)setControlView:(PSMTabBarControl *)newControl;
-- (NSTrackingRectTag)cellTrackingTag;
-- (void)setCellTrackingTag:(NSTrackingRectTag)tag;
 - (CGFloat)width;
 - (NSRect)frame;
 - (void)setFrame:(NSRect)rect;
-- (void)setStringValue:(NSString *)aString;
-- (NSSize)stringSize;
+- (NSSize)attributedStringSize;
 - (NSAttributedString *)attributedStringValue;
 - (NSAttributedString *)attributedObjectCountStringValue;
 - (NSProgressIndicator *)indicator;
@@ -114,7 +113,8 @@ typedef enum PSMCloseButtonImageType : NSUInteger
 - (void)drawIndicatorWithFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
 - (void)drawCloseButtonWithFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
 
-#pragma mark Tracking
+#pragma mark Tracking Area Support
+- (void)addTrackingAreasForView:(NSView *)view inRect:(NSRect)cellFrame withUserInfo:(NSDictionary *)userInfo mouseLocation:(NSPoint)currentPoint;
 - (void)mouseEntered:(NSEvent *)theEvent;
 - (void)mouseExited:(NSEvent *)theEvent;
 

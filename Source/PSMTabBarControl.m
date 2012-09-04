@@ -46,7 +46,6 @@
 // draw
 - (void)update;
 - (void)update:(BOOL)animate;
-- (void)_setupTrackingRectsForCell:(PSMTabBarCell *)cell;
 - (void)_positionOverflowMenu;
 - (void)_checkWindowFrame;
 
@@ -210,12 +209,19 @@ static NSMutableDictionary *registeredStyleClasses;
 		// resize
 		[self setPostsFrameChangedNotifications:YES];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(frameDidChange:) name:NSViewFrameDidChangeNotification object:self];
+        
+        // add observing of cells
+        [self addObserver:self forKeyPath:@"cells" options:NSKeyValueObservingOptionNew |
+            NSKeyValueObservingOptionOld | NSKeyValueObservingOptionInitial context:NULL];
 	}
-	[self setTarget:self];
+//	[self setTarget:self];
 	return self;
 }
 
 - (void)dealloc {
+    
+    [self removeObserver:self forKeyPath:@"cells"];
+
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
 	//stop any animations that may be running
@@ -364,6 +370,19 @@ static NSMutableDictionary *registeredStyleClasses;
 
 - (void)replaceCellAtIndex:(NSUInteger)index withCell:(PSMTabBarCell *)aCell {
     [self replaceObjectInCellsAtIndex:index withObject:aCell];
+}
+
+#pragma mark -
+#pragma mark Displaying a Cell
+
+-(void)updateCell:(NSCell *)aCell {
+
+    if ([aCell isKindOfClass:[PSMTabBarCell class]])
+        {
+        [self setNeedsDisplayInRect:[(PSMTabBarCell *)aCell frame]];
+        }
+    else
+        [super updateCell:aCell];
 }
 
 #pragma mark -
@@ -662,7 +681,7 @@ static NSMutableDictionary *registeredStyleClasses;
 	[self bindPropertiesForCell:cell andTabViewItem:item];
 
 	// add to collection
-	[_cells insertObject:cell atIndex:index];
+    [self insertCell:cell atIndex:index];
 	[cell release];
 	if([_cells count] == [tabView numberOfTabViewItems]) {
 		[self update]; // don't update unless all are accounted for!
@@ -736,28 +755,26 @@ static NSMutableDictionary *registeredStyleClasses;
 	// remove tracking
 	[[NSNotificationCenter defaultCenter] removeObserver:cell];
 
-	if([cell closeButtonTrackingTag] != 0) {
-		[self removeTrackingRect:[cell closeButtonTrackingTag]];
-		[cell setCloseButtonTrackingTag:0];
-	}
-	if([cell cellTrackingTag] != 0) {
-		[self removeTrackingRect:[cell cellTrackingTag]];
-		[cell setCellTrackingTag:0];
-	}
-
 	// pull from collection
-	[_cells removeObject:cell];
+    NSUInteger cellIndex = [_cells indexOfObjectIdenticalTo:cell];
+    if (cellIndex != NSNotFound)
+        [self removeCellAtIndex:cellIndex];
 
 	[self update];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-	// did the tab's identifier change?
-	if([keyPath isEqualToString:@"identifier"]) {
+
+    // did cell array change?
+    if ([keyPath isEqualToString:@"cells"]) {
+        [self updateTrackingAreas];
+
+    // did the tab's identifier change?
+    } else if([keyPath isEqualToString:@"identifier"]) {
         id oldIdentifier = [change objectForKey: NSKeyValueChangeOldKey];
         
         for (PSMTabBarCell *cell in _cells) {
-			if([cell representedObject] == object) {
+            if([cell representedObject] == object) {
                 // unbind the old value first
                 NSArray *selectors = [NSArray arrayWithObjects: @"isProcessing", @"icon", @"objectCount", @"countColor", @"largeImage", @"isEdited", nil];
                 for (NSString *selector in selectors) {
@@ -766,10 +783,12 @@ static NSMutableDictionary *registeredStyleClasses;
                         [oldIdentifier removeObserver:cell forKeyPath:selector];
                     }
                 }
-				[self _bindPropertiesForCell:cell andTabViewItem:object];
-			}
-		}
-	}
+                [self _bindPropertiesForCell:cell andTabViewItem:object];
+            }
+        }
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 #pragma mark -
@@ -1112,14 +1131,11 @@ static NSMutableDictionary *registeredStyleClasses;
 		for(NSInteger i = 0; i < [_cells count]; i++) {
 			currentCell = [_cells objectAtIndex:i];
 			[currentCell setFrame:[_controller cellFrameAtIndex:i]];
-
-			if(![currentCell isInOverflowMenu]) {
-				[self _setupTrackingRectsForCell:currentCell];
-			}
 		}
 
 		[_addTabButton setFrame:[_controller addButtonRect]];
 		[_addTabButton setHidden:!_showAddTabButton];
+        [self updateTrackingAreas];
 		[self setNeedsDisplay:YES];
 	}
 }
@@ -1199,47 +1215,10 @@ static NSMutableDictionary *registeredStyleClasses;
 		[_animationTimer invalidate];
 		[_animationTimer release]; _animationTimer = nil;
 
-		for(NSInteger i = 0; i < cellCount; i++) {
-			currentCell = [_cells objectAtIndex:i];
-
-			//we've hit the cells that are in overflow, stop setting up tracking rects
-			if([currentCell isInOverflowMenu]) {
-				break;
-			}
-
-			[self _setupTrackingRectsForCell:currentCell];
-		}
+        [self updateTrackingAreas];
 	}
 
 	[self setNeedsDisplay:YES];
-}
-
-- (void)_setupTrackingRectsForCell:(PSMTabBarCell *)cell {
-	NSInteger tag, index = [_cells indexOfObject:cell];
-	NSRect cellTrackingRect = [_controller cellTrackingRectAtIndex:index];
-	NSPoint mousePoint = [self convertPoint:[[self window] mouseLocationOutsideOfEventStream] fromView:nil];
-	BOOL mouseInCell = NSMouseInRect(mousePoint, cellTrackingRect, [self isFlipped]);
-
-	//set the cell tracking rect
-	[self removeTrackingRect:[cell cellTrackingTag]];
-	tag = [self addTrackingRect:cellTrackingRect owner:cell userData:nil assumeInside:mouseInCell];
-	[cell setCellTrackingTag:tag];
-	[cell setHighlighted:mouseInCell];
-
-	if([cell hasCloseButton] && ![cell isCloseButtonSuppressed]) {
-		NSRect closeRect = [_controller closeButtonTrackingRectAtIndex:index];
-		BOOL mouseInCloseRect = NSMouseInRect(mousePoint, closeRect, [self isFlipped]);
-
-		//set the close button tracking rect
-		[self removeTrackingRect:[cell closeButtonTrackingTag]];
-		tag = [self addTrackingRect:closeRect owner:cell userData:nil assumeInside:mouseInCloseRect];
-		[cell setCloseButtonTrackingTag:tag];
-
-		[cell setCloseButtonOver:mouseInCloseRect];
-	}
-
-	//set the tooltip tracking rect
-	[self addToolTipRect:[cell frame] owner:self userData:nil];
 }
 
 - (void)_positionOverflowMenu {
@@ -1283,6 +1262,63 @@ static NSMutableDictionary *registeredStyleClasses;
 }
 
 #pragma mark -
+#pragma mark Tracking Area Support
+
+- (void)updateTrackingAreas {
+
+    [super updateTrackingAreas];
+    
+    // remove all tracking rects
+    for (NSTrackingArea *area in [self trackingAreas]) {
+        // We have to uniquely identify our own tracking areas
+        if ([area owner] == self) {
+            [self removeTrackingArea:area];
+        }
+    }
+
+    // remove all tool tip rects
+    [self removeAllToolTips];
+    
+    // recreate tracking areas and tool tip rects
+    NSPoint mouseLocation = [self convertPoint:[[self window] convertScreenToBase:[NSEvent mouseLocation]] fromView:nil];
+    
+    NSUInteger cellIndex = 0;
+    for (PSMTabBarCell *aCell in _cells) {
+    
+        if ([aCell isInOverflowMenu])
+            break;
+    
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:cellIndex], @"cellIndex", aCell, @"cell", nil];
+        [aCell addTrackingAreasForView:self inRect:[aCell frame] withUserInfo:userInfo mouseLocation:mouseLocation];
+
+        [self addToolTipRect:[aCell frame] owner:self userData:nil];
+        
+        cellIndex ++;
+    }
+}
+
+- (void)mouseEntered:(NSEvent *)theEvent {
+
+    if ([[theEvent trackingArea] owner] == self) {
+        NSDictionary *userInfo = [theEvent userData];
+        PSMTabBarCell *tabBarCell = [userInfo objectForKey:@"cell"];
+        if (tabBarCell)
+            [tabBarCell mouseEntered:theEvent];    
+    }
+        
+}
+
+- (void)mouseExited:(NSEvent *)theEvent {
+
+    if ([[theEvent trackingArea] owner] == self) {
+        NSDictionary *userInfo = [theEvent userData];
+        PSMTabBarCell *tabBarCell = [userInfo objectForKey:@"cell"];
+        if (tabBarCell)
+            [tabBarCell mouseExited:theEvent];
+    }
+}
+
+#pragma mark -
 #pragma mark Mouse Tracking
 
 - (BOOL)mouseDownCanMoveWindow {
@@ -1319,7 +1355,7 @@ static NSMutableDictionary *registeredStyleClasses;
 			_closeClicked = YES;
 		} else {
 			[cell setCloseButtonPressed:NO];
-			if(_selectsTabsOnMouseDown) {
+			if(_selectsTabsOnMouseDown || _tearOffStyle == PSMTabBarTearOffMiniwindow) {
 				[self performSelector:@selector(tabClick:) withObject:cell];
 			}
 		}
@@ -1589,26 +1625,33 @@ static NSMutableDictionary *registeredStyleClasses;
 }
 
 - (void)closeTabClick:(id)sender {
-	NSTabViewItem *item = [sender representedObject];
-	[sender retain];
-	if(([_cells count] == 1) && (![self canCloseOnlyTab])) {
-    [sender release];
+
+    if (([_cells count] == 1) && (![self canCloseOnlyTab])) {
 		return;
 	}
 
-	if([[self delegate] respondsToSelector:@selector(tabView:shouldCloseTabViewItem:)]) {
-		if(![[self delegate] tabView:tabView shouldCloseTabViewItem:item]) {
-			// fix mouse downed close button
-			[sender setCloseButtonPressed:NO];
-      [sender release];
-			return;
-		}
-	}
+	[sender retain];
 
-	[item retain];
+    if (([self delegate]) && ([[self delegate] respondsToSelector:@selector(tabView:shouldCloseTabViewItem:)])) {
+        if (![[self delegate] tabView:tabView shouldCloseTabViewItem:[sender representedObject]]) {
+             // fix mouse downed close button
+             [sender setCloseButtonPressed:NO];
+             return;
+         }
+    }
 
-	[tabView removeTabViewItem:item];
-	[item release];
+    if (([self delegate]) && ([[self delegate] respondsToSelector:@selector(tabView:willCloseTabViewItem:)])) {
+         [[self delegate] tabView:tabView willCloseTabViewItem:[sender representedObject]];
+    }
+     
+    [[sender representedObject] retain];
+    [tabView removeTabViewItem:[sender representedObject]];
+     
+    if (([self delegate]) && ([[self delegate] respondsToSelector:@selector(tabView:didCloseTabViewItem:)])) {
+         [[self delegate] tabView:tabView didCloseTabViewItem:[sender representedObject]];
+    }
+    [[sender representedObject] release];
+
 	[sender release];
 }
 
@@ -1760,8 +1803,8 @@ static NSMutableDictionary *registeredStyleClasses;
 			[thisCell retain];
 			[aTabView removeTabViewItem:tabViewItem];
 			[aTabView insertTabViewItem:tabViewItem atIndex:0];
-			[_cells removeObjectAtIndex:tabIndex];
-			[_cells insertObject:thisCell atIndex:0];
+            [self removeCellAtIndex:tabIndex];
+            [self insertCell:thisCell atIndex:0];
 			[thisCell setIsInOverflowMenu:NO];                  //very important else we get a fun recursive loop going
 			[[_cells objectAtIndex:[_cells count] - 1] setIsInOverflowMenu:YES];             //these 2 lines are pretty uncool and this logic needs to be updated
 			[thisCell release];
@@ -1804,8 +1847,8 @@ static NSMutableDictionary *registeredStyleClasses;
     for (PSMTabBarCell *cell in tmpCellArray) {
 		//remove the observer binding
 		if([cell representedObject] && ![tabItems containsObject:[cell representedObject]]) {
-			if([[self delegate] respondsToSelector:@selector(tabView:didCloseTabViewItem:)]) {
-				[[self delegate] tabView:aTabView didCloseTabViewItem:[cell representedObject]];
+			if ([[self delegate] respondsToSelector:@selector(tabView:didDetachTabViewItem:)]) {
+				[[self delegate] tabView:aTabView didDetachTabViewItem:[cell representedObject]];
 			}
 
 			[self removeTabForCell:cell];
@@ -1920,7 +1963,7 @@ static NSMutableDictionary *registeredStyleClasses;
 			delegate = [[aDecoder decodeObjectForKey:@"PSMdelegate"] retain];
 		}
 	}
-	[self setTarget:self];
+//	[self setTarget:self];
 	return self;
 }
 

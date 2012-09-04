@@ -56,15 +56,11 @@
 @synthesize isPlaceholder = _isPlaceholder;
 @synthesize isEdited = _isEdited;
 @synthesize closeButtonPressed = _closeButtonPressed;
-@synthesize closeButtonTrackingTag = _closeButtonTrackingTag;
-@synthesize cellTrackingTag = _cellTrackingTag;
 
 #pragma mark -
 #pragma mark Creation/Destruction
 - (id)init {
 	if((self = [super init])) {
-		_closeButtonTrackingTag = 0;
-		_cellTrackingTag = 0;
 		_closeButtonOver = NO;
 		_closeButtonPressed = NO;
 		_indicator = [[PSMProgressIndicator alloc] initWithFrame:NSMakeRect(0.0, 0.0, kPSMTabBarIndicatorWidth, kPSMTabBarIndicatorWidth)];
@@ -92,8 +88,6 @@
 			}
 		}
 		[self setFrame:frame];
-		_closeButtonTrackingTag = 0;
-		_cellTrackingTag = 0;
 		_closeButtonOver = NO;
 		_closeButtonPressed = NO;
 		_indicator = nil;
@@ -151,15 +145,16 @@
 	}
 }
 
-- (void)setStringValue:(NSString *)aString {
-	[super setStringValue:aString];
-	_stringSize = [[self attributedStringValue] size];
+- (void)setTitle:(NSString *)aString {
+
+	[super setTitle:aString];
+	_attributedStringSize = [[self attributedStringValue] size];
 	// need to redisplay now - binding observation was too quick.
 	[[self controlView] update];
 }
 
-- (NSSize)stringSize {
-	return _stringSize;
+- (NSSize)attributedStringSize {
+	return _attributedStringSize;
 }
 
 - (NSAttributedString *)attributedStringValue {
@@ -530,45 +525,108 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 }
 
 #pragma mark -
-#pragma mark Tracking
+#pragma mark Tracking Area Support
+
+- (void)addTrackingAreasForView:(NSView *)controlView inRect:(NSRect)cellFrame withUserInfo:(NSDictionary *)userInfo mouseLocation:(NSPoint)mouseLocation {
+
+    NSTrackingAreaOptions options = 0;
+    BOOL mouseIsInside = NO;
+    NSTrackingArea *area = nil;
+    NSMutableDictionary *enrichedUserInfo = nil;
+
+    // ---- add tracking area for cell frame ----
+    
+    options = NSTrackingEnabledDuringMouseDrag | NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways;
+
+    mouseIsInside = NSMouseInRect(mouseLocation, cellFrame, [controlView isFlipped]);
+    if (mouseIsInside) {
+        options |= NSTrackingAssumeInside;
+        [controlView setNeedsDisplayInRect:cellFrame];
+    }
+    
+    enrichedUserInfo = [userInfo mutableCopy];
+    [enrichedUserInfo setObject:[NSNumber numberWithInteger:PSMTabBarCellTrackingAreaCellFrameType] forKey:@"type"];
+
+    // We make the view the owner, and it delegates the calls back to the cell after it is properly setup for the corresponding row/column in the outlineview
+    area = [[NSTrackingArea alloc] initWithRect:cellFrame options:options owner:controlView userInfo:enrichedUserInfo];
+    [controlView addTrackingArea:area];
+    [area release], area = nil;
+    [enrichedUserInfo release], enrichedUserInfo = nil;
+
+    // ---- add tracking area for close button ----
+    
+    NSRect closeButtonRect = [self closeButtonRectForBounds:cellFrame];
+    if (!NSEqualRects(NSZeroRect, closeButtonRect)) {
+        options = NSTrackingEnabledDuringMouseDrag | NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways;
+
+        mouseIsInside = NSMouseInRect(mouseLocation, closeButtonRect, [controlView isFlipped]);
+        if (mouseIsInside) {
+            options |= NSTrackingAssumeInside;
+            [controlView setNeedsDisplayInRect:cellFrame];
+        }
+
+        enrichedUserInfo = [userInfo mutableCopy];
+        [enrichedUserInfo setObject:[NSNumber numberWithInteger:PSMTabBarCellTrackingAreaCloseButtonType] forKey:@"type"];
+        
+        // We make the view the owner, and it delegates the calls back to the cell after it is properly setup for the corresponding row/column in the outlineview
+        area = [[NSTrackingArea alloc] initWithRect:closeButtonRect options:options owner:controlView userInfo:enrichedUserInfo];
+        [controlView addTrackingArea:area];
+        [area release], area = nil;
+
+        [enrichedUserInfo release], enrichedUserInfo = nil;        
+    }
+}
 
 - (void)mouseEntered:(NSEvent *)theEvent {
-	// check for which tag
-	if([theEvent trackingNumber] == _closeButtonTrackingTag) {
-		_closeButtonOver = YES;
-	}
-    
+
     PSMTabBarControl *tabBarControl = [self controlView];
-    
-	if([theEvent trackingNumber] == _cellTrackingTag) {
-		[self setHighlighted:YES];
-		[tabBarControl setNeedsDisplay:NO];
-	}
+    NSDictionary *userInfo = [theEvent userData];
+            
+    NSUInteger type = [[userInfo objectForKey:@"type"] unsignedIntegerValue];
+    switch (type) {
+        case PSMTabBarCellTrackingAreaCellFrameType:
 
-	// scrubtastic
-	if([tabBarControl allowsScrubbing] && ([theEvent modifierFlags] & NSAlternateKeyMask)) {
-		[tabBarControl performSelector:@selector(tabClick:) withObject:self];
-	}
+            [self setHighlighted:YES];
+            
+            // scrubtastic
+            if ([tabBarControl allowsScrubbing] && ([theEvent modifierFlags] & NSAlternateKeyMask)) {
+                [tabBarControl performSelector:@selector(tabClick:) withObject:self];
+            }
+            
+            break;
 
-	// tell the control we only need to redraw the affected tab
-	[tabBarControl setNeedsDisplayInRect:NSInsetRect([self frame], -2, -2)];
+        case PSMTabBarCellTrackingAreaCloseButtonType:
+            _closeButtonOver = YES;
+            [tabBarControl updateCell:self];            
+            break;
+
+        default:
+            break;
+    }
 }
 
 - (void)mouseExited:(NSEvent *)theEvent {
-	// check for which tag
-	if([theEvent trackingNumber] == _closeButtonTrackingTag) {
-		_closeButtonOver = NO;
-	}
 
     PSMTabBarControl *tabBarControl = [self controlView];
-    
-	if([theEvent trackingNumber] == _cellTrackingTag) {
-		[self setHighlighted:NO];
-		[tabBarControl setNeedsDisplay:NO];
-	}
+    NSDictionary *userInfo = [theEvent userData];
+            
+    NSUInteger type = [[userInfo objectForKey:@"type"] unsignedIntegerValue];
+        
+    switch (type) {
+        case PSMTabBarCellTrackingAreaCellFrameType:
 
-	//tell the control we only need to redraw the affected tab
-	[tabBarControl setNeedsDisplayInRect:NSInsetRect([self frame], -2, -2)];
+            [self setHighlighted:NO];
+            
+            break;
+
+        case PSMTabBarCellTrackingAreaCloseButtonType:
+            _closeButtonOver = NO;
+            [tabBarControl updateCell:self];
+            break;
+
+        default:
+            break;
+    }  
 }
 
 #pragma mark -
@@ -606,12 +664,10 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 	[super encodeWithCoder:aCoder];
 	if([aCoder allowsKeyedCoding]) {
 		[aCoder encodeRect:_frame forKey:@"frame"];
-		[aCoder encodeSize:_stringSize forKey:@"stringSize"];
+		[aCoder encodeSize:_attributedStringSize forKey:@"attributedStringSize"];
 		[aCoder encodeInteger:_currentStep forKey:@"currentStep"];
 		[aCoder encodeBool:_isPlaceholder forKey:@"isPlaceholder"];
 		[aCoder encodeInteger:_tabState forKey:@"tabState"];
-		[aCoder encodeInteger:_closeButtonTrackingTag forKey:@"closeButtonTrackingTag"];
-		[aCoder encodeInteger:_cellTrackingTag forKey:@"cellTrackingTag"];
 		[aCoder encodeBool:_closeButtonOver forKey:@"closeButtonOver"];
 		[aCoder encodeBool:_closeButtonPressed forKey:@"closeButtonPressed"];
 		[aCoder encodeObject:_indicator forKey:@"indicator"];
@@ -630,12 +686,10 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 	if(self) {
 		if([aDecoder allowsKeyedCoding]) {
 			_frame = [aDecoder decodeRectForKey:@"frame"];
-			_stringSize = [aDecoder decodeSizeForKey:@"stringSize"];
+			_attributedStringSize = [aDecoder decodeSizeForKey:@"attributedStringSize"];
 			_currentStep = [aDecoder decodeIntegerForKey:@"currentStep"];
 			_isPlaceholder = [aDecoder decodeBoolForKey:@"isPlaceholder"];
 			_tabState = [aDecoder decodeIntegerForKey:@"tabState"];
-			_closeButtonTrackingTag = [aDecoder decodeIntegerForKey:@"closeButtonTrackingTag"];
-			_cellTrackingTag = [aDecoder decodeIntegerForKey:@"cellTrackingTag"];
 			_closeButtonOver = [aDecoder decodeBoolForKey:@"closeButtonOver"];
 			_closeButtonPressed = [aDecoder decodeBoolForKey:@"closeButtonPressed"];
 			_indicator = [[aDecoder decodeObjectForKey:@"indicator"] retain];

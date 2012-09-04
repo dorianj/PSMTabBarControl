@@ -26,8 +26,6 @@
 		0694F10E15F4EB91000FBC15 /* PSMCardTabStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0694F10C15F4EB90000FBC15 /* PSMCardTabStyle.m */; };
 		069DFB2915EFBDF500FB9F1C /* largeImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B3987D51184F19D004462EE /* largeImage.png */; };
 		13F8B89007B43554008AE28D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92D38A0106425D02CA0E72 /* Cocoa.framework */; };
-		8B3988671184F64C004462EE /* NSBezierPath_AMShading.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B39880C1184F40E004462EE /* NSBezierPath_AMShading.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8B3988681184F64D004462EE /* NSBezierPath_AMShading.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B39880D1184F40E004462EE /* NSBezierPath_AMShading.m */; };
 		8B3988691184F64D004462EE /* NSString_AITruncation.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B39880E1184F40E004462EE /* NSString_AITruncation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B39886A1184F64D004462EE /* NSString_AITruncation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B39880F1184F40E004462EE /* NSString_AITruncation.m */; };
 		8B39886B1184F64E004462EE /* PSMAdiumTabStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3988101184F40E004462EE /* PSMAdiumTabStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -198,8 +196,6 @@
 		8B3987E41184F19D004462EE /* TabNewMetal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TabNewMetal.png; path = Resources/TabNewMetal.png; sourceTree = "<group>"; };
 		8B3987E51184F19D004462EE /* TabNewMetalPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TabNewMetalPressed.png; path = Resources/TabNewMetalPressed.png; sourceTree = "<group>"; };
 		8B3987E61184F19D004462EE /* TabNewMetalRollover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TabNewMetalRollover.png; path = Resources/TabNewMetalRollover.png; sourceTree = "<group>"; };
-		8B39880C1184F40E004462EE /* NSBezierPath_AMShading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSBezierPath_AMShading.h; path = Source/NSBezierPath_AMShading.h; sourceTree = "<group>"; };
-		8B39880D1184F40E004462EE /* NSBezierPath_AMShading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSBezierPath_AMShading.m; path = Source/NSBezierPath_AMShading.m; sourceTree = "<group>"; };
 		8B39880E1184F40E004462EE /* NSString_AITruncation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSString_AITruncation.h; path = Source/NSString_AITruncation.h; sourceTree = "<group>"; };
 		8B39880F1184F40E004462EE /* NSString_AITruncation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSString_AITruncation.m; path = Source/NSString_AITruncation.m; sourceTree = "<group>"; };
 		8B3988101184F40E004462EE /* PSMAdiumTabStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSMAdiumTabStyle.h; path = Source/PSMAdiumTabStyle.h; sourceTree = "<group>"; };
@@ -413,8 +409,6 @@
 		8B549E451185BC1C00740C49 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				8B39880C1184F40E004462EE /* NSBezierPath_AMShading.h */,
-				8B39880D1184F40E004462EE /* NSBezierPath_AMShading.m */,
 				8B39880E1184F40E004462EE /* NSString_AITruncation.h */,
 				8B39880F1184F40E004462EE /* NSString_AITruncation.m */,
 			);
@@ -494,7 +488,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B3988671184F64C004462EE /* NSBezierPath_AMShading.h in Headers */,
 				8B3988691184F64D004462EE /* NSString_AITruncation.h in Headers */,
 				8B39886B1184F64E004462EE /* PSMAdiumTabStyle.h in Headers */,
 				8B39886D1184F650004462EE /* PSMAquaTabStyle.h in Headers */,
@@ -652,7 +645,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B3988681184F64D004462EE /* NSBezierPath_AMShading.m in Sources */,
 				8B39886A1184F64D004462EE /* NSString_AITruncation.m in Sources */,
 				8B39886C1184F64E004462EE /* PSMAdiumTabStyle.m in Sources */,
 				8B39886E1184F651004462EE /* PSMAquaTabStyle.m in Sources */,
