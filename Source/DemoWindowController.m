@@ -99,7 +99,24 @@
 }
 
 - (IBAction)closeTab:(id)sender {
-	[tabView removeTabViewItem:[tabView selectedTabViewItem]];
+
+    NSTabViewItem *tabViewItem = [tabView selectedTabViewItem];
+
+    if (([tabBar delegate]) && ([[tabBar delegate] respondsToSelector:@selector(tabView:shouldCloseTabViewItem:)])) {
+        if(![[tabBar delegate] tabView:tabView shouldCloseTabViewItem:tabViewItem]) {
+            return;
+        }
+    }
+    
+    if (([tabBar delegate]) && ([[tabBar delegate] respondsToSelector:@selector(tabView:willCloseTabViewItem:)])) {
+        [[tabBar delegate] tabView:tabView willCloseTabViewItem:tabViewItem];
+    }
+    
+    [tabView removeTabViewItem:[[tabViewItem retain] autorelease]];
+    
+    if (([tabBar delegate]) && ([[tabBar delegate] respondsToSelector:@selector(tabView:didCloseTabViewItem:)])) {
+        [[tabBar delegate] tabView:tabView didCloseTabViewItem:tabViewItem];
+    }
 }
 
 - (void)stopProcessing:(id)sender {
