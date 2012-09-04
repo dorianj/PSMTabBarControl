@@ -214,7 +214,7 @@ static NSMutableDictionary *registeredStyleClasses;
         [self addObserver:self forKeyPath:@"cells" options:NSKeyValueObservingOptionNew |
             NSKeyValueObservingOptionOld | NSKeyValueObservingOptionInitial context:NULL];
 	}
-	[self setTarget:self];
+//	[self setTarget:self];
 	return self;
 }
 
@@ -1956,7 +1956,7 @@ static NSMutableDictionary *registeredStyleClasses;
 			delegate = [[aDecoder decodeObjectForKey:@"PSMdelegate"] retain];
 		}
 	}
-	[self setTarget:self];
+//	[self setTarget:self];
 	return self;
 }
 

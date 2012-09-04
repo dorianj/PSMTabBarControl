@@ -29,12 +29,12 @@ typedef enum PSMTabBarCellTrackingAreaType : NSUInteger
 @interface PSMTabBarCell : NSActionCell {
 	// sizing
 	NSRect					_frame;
-	NSSize					_stringSize;
+	NSSize					_attributedStringSize;
 	NSInteger				_currentStep;
 	BOOL					_isPlaceholder;
 
 	// state
-	NSInteger				_tabState;
+	PSMTabStateMask		    _tabState;
 	BOOL					_closeButtonOver;
 	BOOL					_closeButtonPressed;
 	PSMProgressIndicator	*_indicator;
@@ -48,7 +48,7 @@ typedef enum PSMTabBarCellTrackingAreaType : NSUInteger
 	BOOL					_isEdited;
 }
 
-@property (assign) NSInteger tabState;
+@property (assign) PSMTabStateMask tabState;
 @property (assign) BOOL hasCloseButton;
 @property (assign) BOOL hasIcon;
 @property (assign) BOOL hasLargeImage;
@@ -69,8 +69,7 @@ typedef enum PSMTabBarCellTrackingAreaType : NSUInteger
 - (CGFloat)width;
 - (NSRect)frame;
 - (void)setFrame:(NSRect)rect;
-- (void)setStringValue:(NSString *)aString;
-- (NSSize)stringSize;
+- (NSSize)attributedStringSize;
 - (NSAttributedString *)attributedStringValue;
 - (NSAttributedString *)attributedObjectCountStringValue;
 - (NSProgressIndicator *)indicator;

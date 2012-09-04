@@ -145,15 +145,16 @@
 	}
 }
 
-- (void)setStringValue:(NSString *)aString {
-	[super setStringValue:aString];
-	_stringSize = [[self attributedStringValue] size];
+- (void)setTitle:(NSString *)aString {
+
+	[super setTitle:aString];
+	_attributedStringSize = [[self attributedStringValue] size];
 	// need to redisplay now - binding observation was too quick.
 	[[self controlView] update];
 }
 
-- (NSSize)stringSize {
-	return _stringSize;
+- (NSSize)attributedStringSize {
+	return _attributedStringSize;
 }
 
 - (NSAttributedString *)attributedStringValue {
@@ -663,7 +664,7 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 	[super encodeWithCoder:aCoder];
 	if([aCoder allowsKeyedCoding]) {
 		[aCoder encodeRect:_frame forKey:@"frame"];
-		[aCoder encodeSize:_stringSize forKey:@"stringSize"];
+		[aCoder encodeSize:_attributedStringSize forKey:@"attributedStringSize"];
 		[aCoder encodeInteger:_currentStep forKey:@"currentStep"];
 		[aCoder encodeBool:_isPlaceholder forKey:@"isPlaceholder"];
 		[aCoder encodeInteger:_tabState forKey:@"tabState"];
@@ -685,7 +686,7 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 	if(self) {
 		if([aDecoder allowsKeyedCoding]) {
 			_frame = [aDecoder decodeRectForKey:@"frame"];
-			_stringSize = [aDecoder decodeSizeForKey:@"stringSize"];
+			_attributedStringSize = [aDecoder decodeSizeForKey:@"attributedStringSize"];
 			_currentStep = [aDecoder decodeIntegerForKey:@"currentStep"];
 			_isPlaceholder = [aDecoder decodeBoolForKey:@"isPlaceholder"];
 			_tabState = [aDecoder decodeIntegerForKey:@"tabState"];
