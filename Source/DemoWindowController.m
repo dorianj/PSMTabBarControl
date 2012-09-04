@@ -15,6 +15,26 @@
 - (void)configureTabBarInitially;
 @end
 
+@interface DemoWindowController(ConfigActions)
+
+// tab bar config
+- (IBAction)configStyle:(id)sender;
+- (IBAction)configOrientation:(id)sender;
+- (IBAction)configCanCloseOnlyTab:(id)sender;
+- (IBAction)configDisableTabClose:(id)sender;
+- (IBAction)configHideForSingleTab:(id)sender;
+- (IBAction)configAddTabButton:(id)sender;
+- (IBAction)configTabMinWidth:(id)sender;
+- (IBAction)configTabMaxWidth:(id)sender;
+- (IBAction)configTabOptimumWidth:(id)sender;
+- (IBAction)configTabSizeToFit:(id)sender;
+- (IBAction)configTearOffStyle:(id)sender;
+- (IBAction)configUseOverflowMenu:(id)sender;
+- (IBAction)configAutomaticallyAnimates:(id)sender;
+- (IBAction)configAllowsScrubbing:(id)sender;
+
+@end
+
 @implementation DemoWindowController
 
 - (void)awakeFromNib {
