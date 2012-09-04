@@ -757,7 +757,8 @@ static NSMutableDictionary *registeredStyleClasses;
 
 	// pull from collection
     NSUInteger cellIndex = [_cells indexOfObjectIdenticalTo:cell];
-	[self removeCellAtIndex:cellIndex];
+    if (cellIndex != NSNotFound)
+        [self removeCellAtIndex:cellIndex];
 
 	[self update];
 }
@@ -766,17 +767,14 @@ static NSMutableDictionary *registeredStyleClasses;
 
     // did cell array change?
     if ([keyPath isEqualToString:@"cells"]) {
-    
         [self updateTrackingAreas];
-    
-    }
 
-	// did the tab's identifier change?
-	if([keyPath isEqualToString:@"identifier"]) {
+    // did the tab's identifier change?
+    } else if([keyPath isEqualToString:@"identifier"]) {
         id oldIdentifier = [change objectForKey: NSKeyValueChangeOldKey];
         
         for (PSMTabBarCell *cell in _cells) {
-			if([cell representedObject] == object) {
+            if([cell representedObject] == object) {
                 // unbind the old value first
                 NSArray *selectors = [NSArray arrayWithObjects: @"isProcessing", @"icon", @"objectCount", @"countColor", @"largeImage", @"isEdited", nil];
                 for (NSString *selector in selectors) {
@@ -785,10 +783,12 @@ static NSMutableDictionary *registeredStyleClasses;
                         [oldIdentifier removeObserver:cell forKeyPath:selector];
                     }
                 }
-				[self _bindPropertiesForCell:cell andTabViewItem:object];
-			}
-		}
-	}
+                [self _bindPropertiesForCell:cell andTabViewItem:object];
+            }
+        }
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 #pragma mark -
