@@ -56,15 +56,11 @@
 @synthesize isPlaceholder = _isPlaceholder;
 @synthesize isEdited = _isEdited;
 @synthesize closeButtonPressed = _closeButtonPressed;
-@synthesize closeButtonTrackingTag = _closeButtonTrackingTag;
-@synthesize cellTrackingTag = _cellTrackingTag;
 
 #pragma mark -
 #pragma mark Creation/Destruction
 - (id)init {
 	if((self = [super init])) {
-		_closeButtonTrackingTag = 0;
-		_cellTrackingTag = 0;
 		_closeButtonOver = NO;
 		_closeButtonPressed = NO;
 		_indicator = [[PSMProgressIndicator alloc] initWithFrame:NSMakeRect(0.0, 0.0, kPSMTabBarIndicatorWidth, kPSMTabBarIndicatorWidth)];
@@ -92,8 +88,6 @@
 			}
 		}
 		[self setFrame:frame];
-		_closeButtonTrackingTag = 0;
-		_cellTrackingTag = 0;
 		_closeButtonOver = NO;
 		_closeButtonPressed = NO;
 		_indicator = nil;
@@ -673,8 +667,6 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 		[aCoder encodeInteger:_currentStep forKey:@"currentStep"];
 		[aCoder encodeBool:_isPlaceholder forKey:@"isPlaceholder"];
 		[aCoder encodeInteger:_tabState forKey:@"tabState"];
-		[aCoder encodeInteger:_closeButtonTrackingTag forKey:@"closeButtonTrackingTag"];
-		[aCoder encodeInteger:_cellTrackingTag forKey:@"cellTrackingTag"];
 		[aCoder encodeBool:_closeButtonOver forKey:@"closeButtonOver"];
 		[aCoder encodeBool:_closeButtonPressed forKey:@"closeButtonPressed"];
 		[aCoder encodeObject:_indicator forKey:@"indicator"];
@@ -697,8 +689,6 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 			_currentStep = [aDecoder decodeIntegerForKey:@"currentStep"];
 			_isPlaceholder = [aDecoder decodeBoolForKey:@"isPlaceholder"];
 			_tabState = [aDecoder decodeIntegerForKey:@"tabState"];
-			_closeButtonTrackingTag = [aDecoder decodeIntegerForKey:@"closeButtonTrackingTag"];
-			_cellTrackingTag = [aDecoder decodeIntegerForKey:@"cellTrackingTag"];
 			_closeButtonOver = [aDecoder decodeBoolForKey:@"closeButtonOver"];
 			_closeButtonPressed = [aDecoder decodeBoolForKey:@"closeButtonPressed"];
 			_indicator = [[aDecoder decodeObjectForKey:@"indicator"] retain];

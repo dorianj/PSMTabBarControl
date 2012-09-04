@@ -35,8 +35,6 @@ typedef enum PSMTabBarCellTrackingRectType : NSUInteger
 
 	// state
 	NSInteger				_tabState;
-	NSTrackingRectTag		_closeButtonTrackingTag; // left side tracking, if dragging
-	NSTrackingRectTag		_cellTrackingTag;		 // right side tracking, if dragging
 	BOOL					_closeButtonOver;
 	BOOL					_closeButtonPressed;
 	PSMProgressIndicator	*_indicator;
@@ -59,8 +57,6 @@ typedef enum PSMTabBarCellTrackingRectType : NSUInteger
 @property (assign) BOOL isPlaceholder;
 @property (assign) BOOL isEdited;
 @property (assign) BOOL closeButtonPressed;
-@property (assign) NSTrackingRectTag closeButtonTrackingTag;
-@property (assign) NSTrackingRectTag cellTrackingTag;
 
 #pragma mark Creation/Destruction
 - (id)init;
@@ -70,8 +66,6 @@ typedef enum PSMTabBarCellTrackingRectType : NSUInteger
 #pragma mark Accessors
 - (PSMTabBarControl *)controlView;
 - (void)setControlView:(PSMTabBarControl *)newControl;
-- (NSTrackingRectTag)cellTrackingTag;
-- (void)setCellTrackingTag:(NSTrackingRectTag)tag;
 - (CGFloat)width;
 - (NSRect)frame;
 - (void)setFrame:(NSRect)rect;
