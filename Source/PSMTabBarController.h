@@ -13,8 +13,6 @@
 @interface PSMTabBarController : NSObject <NSMenuDelegate>
 {
 	PSMTabBarControl	*_control;
-	NSMutableArray		*_cellTrackingRects;
-	NSMutableArray		*_closeButtonTrackingRects;
 	NSMutableArray		*_cellFrames;
 	NSRect				_addButtonRect;
 	NSMenu				*_overflowMenu;
@@ -24,8 +22,6 @@
 
 - (NSRect)addButtonRect;
 - (NSMenu *)overflowMenu;
-- (NSRect)cellTrackingRectAtIndex:(NSInteger)index;
-- (NSRect)closeButtonTrackingRectAtIndex:(NSInteger)index;
 - (NSRect)cellFrameAtIndex:(NSInteger)index;
 
 - (void)setSelectedCell:(PSMTabBarCell *)cell;

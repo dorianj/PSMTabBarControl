@@ -33,8 +33,6 @@
 - (id)initWithTabBarControl:(PSMTabBarControl *)control {
 	if((self = [super init])) {
 		_control = control;
-		_cellTrackingRects = [[NSMutableArray alloc] init];
-		_closeButtonTrackingRects = [[NSMutableArray alloc] init];
 		_cellFrames = [[NSMutableArray alloc] init];
 		_addButtonRect = NSZeroRect;
 	}
@@ -42,8 +40,6 @@
 }
 
 - (void)dealloc {
-	[_cellTrackingRects release];
-	[_closeButtonTrackingRects release];
 	[_cellFrames release];
 	[super dealloc];
 }
@@ -68,44 +64,6 @@
 
 - (NSMenu *)overflowMenu {
 	return _overflowMenu;
-}
-
-/*!
-    @method     cellTrackingRectAtIndex:
-    @abstract   Returns the rect for the tracking rect at the requested index.
-    @discussion Returns the rect for the tracking rect at the requested index.
-    @param      Index of a cell.
-    @returns    The tracking rect of the cell at the requested index.
- */
-
-- (NSRect)cellTrackingRectAtIndex:(NSInteger)index {
-	NSRect rect;
-	if(index > -1 && index < [_cellTrackingRects count]) {
-		rect = [[_cellTrackingRects objectAtIndex:index] rectValue];
-	} else {
-		NSLog(@"cellTrackingRectAtIndex: Invalid index (%ld)", (long)index);
-		rect = NSZeroRect;
-	}
-	return rect;
-}
-
-/*!
-    @method     closeButtonTrackingRectAtIndex:
-    @abstract   Returns the tracking rect for the close button at the requested index.
-    @discussion Returns the tracking rect for the close button at the requested index.
-    @param      Index of a cell.
-    @returns    The close button tracking rect of the cell at the requested index.
- */
-
-- (NSRect)closeButtonTrackingRectAtIndex:(NSInteger)index {
-	NSRect rect;
-	if(index > -1 && index < [_closeButtonTrackingRects count]) {
-		rect = [[_closeButtonTrackingRects objectAtIndex:index] rectValue];
-	} else {
-		NSLog(@"closeButtonTrackingRectAtIndex: Invalid index (%ld)", (long)index);
-		rect = NSZeroRect;
-	}
-	return rect;
 }
 
 /*!
@@ -190,8 +148,6 @@
 		return;
 	}
 
-	[_cellTrackingRects removeAllObjects];
-	[_closeButtonTrackingRects removeAllObjects];
 	[_cellFrames removeAllObjects];
 
 	NSArray *cellWidths = [self _generateWidthsFromCells:cells];
@@ -527,10 +483,6 @@ static NSInteger potentialMinimumForArray(NSArray *array, NSInteger minimum){
 			}
 
 			[_cellFrames addObject:[NSValue valueWithRect:cellRect]];
-
-			//add tracking rects to arrays
-			[_closeButtonTrackingRects addObject:[NSValue valueWithRect:[cell closeButtonRectForBounds:cellRect]]];
-			[_cellTrackingRects addObject:[NSValue valueWithRect:cellRect]];
 
 			if([[cell representedObject] isEqualTo:selectedTabViewItem]) {
 				[cell setState:NSOnState];
