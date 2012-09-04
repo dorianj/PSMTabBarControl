@@ -20,6 +20,12 @@ typedef enum PSMCloseButtonImageType : NSUInteger
     PSMCloseButtonImageTypeDirtyPressed
 } PSMCloseButtonImageType;
 
+typedef enum PSMTabBarCellTrackingRectType : NSUInteger
+{
+    PSMTabBarCellTrackingRectCellFrameType   = 0,
+    PSMTabBarCellTrackingRectCloseButtonType = 1
+} PSMTabBarCellTrackingRectType;
+
 @interface PSMTabBarCell : NSActionCell {
 	// sizing
 	NSRect					_frame;
@@ -114,7 +120,8 @@ typedef enum PSMCloseButtonImageType : NSUInteger
 - (void)drawIndicatorWithFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
 - (void)drawCloseButtonWithFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
 
-#pragma mark Tracking
+#pragma mark Tracking Area Support
+- (void)addTrackingAreasForView:(NSView *)view inRect:(NSRect)cellFrame withUserInfo:(NSDictionary *)userInfo mouseLocation:(NSPoint)currentPoint;
 - (void)mouseEntered:(NSEvent *)theEvent;
 - (void)mouseExited:(NSEvent *)theEvent;
 

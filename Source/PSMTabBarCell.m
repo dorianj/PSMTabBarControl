@@ -530,45 +530,108 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 }
 
 #pragma mark -
-#pragma mark Tracking
+#pragma mark Tracking Area Support
+
+- (void)addTrackingAreasForView:(NSView *)controlView inRect:(NSRect)cellFrame withUserInfo:(NSDictionary *)userInfo mouseLocation:(NSPoint)mouseLocation {
+
+    NSTrackingAreaOptions options = 0;
+    BOOL mouseIsInside = NO;
+    NSTrackingArea *area = nil;
+    NSMutableDictionary *enrichedUserInfo = nil;
+
+    // ---- add tracking area for cell frame ----
+    
+    options = NSTrackingEnabledDuringMouseDrag | NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways;
+
+    mouseIsInside = NSMouseInRect(mouseLocation, cellFrame, [controlView isFlipped]);
+    if (mouseIsInside) {
+        options |= NSTrackingAssumeInside;
+        [controlView setNeedsDisplayInRect:cellFrame];
+    }
+    
+    enrichedUserInfo = [userInfo mutableCopy];
+    [enrichedUserInfo setObject:[NSNumber numberWithInteger:PSMTabBarCellTrackingRectCellFrameType] forKey:@"type"];
+
+    // We make the view the owner, and it delegates the calls back to the cell after it is properly setup for the corresponding row/column in the outlineview
+    area = [[NSTrackingArea alloc] initWithRect:cellFrame options:options owner:controlView userInfo:enrichedUserInfo];
+    [controlView addTrackingArea:area];
+    [area release], area = nil;
+    [enrichedUserInfo release], enrichedUserInfo = nil;
+
+    // ---- add tracking area for close button ----
+    
+    NSRect closeButtonRect = [self closeButtonRectForBounds:cellFrame];
+    if (!NSEqualRects(NSZeroRect, closeButtonRect)) {
+        options = NSTrackingEnabledDuringMouseDrag | NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways;
+
+        mouseIsInside = NSMouseInRect(mouseLocation, closeButtonRect, [controlView isFlipped]);
+        if (mouseIsInside) {
+            options |= NSTrackingAssumeInside;
+            [controlView setNeedsDisplayInRect:cellFrame];
+        }
+
+        enrichedUserInfo = [userInfo mutableCopy];
+        [enrichedUserInfo setObject:[NSNumber numberWithInteger:PSMTabBarCellTrackingRectCloseButtonType] forKey:@"type"];
+        
+        // We make the view the owner, and it delegates the calls back to the cell after it is properly setup for the corresponding row/column in the outlineview
+        area = [[NSTrackingArea alloc] initWithRect:closeButtonRect options:options owner:controlView userInfo:enrichedUserInfo];
+        [controlView addTrackingArea:area];
+        [area release], area = nil;
+
+        [enrichedUserInfo release], enrichedUserInfo = nil;        
+    }
+}
 
 - (void)mouseEntered:(NSEvent *)theEvent {
-	// check for which tag
-	if([theEvent trackingNumber] == _closeButtonTrackingTag) {
-		_closeButtonOver = YES;
-	}
-    
+
     PSMTabBarControl *tabBarControl = [self controlView];
-    
-	if([theEvent trackingNumber] == _cellTrackingTag) {
-		[self setHighlighted:YES];
-		[tabBarControl setNeedsDisplay:NO];
-	}
+    NSDictionary *userInfo = [theEvent userData];
+            
+    NSUInteger type = [[userInfo objectForKey:@"type"] unsignedIntegerValue];
+    switch (type) {
+        case PSMTabBarCellTrackingRectCellFrameType:
 
-	// scrubtastic
-	if([tabBarControl allowsScrubbing] && ([theEvent modifierFlags] & NSAlternateKeyMask)) {
-		[tabBarControl performSelector:@selector(tabClick:) withObject:self];
-	}
+            [self setHighlighted:YES];
+            
+            // scrubtastic
+            if ([tabBarControl allowsScrubbing] && ([theEvent modifierFlags] & NSAlternateKeyMask)) {
+                [tabBarControl performSelector:@selector(tabClick:) withObject:self];
+            }
+            
+            break;
 
-	// tell the control we only need to redraw the affected tab
-	[tabBarControl setNeedsDisplayInRect:NSInsetRect([self frame], -2, -2)];
+        case PSMTabBarCellTrackingRectCloseButtonType:
+            _closeButtonOver = YES;
+            [tabBarControl updateCell:self];            
+            break;
+
+        default:
+            break;
+    }
 }
 
 - (void)mouseExited:(NSEvent *)theEvent {
-	// check for which tag
-	if([theEvent trackingNumber] == _closeButtonTrackingTag) {
-		_closeButtonOver = NO;
-	}
 
     PSMTabBarControl *tabBarControl = [self controlView];
-    
-	if([theEvent trackingNumber] == _cellTrackingTag) {
-		[self setHighlighted:NO];
-		[tabBarControl setNeedsDisplay:NO];
-	}
+    NSDictionary *userInfo = [theEvent userData];
+            
+    NSUInteger type = [[userInfo objectForKey:@"type"] unsignedIntegerValue];
+        
+    switch (type) {
+        case PSMTabBarCellTrackingRectCellFrameType:
 
-	//tell the control we only need to redraw the affected tab
-	[tabBarControl setNeedsDisplayInRect:NSInsetRect([self frame], -2, -2)];
+            [self setHighlighted:NO];
+            
+            break;
+
+        case PSMTabBarCellTrackingRectCloseButtonType:
+            _closeButtonOver = NO;
+            [tabBarControl updateCell:self];
+            break;
+
+        default:
+            break;
+    }  
 }
 
 #pragma mark -
