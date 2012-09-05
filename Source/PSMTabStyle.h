@@ -19,11 +19,6 @@
 + (NSString *)name;
 - (NSString *)name;
 
-// control specific parameters
-- (CGFloat)leftMarginForTabBarControl;
-- (CGFloat)rightMarginForTabBarControl;
-- (CGFloat)topMarginForTabBarControl;
-
 // add tab button
 - (NSImage *)addTabButtonImage;
 - (NSImage *)addTabButtonPressedImage;
@@ -33,6 +28,14 @@
 - (NSRect)dragRectForTabCell:(PSMTabBarCell *)cell ofTabBarControl:(PSMTabBarControl *)tabBarControl;
 
 @optional
+
+// control specific parameters
+- (CGFloat)leftMarginForTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (CGFloat)rightMarginForTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (CGFloat)topMarginForTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (CGFloat)bottomMarginForTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (NSRect)addTabButtonRectForTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (NSRect)overflowButtonRectForTabBarControl:(PSMTabBarControl *)tabBarControl;
 
 // cell values
 - (NSAttributedString *)attributedObjectCountStringValueForTabCell:(PSMTabBarCell *)cell;
@@ -57,7 +60,6 @@
 - (NSRect)closeButtonRectForBounds:(NSRect)theRect ofTabCell:(PSMTabBarCell *)cell;
 
 // Drawing
-
 - (void)drawTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect;
 - (void)drawBezelOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect;
 - (void)drawInteriorOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect;
@@ -85,4 +87,7 @@
 - (CGFloat)tabCellHeight DEPRECATED_ATTRIBUTE;
 - (NSRect)dragRectForTabCell:(PSMTabBarCell *)cell orientation:(PSMTabBarOrientation)orientation DEPRECATED_ATTRIBUTE;
 - (NSAttributedString *)attributedObjectCountValueForTabCell:(PSMTabBarCell *)cell DEPRECATED_ATTRIBUTE;
+- (CGFloat)leftMarginForTabBarControl DEPRECATED_ATTRIBUTE;
+- (CGFloat)rightMarginForTabBarControl DEPRECATED_ATTRIBUTE;
+- (CGFloat)topMarginForTabBarControl DEPRECATED_ATTRIBUTE;
 @end
