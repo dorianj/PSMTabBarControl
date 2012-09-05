@@ -842,17 +842,27 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
     
     NSSize scaledIconSize = [self scaleImageWithSize:iconSize toFitInSize:NSMakeSize(iconSize.width, constrainedDrawingRect.size.height) scalingType:NSImageScaleProportionallyDown];
 
-    NSRect result = NSMakeRect(constrainedDrawingRect.origin.x,
-                                         constrainedDrawingRect.origin.y - ((constrainedDrawingRect.size.height - scaledIconSize.height) / 2),
-                                         scaledIconSize.width, scaledIconSize.height);
-                                         
-    // center in available space (in case icon image is smaller than kPSMTabBarIconWidth)
-    if(scaledIconSize.width < kPSMTabBarIconWidth) {
-        result.origin.x += ceil((kPSMTabBarIconWidth - scaledIconSize.width) / 2.0);
-    }
+    NSRect result;
+    
+    // icon only
+    if ([[self title] length] == 0 && ![self shouldDrawObjectCounter] && [[self indicator] isHidden]) {
+        result = NSMakeRect(constrainedDrawingRect.origin.x+(constrainedDrawingRect.size.width - scaledIconSize.width)/2,
+            constrainedDrawingRect.origin.y + ((constrainedDrawingRect.size.height - scaledIconSize.height) / 2),
+            scaledIconSize.width, scaledIconSize.height);
+    // icon 
+    } else {
+        result = NSMakeRect(constrainedDrawingRect.origin.x,
+                                             constrainedDrawingRect.origin.y + ((constrainedDrawingRect.size.height - scaledIconSize.height) / 2),
+                                             scaledIconSize.width, scaledIconSize.height);
+                                             
+        // center in available space (in case icon image is smaller than kPSMTabBarIconWidth)
+        if(scaledIconSize.width < kPSMTabBarIconWidth) {
+            result.origin.x += ceil((kPSMTabBarIconWidth - scaledIconSize.width) / 2.0);
+        }
 
-    if(scaledIconSize.height < kPSMTabBarIconWidth) {
-        result.origin.y -= ceil((kPSMTabBarIconWidth - scaledIconSize.height) / 2.0 - 0.5);
+        if(scaledIconSize.height < kPSMTabBarIconWidth) {
+            result.origin.y += ceil((kPSMTabBarIconWidth - scaledIconSize.height) / 2.0 - 0.5);
+        }
     }
 
     return NSIntegralRect(result);

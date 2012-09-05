@@ -275,7 +275,7 @@
     }
 
     if(scaledIconSize.height < kPSMTabBarIconWidth) {
-        result.origin.y -= ceil((kPSMTabBarIconWidth - scaledIconSize.height) / 2.0 - 0.5);
+        result.origin.y += ceil((kPSMTabBarIconWidth - scaledIconSize.height) / 2.0 - 0.5);
     }
 
     return NSIntegralRect(result);    
