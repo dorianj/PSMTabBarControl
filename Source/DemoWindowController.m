@@ -428,6 +428,8 @@
 //	[tabViewImage compositeToPoint:tabOrigin operation:NSCompositeSourceOver];
 	[viewImage unlockFocus];
 
+    PSMTabBarControl *tabBarControl = (PSMTabBarControl*)[aTabView delegate];
+    
 	//draw over where the tab bar would usually be
 	NSRect tabFrame = [tabBar frame];
 	[viewImage lockFocus];
@@ -438,19 +440,18 @@
 	[transform scaleXBy:1.0 yBy:-1.0];
 	[transform concat];
 	tabFrame.origin.y = -tabFrame.origin.y - tabFrame.size.height;
-    PSMTabBarControl *tabBarControl = (PSMTabBarControl*)[aTabView delegate];
 	[[tabBarControl style] drawBezelOfTabBarControl:tabBarControl inRect:tabFrame];
 	[transform invert];
 	[transform concat];
 
 	[viewImage unlockFocus];
 
-	if([(PSMTabBarControl *)[aTabView delegate] orientation] == PSMTabBarHorizontalOrientation) {
-		offset->width = [(id < PSMTabStyle >)[(PSMTabBarControl*)[aTabView delegate] style] leftMarginForTabBarControl];
+	if([tabBarControl orientation] == PSMTabBarHorizontalOrientation) {
+		offset->width = [(id < PSMTabStyle >)[tabBarControl style] leftMarginForTabBarControl:tabBarControl];
 		offset->height = 22;
 	} else {
 		offset->width = 0;
-		offset->height = 22 + [(id < PSMTabStyle >)[(PSMTabBarControl*)[aTabView delegate] style] leftMarginForTabBarControl];
+		offset->height = 22 + [(id < PSMTabStyle >)[tabBarControl style] leftMarginForTabBarControl:tabBarControl];
 	}
 
 	if(styleMask) {
@@ -465,11 +466,14 @@
 
 	//create a new window controller with no tab items
 	DemoWindowController *controller = [[DemoWindowController alloc] initWithWindowNibName:@"DemoWindow"];
-	id <PSMTabStyle> style = (id <PSMTabStyle>)[(PSMTabBarControl*)[aTabView delegate] style];
+    
+    PSMTabBarControl *tabBarControl = (PSMTabBarControl*)[aTabView delegate];
+    
+	id <PSMTabStyle> style = (id <PSMTabStyle>)[tabBarControl style];
 
 	NSRect windowFrame = [[controller window] frame];
 	point.y += windowFrame.size.height - [[[controller window] contentView] frame].size.height;
-	point.x -= [style leftMarginForTabBarControl];
+	point.x -= [style leftMarginForTabBarControl:tabBarControl];
 
 	[[controller window] setFrameTopLeftPoint:point];
 	[[controller tabBar] setStyle:style];
