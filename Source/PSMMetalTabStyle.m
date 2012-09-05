@@ -151,7 +151,7 @@
 
 - (NSAttributedString *)attributedStringValueForTabCell:(PSMTabBarCell *)cell {
 	NSMutableAttributedString *attrStr;
-	NSString *contents = [cell stringValue];
+	NSString *contents = [cell title];
 	attrStr = [[[NSMutableAttributedString alloc] initWithString:contents] autorelease];
 	NSRange range = NSMakeRange(0, [contents length]);
 

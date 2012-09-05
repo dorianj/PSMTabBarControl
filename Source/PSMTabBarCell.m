@@ -723,7 +723,7 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 		attributeValue = [self title];
 	} else if([attribute isEqualToString: NSAccessibilityHelpAttribute]) {
 		if([[[self controlView] delegate] respondsToSelector:@selector(accessibilityStringForTabView:objectCount:)]) {
-			attributeValue = [NSString stringWithFormat:@"%@, %lu %@", [self stringValue],
+			attributeValue = [NSString stringWithFormat:@"%@, %lu %@", [self title],
 							  (unsigned long)[self count],
 							  [[[self controlView] delegate] accessibilityStringForTabView:[[self controlView] tabView] objectCount:[self count]]];
 		} else {
@@ -1070,7 +1070,7 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 - (NSAttributedString *)_attributedStringValue {
 
 	NSMutableAttributedString *attrStr;
-	NSString *contents = [self stringValue];
+	NSString *contents = [self title];
 	attrStr = [[[NSMutableAttributedString alloc] initWithString:contents] autorelease];
 	NSRange range = NSMakeRange(0, [contents length]);
 
