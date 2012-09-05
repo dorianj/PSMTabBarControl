@@ -11,72 +11,33 @@
 
 @implementation DemoFakeModel
 
+@synthesize largeImage = _largeImage;
+@synthesize icon = _icon;
+@synthesize iconName = _iconName;
+
+@synthesize isProcessing = _isProcessing;
+@synthesize objectCount = _objectCount;
+@synthesize isEdited = _isEdited;
+
 - (id)init {
 	if((self = [super init])) {
 		_isProcessing = NO;
 		_icon = nil;
 		_iconName = nil;
+        _largeImage = nil;
 		_objectCount = 2;
 		_isEdited = NO;
 	}
 	return self;
 }
 
+-(void)dealloc {
+    
+    [_icon release], _icon = nil;
+    [_iconName release], _iconName = nil;
+    [_largeImage release], _largeImage = nil;
 
-// accessors
-- (BOOL)isProcessing {
-	return _isProcessing;
-}
-
-- (void)setIsProcessing:(BOOL)value {
-	_isProcessing = value;
-}
-
-- (NSImage *)icon {
-	return _icon;
-}
-
-- (void)setIcon:(NSImage *)icon {
-	[icon retain];
-	[_icon release];
-	_icon = icon;
-}
-
-- (NSString *)iconName {
-	return _iconName;
-}
-
-- (void)setIconName:(NSString *)iconName {
-	[iconName retain];
-	[_iconName release];
-	_iconName = iconName;
-}
-
-- (NSInteger)objectCount {
-	return _objectCount;
-}
-
-- (void)setObjectCount:(NSInteger)value {
-	_objectCount = value;
-}
-
-- (BOOL)isEdited {
-	return _isEdited;
-}
-
-- (void)setIsEdited:(BOOL)value {
-	_isEdited = value;
-}
-
-
-- (NSImage *)largeImage {
-	return [NSImage imageNamed:@"largeImage"];
-}
-
-- (void)setLargeImage:(NSImage *)icon {
-	[icon retain];
-	[_icon release];
-	_icon = icon;
+    [super dealloc];
 }
 
 @end

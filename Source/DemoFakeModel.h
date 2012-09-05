@@ -8,28 +8,24 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface DemoFakeModel : NSObject {
-	BOOL						_isProcessing;
-	NSImage					*_icon;
-	NSString					*_iconName;
-	NSInteger					_objectCount;
-	BOOL						_isEdited;
+	BOOL        _isProcessing;
+	NSImage     *_icon;
+    NSImage     *_largeImage;
+	NSString    *_iconName;
+	NSInteger   _objectCount;
+	BOOL        _isEdited;
 }
 
-// creation/destruction
-- (id)init;
+@property (retain) NSImage *largeImage;
+@property (retain) NSImage *icon;
+@property (retain) NSString *iconName;
 
-// accessors
-- (BOOL)isProcessing;
-- (void)setIsProcessing:(BOOL)value;
-- (NSImage *)icon;
-- (void)setIcon:(NSImage *)icon;
-- (NSString *)iconName;
-- (void)setIconName:(NSString *)iconName;
-- (NSInteger)objectCount;
-- (void)setObjectCount:(NSInteger)value;
-- (BOOL)isEdited;
-- (void)setIsEdited:(BOOL)value;
+@property (assign) BOOL isProcessing;
+@property (assign) NSInteger objectCount;
+@property (assign) BOOL isEdited;
+
+// designated initializer
+- (id)init;
 
 @end
