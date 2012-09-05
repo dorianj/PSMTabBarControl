@@ -11,6 +11,7 @@
 @interface PSMTabBarControl(SharedPrivates)
 
 - (void)_drawInteriorInRect:(NSRect)rect;
+- (NSRect)_addTabButtonRect;
 
 @end
 
@@ -65,11 +66,15 @@
 #pragma mark -
 #pragma mark Control Specific
 
-- (CGFloat)rightMarginForTabBarControl {
-	return 24.0f;
+- (CGFloat)leftMarginForTabBarControl:(PSMTabBarControl *)tabBarControl {
+	return _leftMargin;
 }
 
-- (CGFloat)topMarginForTabBarControl {
+- (CGFloat)rightMarginForTabBarControl:(PSMTabBarControl *)tabBarControl {
+    return _leftMargin;
+}
+
+- (CGFloat)topMarginForTabBarControl:(PSMTabBarControl *)tabBarControl {
 	return 10.0f;
 }
 

@@ -34,7 +34,6 @@
 	if((self = [super init])) {
 		_control = control;
 		_cellFrames = [[NSMutableArray alloc] init];
-		_addButtonRect = NSZeroRect;
 	}
 	return self;
 }
@@ -42,17 +41,6 @@
 - (void)dealloc {
 	[_cellFrames release];
 	[super dealloc];
-}
-
-/*!
-    @method     addButtonRect
-    @abstract   Returns the position for the add tab button.
-    @discussion Returns the position for the add tab button.
-    @returns    The rect  for the add button rect.
- */
-
-- (NSRect)addButtonRect {
-	return _addButtonRect;
 }
 
 /*!
@@ -152,22 +140,6 @@
 
 	NSArray *cellWidths = [self _generateWidthsFromCells:cells];
 	[self _setupCells:cells withWidths:cellWidths];
-
-	//set up the rect from the add tab button
-	_addButtonRect = [_control genericCellRect];
-	_addButtonRect.size = [[_control addTabButton] frame].size;
-	if([_control orientation] == PSMTabBarHorizontalOrientation) {
-		_addButtonRect.origin.y = MARGIN_Y;
-		_addButtonRect.origin.x += [[cellWidths valueForKeyPath:@"@sum.floatValue"] doubleValue] + 2;
-	} else {
-        if ([cells count] > 0) {
-            _addButtonRect.origin.x = kPSMTabBarCellPadding;
-            _addButtonRect.origin.y = [[cellWidths lastObject] doubleValue] + NSHeight([self cellFrameAtIndex:[cells count]-1]);
-        } else {
-            _addButtonRect.origin.x = 0.0;
-            _addButtonRect.origin.y = 0.0;
-        }
-	}
 }
 
 /*!
@@ -240,16 +212,11 @@ static NSInteger potentialMinimumForArray(NSArray *array, NSInteger minimum){
 	NSMutableArray *newWidths = [NSMutableArray arrayWithCapacity:cellCount];
 	id <PSMTabStyle> style = [_control style];
 	CGFloat availableWidth = [_control availableCellWidth], currentOrigin = 0, totalOccupiedWidth = 0.0, width;
-	NSRect cellRect = [_control genericCellRect], controlRect = [_control frame];
+	NSRect cellRect = [_control genericCellRect];
 	PSMTabBarCell *currentCell;
 
 	if([_control orientation] == PSMTabBarVerticalOrientation) {
-		currentOrigin = [style topMarginForTabBarControl];
-	}
-
-	//Don't let cells overlap the add tab button if it is visible
-	if([_control showAddTabButton]) {
-		availableWidth -= [self addButtonRect].size.width;
+		currentOrigin = [style topMarginForTabBarControl:_control];
 	}
 
 	for(i = 0; i < cellCount; i++) {
@@ -411,17 +378,12 @@ static NSInteger potentialMinimumForArray(NSArray *array, NSInteger minimum){
 			}
 		} else {
 			//lay out vertical tabs
-			if(currentOrigin + cellRect.size.height <= controlRect.size.height) {
+			if(currentOrigin + cellRect.size.height <= [_control availableCellHeight]) {
 				[newWidths addObject:[NSNumber numberWithDouble:currentOrigin]];
 				numberOfVisibleCells++;
 				currentOrigin += cellRect.size.height;
 			} else {
-				//out of room, the remaining tabs go into overflow
-				if([newWidths count] > 0 && controlRect.size.height - currentOrigin < 17) {
-					[newWidths removeLastObject];
-					numberOfVisibleCells--;
-				}
-				break;
+                break;
 			}
 		}
 	}
@@ -521,7 +483,10 @@ static NSInteger potentialMinimumForArray(NSArray *array, NSInteger minimum){
 			}
 
 			// next...
-			cellRect.origin.x += [[widths objectAtIndex:i] doubleValue];
+            if ([_control orientation] == PSMTabBarHorizontalOrientation)
+                cellRect.origin.x += [[widths objectAtIndex:i] doubleValue];
+            else
+                cellRect.origin.y += cellRect.size.height;
 		} else {
 			[cell setState:NSOffState];
 			[cell setIsInOverflowMenu:YES];
@@ -529,7 +494,7 @@ static NSInteger potentialMinimumForArray(NSArray *array, NSInteger minimum){
 
 			//position the cell well offscreen
 			if([_control orientation] == PSMTabBarHorizontalOrientation) {
-				cellRect.origin.x += [[_control style] rightMarginForTabBarControl] + 20;
+				cellRect.origin.x += [[_control style] rightMarginForTabBarControl:_control] + 20;
 			} else {
 				cellRect.origin.y = [_control frame].size.height + 2;
 			}

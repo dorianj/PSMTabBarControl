@@ -84,15 +84,15 @@
 #pragma mark -
 #pragma mark Control Specifics
 
-- (CGFloat)leftMarginForTabBarControl {
+- (CGFloat)leftMarginForTabBarControl:(PSMTabBarControl *)tabBarControl {
 	return 0.0f;
 }
 
-- (CGFloat)rightMarginForTabBarControl {
-	return 24.0f;
+- (CGFloat)rightMarginForTabBarControl:(PSMTabBarControl *)tabBarControl {
+	return 0.0f;
 }
 
-- (CGFloat)topMarginForTabBarControl {
+- (CGFloat)topMarginForTabBarControl:(PSMTabBarControl *)tabBarControl {
 	return 0.0f;
 }
 

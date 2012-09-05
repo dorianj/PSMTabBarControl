@@ -14,13 +14,11 @@
 {
 	PSMTabBarControl	*_control;
 	NSMutableArray		*_cellFrames;
-	NSRect				_addButtonRect;
 	NSMenu				*_overflowMenu;
 }
 
 - (id)initWithTabBarControl:(PSMTabBarControl *)control;
 
-- (NSRect)addButtonRect;
 - (NSMenu *)overflowMenu;
 - (NSRect)cellFrameAtIndex:(NSInteger)index;
 

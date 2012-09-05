@@ -656,14 +656,14 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 	BOOL removeFlag = YES;
 	NSArray *cells = [tabBarControl cells];
 	NSInteger i, cellCount = [cells count];
-	CGFloat position = [tabBarControl orientation] == PSMTabBarHorizontalOrientation ?[[tabBarControl style] leftMarginForTabBarControl] :[[tabBarControl style] topMarginForTabBarControl];
+	CGFloat position = [tabBarControl orientation] == PSMTabBarHorizontalOrientation ?[[tabBarControl style] leftMarginForTabBarControl:tabBarControl] :[[tabBarControl style] topMarginForTabBarControl:tabBarControl];
 
 	// identify target cell
 	// mouse at beginning of tabs
 	NSPoint mouseLoc = [self currentMouseLoc];
 	if([self destinationTabBar] == tabBarControl) {
 		removeFlag = NO;
-		if(mouseLoc.x < [[tabBarControl style] leftMarginForTabBarControl]) {
+		if(mouseLoc.x < [[tabBarControl style] leftMarginForTabBarControl:tabBarControl]) {
 			[self setTargetCell:[cells objectAtIndex:0]];
 		} else {
 			NSRect overCellRect;

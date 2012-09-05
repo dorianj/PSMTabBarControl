@@ -127,6 +127,7 @@ typedef enum PSMTabStateMask : NSUInteger {
 
 + (NSBundle *)bundle;
 - (CGFloat)availableCellWidth;
+- (CGFloat)availableCellHeight;
 - (NSRect)genericCellRect;
 
 #pragma mark Style Class Registry
@@ -195,6 +196,19 @@ typedef enum PSMTabStateMask : NSUInteger {
 - (void)setDelegate:(id<PSMTabBarControlDelegate>)object;
 - (id)partnerView;
 - (void)setPartnerView:(id)view;
+
+#pragma mark -
+#pragma mark Determining Sizes
+
+- (NSRect)addTabButtonRect;
+
+#pragma mark -
+#pragma mark Determining Margins
+
+- (CGFloat)rightMargin;
+- (CGFloat)leftMargin;
+- (CGFloat)topMargin;
+- (CGFloat)bottomMargin;
 
 #pragma mark The Buttons
 

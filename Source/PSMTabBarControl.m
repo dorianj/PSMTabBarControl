@@ -23,6 +23,12 @@
 @interface PSMTabBarControl (/*Private*/)
 
 - (CGFloat)_heightOfTabCells;
+- (CGFloat)_rightMargin;
+- (CGFloat)_leftMargin;
+- (CGFloat)_topMargin;
+- (CGFloat)_bottomMargin;
+- (NSRect)_addTabButtonRect;
+- (NSRect)_overflowButtonRect;
 - (void)_drawTabBarControlInRect:(NSRect)aRect;
 - (void)_drawBezelInRect:(NSRect)rect;
 - (void)_drawInteriorInRect:(NSRect)rect;
@@ -92,6 +98,7 @@ static NSMutableDictionary *registeredStyleClasses;
 
 #pragma mark -
 #pragma mark Characteristics
+
 + (NSBundle *)bundle;
 {
 	static NSBundle *bundle = nil;
@@ -109,7 +116,50 @@ static NSMutableDictionary *registeredStyleClasses;
  */
 
 - (CGFloat)availableCellWidth {
-	return [self frame].size.width - [style leftMarginForTabBarControl] - [style rightMarginForTabBarControl] - _resizeAreaCompensation;
+
+    CGFloat result = [self frame].size.width - [self leftMargin] - [self rightMargin];
+    
+    result -= _resizeAreaCompensation;
+    
+	//Don't let cells overlap the add tab button if it is visible
+	if ([self showAddTabButton]) {
+		result -= [self addTabButtonRect].size.width + 2*kPSMTabBarCellPadding;         
+	}
+
+	//let room for overflow popup button
+    if ([self useOverflowMenu] && ![[self overflowPopUpButton] isHidden]) {
+		result -= [self overflowButtonRect].size.width + kPSMTabBarCellPadding;
+        
+        if (![self showAddTabButton])
+            result -= kPSMTabBarCellPadding;
+    }
+    
+    return result;
+}
+/*!
+    @method     availableCellHeight
+    @abstract   The number of pixels available for cells
+    @discussion Calculates the number of pixels available for cells based on margins and the window resize badge.
+    @returns    Returns the amount of space for cells.
+ */
+
+- (CGFloat)availableCellHeight {
+
+    CGFloat result = [self bounds].size.height - [self topMargin] - [self bottomMargin];
+    
+    result -= _resizeAreaCompensation;
+        
+	//Don't let cells overlap the add tab button if it is visible
+	if ([self showAddTabButton]) {
+		result -= [self addTabButtonRect].size.height;
+	}
+
+	//let room for overflow popup button
+    if ([self useOverflowMenu] && ![[self overflowPopUpButton] isHidden]) {
+		result -= [self overflowButtonRect].size.height;        
+    }
+    
+    return result;
 }
 
 /*!
@@ -121,7 +171,7 @@ static NSMutableDictionary *registeredStyleClasses;
 
 - (NSRect)genericCellRect {
 	NSRect aRect = [self frame];
-	aRect.origin.x = [style leftMarginForTabBarControl];
+	aRect.origin.x = [self leftMargin];
 	aRect.origin.y = 0.0;
 	aRect.size.width = [self availableCellWidth];
 	aRect.size.height = [self heightOfTabCells];
@@ -160,7 +210,7 @@ static NSMutableDictionary *registeredStyleClasses;
 	style = [[PSMMetalTabStyle alloc] init];
 
 	// the overflow button/menu
-	NSRect overflowButtonRect = NSMakeRect([self frame].size.width - [style rightMarginForTabBarControl] + 1, 0, [style rightMarginForTabBarControl] - 1, [self frame].size.height);
+	NSRect overflowButtonRect = [self overflowButtonRect];
 	_overflowPopUpButton = [[PSMOverflowPopUpButton alloc] initWithFrame:overflowButtonRect pullsDown:YES];
 	[_overflowPopUpButton setAutoresizingMask:NSViewNotSizable | NSViewMinXMargin];
 	[_overflowPopUpButton setHidden:YES];
@@ -168,7 +218,7 @@ static NSMutableDictionary *registeredStyleClasses;
 	[self _positionOverflowMenu];
 
 	// new tab button
-	NSRect addTabButtonRect = NSMakeRect([self frame].size.width - [style rightMarginForTabBarControl] + 1, 3.0, 16.0, 16.0);
+	NSRect addTabButtonRect = [self addTabButtonRect];
 	_addTabButton = [[PSMRolloverButton alloc] initWithFrame:addTabButtonRect];
 	if(_addTabButton) {
 		NSImage *newButtonImage = [style addTabButtonImage];
@@ -524,8 +574,8 @@ static NSMutableDictionary *registeredStyleClasses;
 
 - (void)setShowAddTabButton:(BOOL)value {
 	_showAddTabButton = value;
-	if(!NSIsEmptyRect([_controller addButtonRect])) {
-		[_addTabButton setFrame:[_controller addButtonRect]];
+	if(!NSIsEmptyRect([self addTabButtonRect])) {
+		[_addTabButton setFrame:[self addTabButtonRect]];
 	}
 
 	[_addTabButton setHidden:!_showAddTabButton];
@@ -1042,6 +1092,86 @@ static NSMutableDictionary *registeredStyleClasses;
 }
 
 #pragma mark -
+#pragma mark Determining Sizes
+
+- (NSRect)addTabButtonRect {
+    
+    NSRect theRect;
+    
+    if ([style respondsToSelector:@selector(addTabButtonRectForTabBarControl:)]) {
+        theRect = [style addTabButtonRectForTabBarControl:self];
+    } else {
+        theRect = [self _addTabButtonRect];
+    }
+
+    return theRect;
+}
+
+- (NSRect)overflowButtonRect {
+
+    NSRect theRect;
+    
+    if ([style respondsToSelector:@selector(overflowButtonRectForTabBarControl:)]) {
+        theRect = [style overflowButtonRectForTabBarControl:self];
+    } else {
+        theRect = [self _overflowButtonRect];
+    }
+
+    return theRect;
+}
+
+#pragma mark -
+#pragma mark Determining Margins
+
+- (CGFloat)rightMargin {
+    CGFloat margin = 0.0;
+    
+    if ([style respondsToSelector:@selector(rightMarginForTabBarControl:)]) {
+        margin = [style rightMarginForTabBarControl:self];
+    } else {
+        margin = [self _rightMargin];
+    }
+
+    return margin;
+}
+
+- (CGFloat)leftMargin {
+    CGFloat margin = 0.0;
+    
+    if ([style respondsToSelector:@selector(leftMarginForTabBarControl:)]) {
+        margin = [style leftMarginForTabBarControl:self];
+    } else {
+        margin = [self _leftMargin];
+    }
+
+    return margin;
+}
+
+- (CGFloat)topMargin {
+    CGFloat margin = 0.0;
+    
+    if ([style respondsToSelector:@selector(topMarginForTabBarControl:)]) {
+        margin = [style topMarginForTabBarControl:self];
+    } else {
+        margin = [self _topMargin];
+    }
+
+    return margin;
+}
+
+- (CGFloat)bottomMargin {
+    CGFloat margin = 0.0;
+    
+    if ([style respondsToSelector:@selector(bottomMarginForTabBarControl:)]) {
+        margin = [style bottomMarginForTabBarControl:self];
+    } else {
+        margin = [self _bottomMargin];
+    }
+
+    return margin;
+}
+
+#pragma mark -
 #pragma mark Drawing
 
 - (BOOL)isFlipped {
@@ -1063,7 +1193,7 @@ static NSMutableDictionary *registeredStyleClasses;
         [style drawBezelOfTabBarControl:self inRect:rect];
     } else {
         [self _drawBezelInRect:rect];
-    }
+    }    
 }
 
 - (void)drawInteriorInRect:(NSRect)rect {
@@ -1133,7 +1263,7 @@ static NSMutableDictionary *registeredStyleClasses;
 			[currentCell setFrame:[_controller cellFrameAtIndex:i]];
 		}
 
-		[_addTabButton setFrame:[_controller addButtonRect]];
+		[_addTabButton setFrame:[self addTabButtonRect]];
 		[_addTabButton setHidden:!_showAddTabButton];
         [self updateTrackingAreas];
 		[self setNeedsDisplay:YES];
@@ -1177,7 +1307,7 @@ static NSMutableDictionary *registeredStyleClasses;
 
 		if(_showAddTabButton) {
 			//animate the add tab button
-			NSRect target = [_controller addButtonRect], frame = [_addTabButton frame];
+			NSRect target = [self addTabButtonRect], frame = [_addTabButton frame];
 			frame.origin.x += (target.origin.x - frame.origin.x) * [animation currentProgress];
 			frame.origin.y += (target.origin.y - frame.origin.y) * [animation currentProgress]            ;
 			[_addTabButton setFrame:frame];
@@ -1209,7 +1339,7 @@ static NSMutableDictionary *registeredStyleClasses;
 
 		//set the frame for the add tab button
 		if(_showAddTabButton) {
-            [_addTabButton setFrame:[_controller addButtonRect]];
+            [_addTabButton setFrame:[self addTabButtonRect]];
 		}
 
 		[_animationTimer invalidate];
@@ -1222,22 +1352,9 @@ static NSMutableDictionary *registeredStyleClasses;
 }
 
 - (void)_positionOverflowMenu {
-	NSRect cellRect, frame = [self frame];
-	cellRect.size.height = [self heightOfTabCells];
-	cellRect.size.width = [style rightMarginForTabBarControl];
 
-	if([self orientation] == PSMTabBarHorizontalOrientation) {
-		cellRect.origin.y = 0;
-		cellRect.origin.x = frame.size.width - [style rightMarginForTabBarControl] + (_resizeAreaCompensation ? -(_resizeAreaCompensation - 1) : 1);
-		[_overflowPopUpButton setAutoresizingMask:NSViewNotSizable | NSViewMinXMargin];
-	} else {
-		cellRect.origin.x = 0;
-		cellRect.origin.y = frame.size.height - [self heightOfTabCells];
-		cellRect.size.width = frame.size.width;
-		[_overflowPopUpButton setAutoresizingMask:NSViewNotSizable | NSViewMinXMargin | NSViewMinYMargin];
-	}
-
-	[_overflowPopUpButton setFrame:cellRect];
+    NSRect buttonRect = [self overflowButtonRect];
+    [_overflowPopUpButton setFrame:buttonRect];   
 }
 
 - (void)_checkWindowFrame {
@@ -2075,10 +2192,16 @@ static NSMutableDictionary *registeredStyleClasses;
 	NSInteger i, cellCount = [_cells count];
 	for(i = 0; i < cellCount; i++) {
 		if([[_cells objectAtIndex:i] isInOverflowMenu]) {
-			return [_cells objectAtIndex:(i - 1)];
+            if (i == 0)
+                return nil;
+            else
+                return [_cells objectAtIndex:(i - 1)];
 		}
 	}
-	return [_cells objectAtIndex:(cellCount - 1)];
+    if (cellCount > 0)
+        return [_cells objectAtIndex:(cellCount - 1)];
+    else
+        return nil;
 }
 
 - (NSInteger)numberOfVisibleTabs {
@@ -2144,6 +2267,74 @@ static NSMutableDictionary *registeredStyleClasses;
 
 - (CGFloat)_heightOfTabCells {
     return kPSMTabBarControlHeight;
+}
+
+- (CGFloat)_rightMargin {
+    return MARGIN_X;
+}
+
+- (CGFloat)_leftMargin {
+    return MARGIN_X;
+}
+
+- (CGFloat)_topMargin {
+    return MARGIN_Y;
+}
+
+- (CGFloat)_bottomMargin {
+    return MARGIN_Y;
+}
+
+- (NSRect)_addTabButtonRect {
+    
+    if ([[self addTabButton] isHidden])
+        return NSZeroRect;
+
+    NSRect theRect;
+    NSSize buttonSize;
+    
+    if ([self orientation] == PSMTabBarHorizontalOrientation) {
+        buttonSize = NSMakeSize(12.0,[self frame].size.height);
+        
+        CGFloat xOffset = kPSMTabBarCellPadding;
+        PSMTabBarCell *lastVisibleTab = [self lastVisibleTab];
+        if (lastVisibleTab)
+            xOffset += NSMaxX([lastVisibleTab frame]);
+        
+        theRect = NSMakeRect(xOffset, NSMinY([self bounds]), buttonSize.width, buttonSize.height);
+    } else {
+        buttonSize = NSMakeSize([self frame].size.width,18.0);
+        
+        CGFloat yOffset = 0;
+        PSMTabBarCell *lastVisibleTab = [self lastVisibleTab];
+        if (lastVisibleTab)
+            yOffset += NSMaxY([lastVisibleTab frame]);
+        
+        theRect = NSMakeRect(NSMinX([self bounds]), yOffset, buttonSize.width, buttonSize.height);
+    }
+            
+    return theRect;
+}
+
+- (NSRect)_overflowButtonRect {
+
+    if ([[self overflowPopUpButton] isHidden])
+        return NSZeroRect;
+
+    NSRect theRect;
+    NSSize buttonSize;
+    
+    if ([self orientation] == PSMTabBarHorizontalOrientation) {
+        buttonSize = NSMakeSize(12.0,[self frame].size.height);
+        
+        theRect = NSMakeRect(NSMaxX([self bounds]) - [self rightMargin] - buttonSize.width -kPSMTabBarCellPadding, 0.0, buttonSize.width, buttonSize.height);
+    } else {
+        buttonSize = NSMakeSize([self frame].size.width,18.0);
+        
+        theRect = NSMakeRect(NSMinX([self bounds]), NSMaxY([self bounds]) - [self bottomMargin] - buttonSize.height, buttonSize.width, buttonSize.height);
+    }
+
+    return theRect;
 }
 
 - (void)_drawTabBarControlInRect:(NSRect)aRect {
