@@ -217,6 +217,7 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 }
 
 - (void)draggingUpdatedInTabBarControl:(PSMTabBarControl *)tabBarControl atPoint:(NSPoint)mouseLoc {
+
 	if([self destinationTabBar] != tabBarControl) {
 		[self setDestinationTabBar:tabBarControl];
 	}
@@ -246,11 +247,12 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 				[[_draggedView window] setAlphaValue:0.0];
 			}
 
-			NSPoint windowOrigin = [[tabBarControl window] frame].origin;
-
+            NSPoint windowOrigin = [[_draggedTab window] frame].origin;
+            
 			windowOrigin.x -= _dragWindowOffset.width;
 			windowOrigin.y += _dragWindowOffset.height;
-			[[_draggedView window] setFrameOrigin:windowOrigin];
+            
+			[[_draggedView window] setFrameTopLeftPoint:windowOrigin];
 			[[_draggedView window] orderWindow:NSWindowBelow relativeTo:[[_draggedTab window] windowNumber]];
 		} else if(_currentTearOffStyle == PSMTabBarTearOffMiniwindow && ![_draggedTab alternateImage]) {
 			NSImage *image;
