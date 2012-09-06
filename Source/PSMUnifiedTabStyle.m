@@ -140,8 +140,8 @@
         
         if ([cell isHighlighted] && [cell state] == NSOffState)
             {
-            aRect.origin.y += 1;
-            aRect.size.height -= 1;
+            aRect.origin.y += 1.5;
+            aRect.size.height -= 1.5;
             }
         
         CGFloat radius = MIN(6.0, 0.5f * MIN(NSWidth(aRect), NSHeight(aRect)));
