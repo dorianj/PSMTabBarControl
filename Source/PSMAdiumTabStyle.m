@@ -574,7 +574,7 @@
 			[bezier moveToPoint:NSMakePoint(aRect.origin.x, aRect.origin.y)];
 			[bezier lineToPoint:NSMakePoint(aRect.origin.x, aRect.origin.y + aRect.size.height)];
 
-			[shadow setShadowOffset:NSMakeSize(-1.5, -1.5)];
+			[shadow setShadowOffset:NSMakeSize(-0.5, -0.5)];
 			[shadow set];
 			[bezier stroke];
 
@@ -590,7 +590,7 @@
 				[bezier lineToPoint:NSMakePoint(aRect.origin.x + aRect.size.width, aRect.origin.y + 0.5)];
 			}
 
-			[shadow setShadowOffset:NSMakeSize(1.5, -1.5)];
+			[shadow setShadowOffset:NSMakeSize(0.5, -0.5)];
 			[shadow set];
 			[bezier stroke];
 		} else {
