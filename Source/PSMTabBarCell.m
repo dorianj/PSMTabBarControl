@@ -1257,6 +1257,6 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
     // draw close button
     NSRect closeButtonRect = [self closeButtonRectForBounds:frame];
 
-    [image drawInRect:closeButtonRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+    [image drawInRect:closeButtonRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
 }
 @end
