@@ -189,10 +189,10 @@
     // frame
     CGFloat radius = MIN(6.0, 0.5f * MIN(NSWidth(aRect), NSHeight(aRect)))-0.5;
 
-    [bezier moveToPoint: NSMakePoint(NSMinX(aRect),NSMaxY(aRect))];
+    [bezier moveToPoint: NSMakePoint(NSMinX(aRect),NSMaxY(aRect)+1.0)];
     [bezier appendBezierPathWithArcFromPoint:NSMakePoint(NSMinX(aRect),NSMinY(aRect)) toPoint:NSMakePoint(NSMidX(aRect),NSMinY(aRect)) radius:radius];
     [bezier appendBezierPathWithArcFromPoint:NSMakePoint(NSMaxX(aRect),NSMinY(aRect)) toPoint:NSMakePoint(NSMaxX(aRect),NSMaxY(aRect)) radius:radius];
-    [bezier lineToPoint: NSMakePoint(NSMaxX(aRect),NSMaxY(aRect))];
+    [bezier lineToPoint: NSMakePoint(NSMaxX(aRect),NSMaxY(aRect)+1.0)];
     
     NSGradient *gradient = nil;
 
