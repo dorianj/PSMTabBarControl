@@ -33,30 +33,14 @@
 - (id)initWithTabBarControl:(PSMTabBarControl *)control {
 	if((self = [super init])) {
 		_control = control;
-		_cellTrackingRects = [[NSMutableArray alloc] init];
-		_closeButtonTrackingRects = [[NSMutableArray alloc] init];
 		_cellFrames = [[NSMutableArray alloc] init];
-		_addButtonRect = NSZeroRect;
 	}
 	return self;
 }
 
 - (void)dealloc {
-	[_cellTrackingRects release];
-	[_closeButtonTrackingRects release];
 	[_cellFrames release];
 	[super dealloc];
-}
-
-/*!
-    @method     addButtonRect
-    @abstract   Returns the position for the add tab button.
-    @discussion Returns the position for the add tab button.
-    @returns    The rect  for the add button rect.
- */
-
-- (NSRect)addButtonRect {
-	return _addButtonRect;
 }
 
 /*!
@@ -68,44 +52,6 @@
 
 - (NSMenu *)overflowMenu {
 	return _overflowMenu;
-}
-
-/*!
-    @method     cellTrackingRectAtIndex:
-    @abstract   Returns the rect for the tracking rect at the requested index.
-    @discussion Returns the rect for the tracking rect at the requested index.
-    @param      Index of a cell.
-    @returns    The tracking rect of the cell at the requested index.
- */
-
-- (NSRect)cellTrackingRectAtIndex:(NSInteger)index {
-	NSRect rect;
-	if(index > -1 && index < [_cellTrackingRects count]) {
-		rect = [[_cellTrackingRects objectAtIndex:index] rectValue];
-	} else {
-		NSLog(@"cellTrackingRectAtIndex: Invalid index (%ld)", (long)index);
-		rect = NSZeroRect;
-	}
-	return rect;
-}
-
-/*!
-    @method     closeButtonTrackingRectAtIndex:
-    @abstract   Returns the tracking rect for the close button at the requested index.
-    @discussion Returns the tracking rect for the close button at the requested index.
-    @param      Index of a cell.
-    @returns    The close button tracking rect of the cell at the requested index.
- */
-
-- (NSRect)closeButtonTrackingRectAtIndex:(NSInteger)index {
-	NSRect rect;
-	if(index > -1 && index < [_closeButtonTrackingRects count]) {
-		rect = [[_closeButtonTrackingRects objectAtIndex:index] rectValue];
-	} else {
-		NSLog(@"closeButtonTrackingRectAtIndex: Invalid index (%ld)", (long)index);
-		rect = NSZeroRect;
-	}
-	return rect;
 }
 
 /*!
@@ -190,23 +136,10 @@
 		return;
 	}
 
-	[_cellTrackingRects removeAllObjects];
-	[_closeButtonTrackingRects removeAllObjects];
 	[_cellFrames removeAllObjects];
 
 	NSArray *cellWidths = [self _generateWidthsFromCells:cells];
 	[self _setupCells:cells withWidths:cellWidths];
-
-	//set up the rect from the add tab button
-	_addButtonRect = [_control genericCellRect];
-	_addButtonRect.size = [[_control addTabButton] frame].size;
-	if([_control orientation] == PSMTabBarHorizontalOrientation) {
-		_addButtonRect.origin.y = MARGIN_Y;
-		_addButtonRect.origin.x += [[cellWidths valueForKeyPath:@"@sum.floatValue"] doubleValue] + 2;
-	} else {
-		_addButtonRect.origin.x = 0;
-		_addButtonRect.origin.y = [[cellWidths lastObject] doubleValue];
-	}
 }
 
 /*!
@@ -279,16 +212,11 @@ static NSInteger potentialMinimumForArray(NSArray *array, NSInteger minimum){
 	NSMutableArray *newWidths = [NSMutableArray arrayWithCapacity:cellCount];
 	id <PSMTabStyle> style = [_control style];
 	CGFloat availableWidth = [_control availableCellWidth], currentOrigin = 0, totalOccupiedWidth = 0.0, width;
-	NSRect cellRect = [_control genericCellRect], controlRect = [_control frame];
+	NSRect cellRect = [_control genericCellRect];
 	PSMTabBarCell *currentCell;
 
 	if([_control orientation] == PSMTabBarVerticalOrientation) {
-		currentOrigin = [style topMarginForTabBarControl];
-	}
-
-	//Don't let cells overlap the add tab button if it is visible
-	if([_control showAddTabButton]) {
-		availableWidth -= [self addButtonRect].size.width;
+		currentOrigin = [style topMarginForTabBarControl:_control];
 	}
 
 	for(i = 0; i < cellCount; i++) {
@@ -450,17 +378,12 @@ static NSInteger potentialMinimumForArray(NSArray *array, NSInteger minimum){
 			}
 		} else {
 			//lay out vertical tabs
-			if(currentOrigin + cellRect.size.height <= controlRect.size.height) {
+			if(currentOrigin + cellRect.size.height <= [_control availableCellHeight]) {
 				[newWidths addObject:[NSNumber numberWithDouble:currentOrigin]];
 				numberOfVisibleCells++;
 				currentOrigin += cellRect.size.height;
 			} else {
-				//out of room, the remaining tabs go into overflow
-				if([newWidths count] > 0 && controlRect.size.height - currentOrigin < 17) {
-					[newWidths removeLastObject];
-					numberOfVisibleCells--;
-				}
-				break;
+                break;
 			}
 		}
 	}
@@ -523,10 +446,6 @@ static NSInteger potentialMinimumForArray(NSArray *array, NSInteger minimum){
 
 			[_cellFrames addObject:[NSValue valueWithRect:cellRect]];
 
-			//add tracking rects to arrays
-			[_closeButtonTrackingRects addObject:[NSValue valueWithRect:[cell closeButtonRectForFrame:cellRect]]];
-			[_cellTrackingRects addObject:[NSValue valueWithRect:cellRect]];
-
 			if([[cell representedObject] isEqualTo:selectedTabViewItem]) {
 				[cell setState:NSOnState];
 				tabState |= PSMTab_SelectedMask;
@@ -564,7 +483,10 @@ static NSInteger potentialMinimumForArray(NSArray *array, NSInteger minimum){
 			}
 
 			// next...
-			cellRect.origin.x += [[widths objectAtIndex:i] doubleValue];
+            if ([_control orientation] == PSMTabBarHorizontalOrientation)
+                cellRect.origin.x += [[widths objectAtIndex:i] doubleValue];
+            else
+                cellRect.origin.y += cellRect.size.height;
 		} else {
 			[cell setState:NSOffState];
 			[cell setIsInOverflowMenu:YES];
@@ -572,7 +494,7 @@ static NSInteger potentialMinimumForArray(NSArray *array, NSInteger minimum){
 
 			//position the cell well offscreen
 			if([_control orientation] == PSMTabBarHorizontalOrientation) {
-				cellRect.origin.x += [[_control style] rightMarginForTabBarControl] + 20;
+				cellRect.origin.x += [[_control style] rightMarginForTabBarControl:_control] + 20;
 			} else {
 				cellRect.origin.y = [_control frame].size.height + 2;
 			}

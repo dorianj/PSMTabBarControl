@@ -10,101 +10,25 @@
 
 @implementation PSMRolloverButton
 
+@synthesize usualImage = _usualImage;
+@synthesize rolloverImage = _rolloverImage;
+
 - (void)awakeFromNib {
 	if([[self superclass] instancesRespondToSelector:@selector(awakeFromNib)]) {
 		[super awakeFromNib];
 	}
-
-	[[NSNotificationCenter defaultCenter] addObserver:self
-	 selector:@selector(rolloverFrameDidChange:)
-	 name:NSViewFrameDidChangeNotification
-	 object:self];
-	[self setPostsFrameChangedNotifications:YES];
-	[self resetCursorRects];
-
-	_myTrackingRectTag = -1;
+    
+    [self addObserver:self forKeyPath:@"usualImage" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld | NSKeyValueObservingOptionInitial context:NULL];
 }
 
 - (void)dealloc {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
-	[self removeTrackingRect];
+    [self removeObserver:self forKeyPath:@"usualImage"];
 
+    [_usualImage release], _usualImage = nil;
+    [_rolloverImage release], _rolloverImage = nil;
+    
 	[super dealloc];
-}
-
-// the regular image
-- (void)setUsualImage:(NSImage *)newImage {
-	[newImage retain];
-	[_usualImage release];
-	_usualImage = newImage;
-
-	[self setImage:_usualImage];
-}
-
-- (NSImage *)usualImage {
-	return _usualImage;
-}
-
-- (void)setRolloverImage:(NSImage *)newImage {
-	[newImage retain];
-	[_rolloverImage release];
-	_rolloverImage = newImage;
-}
-
-- (NSImage *)rolloverImage {
-	return _rolloverImage;
-}
-
-//Remove old tracking rects when we change superviews
-- (void)viewWillMoveToSuperview:(NSView *)newSuperview {
-	[self removeTrackingRect];
-
-	[super viewWillMoveToSuperview:newSuperview];
-}
-
-- (void)viewDidMoveToSuperview {
-	[super viewDidMoveToSuperview];
-
-	[self resetCursorRects];
-}
-
-- (void)viewWillMoveToWindow:(NSWindow *)newWindow {
-	[self removeTrackingRect];
-
-	[super viewWillMoveToWindow:newWindow];
-}
-
-- (void)viewDidMoveToWindow {
-	[super viewDidMoveToWindow];
-
-	[self resetCursorRects];
-}
-
-- (void)rolloverFrameDidChange:(NSNotification *)inNotification {
-	[self resetCursorRects];
-}
-
-- (void)addTrackingRect {
-	// assign a tracking rect to watch for mouse enter/exit
-	NSRect trackRect = [self bounds];
-	NSPoint localPoint = [self convertPoint:[[self window] convertScreenToBase:[NSEvent mouseLocation]]
-						  fromView:nil];
-	BOOL mouseInside = NSPointInRect(localPoint, trackRect);
-
-	_myTrackingRectTag = [self addTrackingRect:trackRect owner:self userData:nil assumeInside:mouseInside];
-	if(mouseInside) {
-		[self mouseEntered:nil];
-	} else{
-		[self mouseExited:nil];
-	}
-}
-
-- (void)removeTrackingRect {
-	if(_myTrackingRectTag != -1) {
-		[self removeTrackingRect:_myTrackingRectTag];
-	}
-	_myTrackingRectTag = -1;
 }
 
 // override for rollover effect
@@ -124,20 +48,62 @@
 	[super mouseExited:theEvent];
 }
 
-- (void)resetCursorRects {
-	// called when the button rect has been changed
-	[self removeTrackingRect];
-	[self addTrackingRect];
+#pragma mark -
+#pragma mark KVO
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+
+    if ([keyPath isEqualToString:@"usualImage"])
+        {
+        [self setImage:[self usualImage]];
+        }
+    else
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 }
 
-- (void)setFrame:(NSRect)rect {
-	[super setFrame:rect];
-	[self resetCursorRects];
+#pragma mark -
+#pragma mark Tracking Area Support
+
+- (void)addTrackingAreasInRect:(NSRect)cellFrame withUserInfo:(NSDictionary *)userInfo mouseLocation:(NSPoint)mouseLocation {
+
+    NSTrackingAreaOptions options = 0;
+    BOOL mouseIsInside = NO;
+    NSTrackingArea *area = nil;
+
+    // ---- add tracking area for hover effect ----
+    
+    options = NSTrackingEnabledDuringMouseDrag | NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways;
+
+    mouseIsInside = NSMouseInRect(mouseLocation, cellFrame, [self isFlipped]);
+    if (mouseIsInside) {
+        options |= NSTrackingAssumeInside;
+    }
+    
+    // We make the view the owner, and it delegates the calls back to the cell after it is properly setup for the corresponding row/column in the outlineview
+    area = [[NSTrackingArea alloc] initWithRect:cellFrame options:options owner:self userInfo:userInfo];
+    [self addTrackingArea:area];
+    [area release], area = nil;
 }
 
-- (void)setBounds:(NSRect)rect {
-	[super setBounds:rect];
-	[self resetCursorRects];
+-(void)updateTrackingAreas {
+
+    [super updateTrackingAreas];
+    
+    // remove all tracking rects
+    for (NSTrackingArea *area in [self trackingAreas]) {
+        // We have to uniquely identify our own tracking areas
+        if ([area owner] == self) {
+            [self removeTrackingArea:area];
+            
+            // restore usual image
+            [self setImage:_usualImage];
+        }
+    }
+
+    // recreate tracking areas and tool tip rects
+    NSPoint mouseLocation = [self convertPoint:[[self window] convertScreenToBase:[NSEvent mouseLocation]] fromView:nil];
+    
+    [self addTrackingAreasInRect:[self bounds] withUserInfo:nil mouseLocation:mouseLocation];
 }
 
 #pragma mark -
@@ -148,7 +114,6 @@
 	if([aCoder allowsKeyedCoding]) {
 		[aCoder encodeObject:_rolloverImage forKey:@"rolloverImage"];
 		[aCoder encodeObject:_usualImage forKey:@"usualImage"];
-		[aCoder encodeInt64:_myTrackingRectTag forKey:@"myTrackingRectTag"];
 	}
 }
 
@@ -158,11 +123,9 @@
 		if([aDecoder allowsKeyedCoding]) {
 			_rolloverImage = [[aDecoder decodeObjectForKey:@"rolloverImage"] retain];
 			_usualImage = [[aDecoder decodeObjectForKey:@"usualImage"] retain];
-			_myTrackingRectTag = [aDecoder decodeInt64ForKey:@"myTrackingRectTag"];
 		}
 	}
 	return self;
 }
-
 
 @end

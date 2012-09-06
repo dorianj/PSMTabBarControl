@@ -1,8 +1,18 @@
+# Xcode
 .DS_Store
 build/
-Source/PSMTabBarControl.xcodeproj/*.mode1v3
-Source/PSMTabBarControl.xcodeproj/*.xcworkspace
-Source/PSMTabBarControl.xcodeproj/xcuserdata/
-Source/PSMTabBarControl.xcodeproj/*.pbxuser
-PSMTabBarControl.framework/Headers
-PSMTabBarControl.framework/Versions/A/Headers/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+*.xcworkspace
+!default.xcworkspace
+xcuserdata
+profile
+*.moved-aside
+DerivedData
+.idea/
