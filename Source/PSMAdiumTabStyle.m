@@ -462,12 +462,12 @@
 
 	NSShadow *shadow = [[NSShadow alloc] init];
 	[shadow setShadowBlurRadius:2];
-	[shadow setShadowColor:[NSColor colorWithCalibratedWhite:0.6 alpha:1.0]];
+	[shadow setShadowColor:[NSColor colorWithCalibratedWhite:0.65 alpha:1.0]];
 
 	[[NSColor grayColor] set];
 
 	NSBezierPath *path = [NSBezierPath bezierPath];
-	[path setLineWidth:1.0];
+	[path setLineWidth:2.0];
 
 	switch(orientation) {
 	case PSMTabBarHorizontalOrientation:
@@ -475,7 +475,7 @@
 		rect.origin.y++;
 		[path moveToPoint:NSMakePoint(rect.origin.x, rect.origin.y - 0.5)];
 		[path lineToPoint:NSMakePoint(rect.origin.x + rect.size.width, rect.origin.y)];
-		[shadow setShadowOffset:NSMakeSize(1.5, -0.5)];
+		[shadow setShadowOffset:NSMakeSize(0, -1.0)];
 
 		[shadow set];
 		[path stroke];
@@ -492,11 +492,11 @@
 		if(_drawsRight) {
 			startPoint = NSMakePoint(NSMinX(rect), NSMinY(rect));
 			endPoint = NSMakePoint(NSMinX(rect), NSMaxY(rect));
-			shadowOffset = NSMakeSize(1.5, -1.5);
+			shadowOffset = NSMakeSize(0.5, -0.5);
 		} else {
-			startPoint = NSMakePoint(NSMaxX(rect) - 1, NSMinY(rect));
-			endPoint = NSMakePoint(NSMaxX(rect) - 1, NSMaxY(rect));
-			shadowOffset = NSMakeSize(-1.5, -1.5);
+			startPoint = NSMakePoint(NSMaxX(rect), NSMinY(rect));
+			endPoint = NSMakePoint(NSMaxX(rect), NSMaxY(rect));
+			shadowOffset = NSMakeSize(-0.5, -1.0);
 		}
 
 		[path moveToPoint:startPoint];
@@ -511,7 +511,7 @@
 		//Draw top horizontal shadow
 		startPoint = NSMakePoint(NSMinX(rect), NSMinY(rect));
 		endPoint = NSMakePoint(NSMaxX(rect), NSMinY(rect));
-		shadowOffset = NSMakeSize(0, -1.5);
+		shadowOffset = NSMakeSize(0, 0);
 
 		[path moveToPoint:startPoint];
 		[path lineToPoint:endPoint];
@@ -546,7 +546,7 @@
 	NSShadow *shadow = [[NSShadow alloc] init];
 	[shadow setShadowOffset:NSMakeSize(-1.5, -1.5)];
 	[shadow setShadowBlurRadius:2];
-	[shadow setShadowColor:[NSColor colorWithCalibratedWhite:0.6 alpha:1.0]];
+	[shadow setShadowColor:[NSColor colorWithCalibratedWhite:0.65 alpha:1.0]];
 
 	if([cell state] == NSOnState) {
 		// selected tab
@@ -574,7 +574,7 @@
 			[bezier moveToPoint:NSMakePoint(aRect.origin.x, aRect.origin.y)];
 			[bezier lineToPoint:NSMakePoint(aRect.origin.x, aRect.origin.y + aRect.size.height)];
 
-			[shadow setShadowOffset:NSMakeSize(-0.5, -0.5)];
+			[shadow setShadowOffset:NSMakeSize(-1.0, -1.0)];
 			[shadow set];
 			[bezier stroke];
 
@@ -590,7 +590,7 @@
 				[bezier lineToPoint:NSMakePoint(aRect.origin.x + aRect.size.width, aRect.origin.y + 0.5)];
 			}
 
-			[shadow setShadowOffset:NSMakeSize(0.5, -0.5)];
+			[shadow setShadowOffset:NSMakeSize(1.0, -1.0)];
 			[shadow set];
 			[bezier stroke];
 		} else {
@@ -650,7 +650,7 @@
 				//Bottom
 				[bezier lineToPoint:NSMakePoint(NSMaxX(aRect), NSMaxY(aRect))];
 			}
-			[shadow setShadowOffset:NSMakeSize((_drawsRight ? 1.5 : -1.5), -1.5)];
+			[shadow setShadowOffset:NSMakeSize((_drawsRight ? 1.0 : -1.0), -1.0)];
 			[shadow set];
 			[bezier stroke];
 		}
