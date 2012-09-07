@@ -161,7 +161,10 @@
 
 - (void)drawInteriorOfTabBarControl:(PSMTabBarControl *)tabBarControl inRect:(NSRect)rect {
 
-        // draw button separator
+    // draw interior first
+    [tabBarControl _drawInteriorInRect:rect];
+    
+    // draw separation line left and right of selected tab (no separation line at selected tab)
     for(PSMTabBarCell *cell in [tabBarControl cells]) {
         if([cell state] == NSOnState) {
             [[NSColor colorWithCalibratedWhite:0.576 alpha:1.0] set];
@@ -173,7 +176,6 @@
         }
     }
         
-    [tabBarControl _drawInteriorInRect:rect];
 }
 
 - (void)drawBezelOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl {
