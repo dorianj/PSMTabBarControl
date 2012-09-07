@@ -34,7 +34,9 @@
 - (CGFloat)rightMarginForTabBarControl:(PSMTabBarControl *)tabBarControl;
 - (CGFloat)topMarginForTabBarControl:(PSMTabBarControl *)tabBarControl;
 - (CGFloat)bottomMarginForTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (NSSize)addTabButtonSizeForTabBarControl:(PSMTabBarControl *)tabBarControl;
 - (NSRect)addTabButtonRectForTabBarControl:(PSMTabBarControl *)tabBarControl;
+- (NSSize)overflowButtonSizeForTabBarControl:(PSMTabBarControl *)tabBarControl;
 - (NSRect)overflowButtonRectForTabBarControl:(PSMTabBarControl *)tabBarControl;
 
 // cell values
