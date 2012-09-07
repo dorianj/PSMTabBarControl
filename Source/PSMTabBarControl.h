@@ -200,7 +200,10 @@ typedef enum PSMTabStateMask : NSUInteger {
 #pragma mark -
 #pragma mark Determining Sizes
 
+- (NSSize)addTabButtonSize;
 - (NSRect)addTabButtonRect;
+- (NSSize)overflowButtonSize;
+- (NSRect)overflowButtonRect;
 
 #pragma mark -
 #pragma mark Determining Margins
