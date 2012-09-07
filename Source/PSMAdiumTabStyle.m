@@ -472,8 +472,7 @@
 	switch(orientation) {
 	case PSMTabBarHorizontalOrientation:
 	{
-		rect.origin.y++;
-		[path moveToPoint:NSMakePoint(rect.origin.x, rect.origin.y - 0.5)];
+		[path moveToPoint:NSMakePoint(rect.origin.x, rect.origin.y)];
 		[path lineToPoint:NSMakePoint(rect.origin.x + rect.size.width, rect.origin.y)];
 		[shadow setShadowOffset:NSMakeSize(0, -1.0)];
 
