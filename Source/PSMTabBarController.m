@@ -212,6 +212,7 @@ static NSInteger potentialMinimumForArray(NSArray *array, NSInteger minimum){
 	NSMutableArray *newWidths = [NSMutableArray arrayWithCapacity:cellCount];
 	id <PSMTabStyle> style = [_control style];
 	CGFloat availableWidth = [_control availableCellWidth], currentOrigin = 0, totalOccupiedWidth = 0.0, width;
+
 	NSRect cellRect = [_control genericCellRect];
 	PSMTabBarCell *currentCell;
 
@@ -333,6 +334,12 @@ static NSInteger potentialMinimumForArray(NSArray *array, NSInteger minimum){
 							}
 						}
 					} else {
+                    
+                        // adjust available width for overflow button
+                        availableWidth -= ([_control overflowButtonSize].width + kPSMTabBarCellPadding);
+                        if (![_control showAddTabButton])
+                            availableWidth -= kPSMTabBarCellPadding;
+                                                
 						// stretch - distribute leftover room among cells, since we can't add this cell
 						NSInteger leftoverWidth = availableWidth - totalOccupiedWidth;
 						NSInteger q;
@@ -365,8 +372,47 @@ static NSInteger potentialMinimumForArray(NSArray *array, NSInteger minimum){
 						[newWidths addObject:[NSNumber numberWithDouble:revisedWidth]];
 						totalOccupiedWidth += revisedWidth;
 						numberOfVisibleCells++;
+                        
+                    // couldn't fit that last one...
 					} else {
-						// couldn't fit that last one...
+                        // adjust available width for overflow button
+                        availableWidth -= ([_control overflowButtonSize].width + kPSMTabBarCellPadding);
+                        if (![_control showAddTabButton])
+                            availableWidth -= kPSMTabBarCellPadding;
+                            
+                        revisedWidth = availableWidth / i;
+                        
+                        if(revisedWidth >= [_control cellMinWidth]) {
+                            NSUInteger q;
+                            totalOccupiedWidth = 0;
+
+                            for(q = 0; q < [newWidths count]; q++) {
+                                [newWidths replaceObjectAtIndex:q withObject:[NSNumber numberWithDouble:revisedWidth]];
+                                totalOccupiedWidth += revisedWidth;
+                            }
+                        } else {
+                            [self _shrinkWidths:newWidths towardMinimum:[_control cellMinWidth] withAvailableWidth:availableWidth];
+                            NSInteger usedWidth = [[newWidths valueForKeyPath:@"@sum.intValue"] integerValue];
+                            // cells still do not fit in available width? -> remove last cell
+                            if (availableWidth < usedWidth) {
+                                totalOccupiedWidth -= [[newWidths lastObject] intValue];
+                                numberOfVisibleCells--;
+                                [newWidths removeLastObject];
+
+                                revisedWidth = availableWidth / numberOfVisibleCells;
+                        
+                                if(revisedWidth >= [_control cellMinWidth]) {
+                                    NSUInteger q;
+                                    totalOccupiedWidth = 0;
+
+                                    for(q = 0; q < [newWidths count]; q++) {
+                                        [newWidths replaceObjectAtIndex:q withObject:[NSNumber numberWithDouble:revisedWidth]];
+                                        totalOccupiedWidth += revisedWidth;
+                                    }
+                                }
+                            }
+                        }
+                                            
 						break;
 					}
 				}
