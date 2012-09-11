@@ -129,6 +129,7 @@ typedef enum PSMTabStateMask : NSUInteger {
 - (CGFloat)availableCellWidth;
 - (CGFloat)availableCellHeight;
 - (NSRect)genericCellRect;
+- (BOOL)isWindowActive;
 
 #pragma mark Style Class Registry
 
