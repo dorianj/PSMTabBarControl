@@ -43,6 +43,8 @@
 - (void)_drawIndicatorWithFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
 - (void)_drawCloseButtonWithFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
 
+- (NSRect)_draggingRect;
+
 @end
 
 @implementation PSMTabBarCell
@@ -632,8 +634,17 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 #pragma mark -
 #pragma mark Drag Support
 
+- (NSRect)draggingRect {
+    id <PSMTabStyle> tabStyle = [[self controlView] style];
+    if ([tabStyle respondsToSelector:@selector(dragRectForTabCell:ofTabBarControl:)])
+        return [tabStyle dragRectForTabCell:self ofTabBarControl:[self controlView]];
+    else
+        return [self _draggingRect];
+}
+
 - (NSImage *)dragImage {
-	NSRect cellFrame = [(id < PSMTabStyle >)[[self controlView] style] dragRectForTabCell:self ofTabBarControl:[self controlView]];
+
+	NSRect cellFrame = [self draggingRect];
 
     PSMTabBarControl *tabBarControl = [self controlView];
 
@@ -767,7 +778,7 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 }
 
 #pragma mark -
-#pragma Private Methods
+#pragma mark Private Methods
 
 - (NSRect)_drawingRectForBounds:(NSRect)theRect {
     return NSInsetRect(theRect, MARGIN_X, MARGIN_Y);
@@ -1259,4 +1270,9 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 
     [image drawInRect:closeButtonRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
 }
+
+- (NSRect)_draggingRect {
+    return [self frame];
+}
+
 @end

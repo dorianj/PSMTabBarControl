@@ -24,9 +24,6 @@
 - (NSImage *)addTabButtonPressedImage;
 - (NSImage *)addTabButtonRolloverImage;
 
-// cell specific parameters
-- (NSRect)dragRectForTabCell:(PSMTabBarCell *)cell ofTabBarControl:(PSMTabBarControl *)tabBarControl;
-
 @optional
 
 // control specific parameters
@@ -75,6 +72,9 @@
 - (void)drawIndicatorOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
 - (void)drawObjectCounterOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
 - (void)drawCloseButtonOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl;
+
+// Dragging Support
+- (NSRect)dragRectForTabCell:(PSMTabBarCell *)cell ofTabBarControl:(PSMTabBarControl *)tabBarControl;
 
 // Deprecated Stuff
 
