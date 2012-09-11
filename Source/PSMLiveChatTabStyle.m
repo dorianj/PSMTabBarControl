@@ -397,7 +397,7 @@
         NSColor *startColor = nil;
         NSColor *endColor = nil;
 
-		if([[[tabBarControl tabView] window] isKeyWindow]) {
+		if([tabBarControl isWindowActive]) {
 			if([cell state] == NSOnState) {
                 startColor = [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
                 endColor = [NSColor colorWithCalibratedWhite:0.95 alpha:1.0];
@@ -451,7 +451,7 @@
 	//Draw for our whole bounds; it'll be automatically clipped to fit the appropriate drawing area
 	rect = [tabBarControl bounds];
 
-	if([[[tabBarControl tabView] window] isKeyWindow]) {
+	if([tabBarControl isWindowActive]) {
 		NSRect gradientRect = rect;
 		gradientRect.origin.y += 1.0;
 		NSBezierPath *path = [NSBezierPath bezierPathWithRect:gradientRect];

@@ -157,7 +157,7 @@
         cornerPoint = NSMakePoint(NSMinX(aRect), NSMinY(aRect));
         [bezier appendBezierPathWithPoints:&cornerPoint count:1];    
 
-        if ([[tabBarControl window] isKeyWindow]) {
+        if ([tabBarControl isWindowActive]) {
             if ([cell state] == NSOnState) {
                 NSColor *startColor = [NSColor colorWithDeviceWhite:0.698 alpha:1.000];
                 NSColor *endColor = [NSColor colorWithDeviceWhite:0.663 alpha:1.000];
@@ -240,7 +240,7 @@
 	NSRect gradientRect = rect;
 	gradientRect.size.height -= 1.0;
 
-	if(![[[tabBarControl tabView] window] isKeyWindow]) {
+	if(![tabBarControl isWindowActive]) {
 		[[NSColor windowBackgroundColor] set];
 		NSRectFill(gradientRect);
 	} else {

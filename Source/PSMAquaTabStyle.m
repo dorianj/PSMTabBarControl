@@ -164,7 +164,7 @@
 			currentTint = [cell controlTint];
 		}
 
-		if(![[[cell controlView] window] isKeyWindow]) {
+		if(![tabBarControl isWindowActive]) {
 			currentTint = NSClearControlTint;
 		}
 

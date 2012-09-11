@@ -138,7 +138,7 @@
 
     NSGradient *gradient = nil;
     
-    if ([[[tabBarControl tabView] window] isKeyWindow]) {
+    if ([tabBarControl isWindowActive]) {
         // gray bar gradient
         gradient = [[NSGradient alloc] initWithColorsAndLocations:
                         [NSColor colorWithCalibratedWhite:0.678 alpha:1.000],0.0f,
@@ -198,7 +198,7 @@
     
     NSGradient *gradient = nil;
 
-    if([[[tabBarControl tabView] window] isKeyWindow]) {
+    if([tabBarControl isWindowActive]) {
         if ([cell state] == NSOnState) {
               gradient = [[NSGradient alloc] initWithStartingColor:[NSColor whiteColor] endingColor:[NSColor colorWithDeviceWhite:0.929 alpha:1.000]];
         } else if ([cell isHighlighted]) {
