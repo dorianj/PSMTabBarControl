@@ -112,13 +112,6 @@
 }
 
 #pragma mark -
-#pragma mark Drag Support
-
-- (NSRect)dragRectForTabCell:(PSMTabBarCell *)cell ofTabBarControl:(PSMTabBarControl *)tabBarControl {
-	return [cell frame];
-}
-
-#pragma mark -
 #pragma mark Providing Images
 
 - (NSImage *)closeButtonImageOfType:(PSMCloseButtonImageType)type forTabCell:(PSMTabBarCell *)cell
@@ -164,7 +157,7 @@
 			currentTint = [cell controlTint];
 		}
 
-		if(![[[cell controlView] window] isKeyWindow]) {
+		if(![tabBarControl isWindowActive]) {
 			currentTint = NSClearControlTint;
 		}
 

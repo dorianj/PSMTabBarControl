@@ -119,6 +119,7 @@ typedef enum PSMTabBarCellTrackingAreaType : NSUInteger
 - (void)mouseExited:(NSEvent *)theEvent;
 
 #pragma mark Drag Support
+- (NSRect)draggingRect;
 - (NSImage *)dragImage;
 
 #pragma mark Archiving

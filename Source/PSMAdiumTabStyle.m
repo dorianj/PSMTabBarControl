@@ -432,7 +432,7 @@
 	switch(orientation) {
 	case PSMTabBarHorizontalOrientation :
 		if(_drawsUnified) {
-			if([[[tabBarControl tabView] window] isKeyWindow]) {
+			if([tabBarControl isWindowActive]) {
                 NSGradient *gradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.835 alpha:1.0] endingColor:[NSColor colorWithCalibratedWhite:0.843 alpha:1.0]];
                 [gradient drawInRect:rect angle:90.0];
                 [gradient release];
@@ -554,7 +554,7 @@
 
 			// background
 			if(_drawsUnified) {
-				if([[[tabBarControl tabView] window] isKeyWindow]) {
+				if([tabBarControl isWindowActive]) {
                 
                     NSGradient *gradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.835 alpha:1.0] endingColor:[NSColor colorWithCalibratedWhite:0.843 alpha:1.0]];
                     [gradient drawInRect:aRect angle:90.0];
@@ -603,7 +603,7 @@
 
 			// background
 			if(_drawsUnified) {
-				if([[[tabBarControl tabView] window] isKeyWindow]) {
+				if([tabBarControl isWindowActive]) {
                 
                     NSGradient *gradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.835 alpha:1.0] endingColor:[NSColor colorWithCalibratedWhite:0.843 alpha:1.0]];
                     [gradient drawInRect:aRect angle:90.0];

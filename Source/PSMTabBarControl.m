@@ -173,6 +173,17 @@ static NSMutableDictionary *registeredStyleClasses;
 	return aRect;
 }
 
+- (BOOL)isWindowActive {
+    NSWindow *window = [self window];
+    BOOL windowActive = NO;
+    if ([window isKeyWindow])
+        windowActive = YES;
+    else if ([window isKindOfClass:[NSPanel class]] && [NSApp isActive])
+        windowActive = YES;
+    
+    return windowActive;
+}
+
 #pragma mark -
 #pragma mark Constructor/destructor
 
