@@ -38,6 +38,9 @@
 @implementation DemoWindowController
 
 - (void)awakeFromNib {
+    
+    [super awakeFromNib];
+
 	[[NSUserDefaults standardUserDefaults] registerDefaults:
 	 [NSDictionary dictionaryWithObjectsAndKeys:
 		  @"Metal", @"Style",
