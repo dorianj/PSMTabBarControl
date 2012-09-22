@@ -13,12 +13,14 @@
 @synthesize usualImage = _usualImage;
 @synthesize rolloverImage = _rolloverImage;
 
-- (void)awakeFromNib {
-	if([[self superclass] instancesRespondToSelector:@selector(awakeFromNib)]) {
-		[super awakeFromNib];
-	}
+- (id)initWithFrame:(NSRect)frameRect {
+    self = [super initWithFrame:frameRect];
+    if (self) {
     
-    [self addObserver:self forKeyPath:@"usualImage" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld | NSKeyValueObservingOptionInitial context:NULL];
+        [self addObserver:self forKeyPath:@"usualImage" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld | NSKeyValueObservingOptionInitial context:NULL];
+
+    }
+    return self;
 }
 
 - (void)dealloc {
