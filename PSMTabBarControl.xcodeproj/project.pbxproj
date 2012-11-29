@@ -726,6 +726,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5A5652FF15D1E72F00F9EFD5 /* PSMTabBarControlFramework-Debug.xcconfig */;
 			buildSettings = {
+				GCC_ENABLE_OBJC_GC = supported;
 				ONLY_ACTIVE_ARCH = NO;
 			};
 			name = Debug;
@@ -734,6 +735,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5A56530015D1E72F00F9EFD5 /* PSMTabBarControlFramework-Release.xcconfig */;
 			buildSettings = {
+				GCC_ENABLE_OBJC_GC = supported;
 			};
 			name = Release;
 		};

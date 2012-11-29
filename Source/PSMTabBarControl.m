@@ -1732,7 +1732,7 @@ static NSMutableDictionary *registeredStyleClasses;
 		}
 		if(!_springTimer) {
 			//Finder's default delay time, as of Tiger, is 668 ms. If the user has never changed it, there's no setting in its defaults, so we default to that amount.
-			NSNumber *delayNumber = [(NSNumber *)CFPreferencesCopyAppValue((CFStringRef)@"SpringingDelayMilliseconds", (CFStringRef)@"com.apple.finder") autorelease];
+			NSNumber *delayNumber = NSMakeCollectable([(NSNumber *)CFPreferencesCopyAppValue((CFStringRef)@"SpringingDelayMilliseconds", (CFStringRef)@"com.apple.finder") autorelease]);
 			NSTimeInterval delaySeconds = delayNumber ?[delayNumber doubleValue] / 1000.0 : 0.668;
 			_springTimer = [[NSTimer scheduledTimerWithTimeInterval:delaySeconds
 							 target:self
