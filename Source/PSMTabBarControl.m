@@ -22,6 +22,8 @@
 
 @interface PSMTabBarControl (/*Private*/)
 
+- (NSTabViewItem *)_tabViewItemForEvent:(NSEvent *)event;
+- (void)_delegateMouseEvent:(NSEvent *)event;
 - (CGFloat)_heightOfTabCells;
 - (CGFloat)_rightMargin;
 - (CGFloat)_leftMargin;
@@ -1510,6 +1512,8 @@ static NSMutableDictionary *registeredStyleClasses;
 		}
 		[self setNeedsDisplay:YES];
 	}
+    
+    [self _delegateMouseEvent:theEvent];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent {
@@ -1582,8 +1586,9 @@ static NSMutableDictionary *registeredStyleClasses;
 		if(cell) {
 			NSPoint trackingStartPoint = [self convertPoint:[[self lastMouseDownEvent] locationInWindow] fromView:nil];
 			NSRect iconRect = [mouseDownCell closeButtonRectForBounds:mouseDownCellFrame];
-
-			if((NSMouseInRect(mousePt, iconRect, [self isFlipped])) && ![self disableTabClose] && ![cell isCloseButtonSuppressed] && [mouseDownCell closeButtonPressed]) {
+			BOOL mouseInCloseIconRect = NSMouseInRect(mousePt, iconRect, [self isFlipped]);
+            
+			if (mouseInCloseIconRect && ![self disableTabClose] && ![cell isCloseButtonSuppressed] && [mouseDownCell closeButtonPressed]) {
 				if(([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask) != 0) {
 					//If the user is holding Option, close all other tabs
                     NSArray *tmpCellArray = [[self cells] copy];
@@ -1612,6 +1617,11 @@ static NSMutableDictionary *registeredStyleClasses;
 				[mouseDownCell setCloseButtonPressed:NO];
 				[self performSelector:@selector(tabNothing:) withObject:cell];
 			}
+
+            if (!mouseInCloseIconRect) {
+				[self _delegateMouseEvent:theEvent];
+			}
+            
 		}
 
 		_closeClicked = NO;
@@ -1627,6 +1637,22 @@ static NSMutableDictionary *registeredStyleClasses;
 	}
 	return menu;
 }
+
+- (void)_delegateMouseEvent:(NSEvent *)event
+{
+	NSTabViewItem *item = [self _tabViewItemForEvent:event];
+	if (item && [[self delegate] respondsToSelector:@selector(tabView:tabViewItem:event:)]) {
+		[[self delegate] tabView:tabView tabViewItem:item event:event];
+	}
+}
+
+- (NSTabViewItem *)_tabViewItemForEvent:(NSEvent *)event
+{
+	NSTabViewItem *item = [[self cellForPoint:[self convertPoint:[event locationInWindow] fromView:nil] cellFrame:nil] representedObject];
+    
+	return item;
+}
+
 
 #pragma mark -
 #pragma mark Drag and Drop
@@ -1706,7 +1732,7 @@ static NSMutableDictionary *registeredStyleClasses;
 		}
 		if(!_springTimer) {
 			//Finder's default delay time, as of Tiger, is 668 ms. If the user has never changed it, there's no setting in its defaults, so we default to that amount.
-			NSNumber *delayNumber = [(NSNumber *)CFPreferencesCopyAppValue((CFStringRef)@"SpringingDelayMilliseconds", (CFStringRef)@"com.apple.finder") autorelease];
+			NSNumber *delayNumber = NSMakeCollectable([(NSNumber *)CFPreferencesCopyAppValue((CFStringRef)@"SpringingDelayMilliseconds", (CFStringRef)@"com.apple.finder") autorelease]);
 			NSTimeInterval delaySeconds = delayNumber ?[delayNumber doubleValue] / 1000.0 : 0.668;
 			_springTimer = [[NSTimer scheduledTimerWithTimeInterval:delaySeconds
 							 target:self
