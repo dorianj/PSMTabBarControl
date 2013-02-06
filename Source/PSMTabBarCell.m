@@ -173,7 +173,7 @@
     PSMTabBarControl *tabBarControl = (PSMTabBarControl *)[self controlView];
     id <PSMTabStyle> tabStyle = [tabBarControl style];
 
-    if ([tabStyle respondsToSelector:@selector(attributedStringValueForTabCell:)])
+    if ([tabStyle respondsToSelector:@selector(attributedObjectCountStringValueForTabCell:)])
         return [tabStyle attributedObjectCountStringValueForTabCell:self];
     else
         return [self _attributedObjectCountStringValue];
