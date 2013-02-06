@@ -172,6 +172,29 @@
 }
 
 #pragma mark -
+#pragma mark Cell Values
+
+- (NSAttributedString *)attributedStringValueForTabCell:(PSMTabBarCell *)cell {
+    NSMutableAttributedString *attrStr;
+    NSString *contents = [cell title];
+    attrStr = [[[NSMutableAttributedString alloc] initWithString:contents] autorelease];
+    NSRange range = NSMakeRange(0, [contents length]);
+    
+    [attrStr addAttribute:NSFontAttributeName value:[NSFont systemFontOfSize:11.0] range:range];
+    [attrStr addAttribute:NSForegroundColorAttributeName value:[NSColor controlTextColor] range:range];
+    
+    // Paragraph Style for Truncating Long Text
+    static NSMutableParagraphStyle *truncatingTailParagraphStyle = nil;
+    if(!truncatingTailParagraphStyle) {
+        truncatingTailParagraphStyle = [[[NSParagraphStyle defaultParagraphStyle] mutableCopy] retain];
+        [truncatingTailParagraphStyle setLineBreakMode:NSLineBreakByTruncatingTail];
+    }
+    [attrStr addAttribute:NSParagraphStyleAttributeName value:truncatingTailParagraphStyle range:range];
+    
+    return attrStr;
+}
+
+#pragma mark -
 #pragma mark Determining Cell Size
 
 - (CGFloat)heightOfTabCellsForTabBarControl:(PSMTabBarControl *)tabBarControl {
@@ -249,9 +272,6 @@
 
     PSMTabBarControl *tabBarControl = [cell controlView];
     PSMTabBarOrientation orientation = [tabBarControl orientation];
-    
-    if ([cell hasLargeImage] && orientation == PSMTabBarVerticalOrientation)
-        return NSZeroRect;
 
     // calculate rect
     NSRect drawingRect = [cell drawingRectForBounds:theRect];
@@ -262,20 +282,19 @@
 
     NSRect result;
     if (orientation == PSMTabBarHorizontalOrientation) {
-        {
         result = NSMakeRect(drawingRect.origin.x, drawingRect.origin.y, scaledIconSize.width, scaledIconSize.height);
-        }
     } else {
-        result = NSMakeRect(drawingRect.origin.x, drawingRect.origin.y, scaledIconSize.width, scaledIconSize.height);
+        result = NSMakeRect(NSMaxX(drawingRect)-scaledIconSize.width, drawingRect.origin.y, scaledIconSize.width, scaledIconSize.height);
     }
     
     // center in available space (in case icon image is smaller than kPSMTabBarIconWidth)
-    if(scaledIconSize.width < kPSMTabBarIconWidth) {
-        result.origin.x += ceil((kPSMTabBarIconWidth - scaledIconSize.width) / 2.0);
-    }
+    if (orientation == PSMTabBarHorizontalOrientation)
+        result.origin.x += ceilf((kPSMTabBarIconWidth+kPSMTabBarCellPadding - scaledIconSize.width) / 2.0) - kPSMTabBarCellPadding;
+    else
+        result.origin.x -= ceilf((kPSMTabBarIconWidth+kPSMTabBarCellPadding - scaledIconSize.width) / 2.0);
 
-    if(scaledIconSize.height < kPSMTabBarIconWidth) {
-        result.origin.y += ceil((kPSMTabBarIconWidth - scaledIconSize.height) / 2.0 - 0.5);
+    if (scaledIconSize.height < drawingRect.size.height) {
+        result.origin.y += ceilf((drawingRect.size.height - scaledIconSize.height) / 2.0);
     }
 
     return NSIntegralRect(result);    
@@ -318,14 +337,6 @@
         }
     } else {
     
-        if ([cell hasIcon] && ![cell hasLargeImage]) {
-            NSRect iconRect = [cell iconRectForBounds:theRect];
-            if (!NSEqualRects(iconRect, NSZeroRect) || !NSEqualRects(iconRect, NSZeroRect)) {
-                constrainedDrawingRect.origin.x += NSWidth(iconRect) + kPSMTabBarCellPadding;
-                constrainedDrawingRect.size.width -= NSWidth(iconRect) + kPSMTabBarCellPadding;
-                }
-        }
-    
         NSRect closeButtonRect = [cell closeButtonRectForBounds:theRect];
         NSRect counterBadgeRect = [cell objectCounterRectForBounds:theRect];
 
@@ -334,6 +345,9 @@
         }    
     }
 
+    if (constrainedDrawingRect.size.width <= 2)
+        return NSZeroRect;
+    
     NSAttributedString *attrString = [cell attributedStringValue];
     if ([attrString length] == 0)
         return NSZeroRect;
@@ -685,27 +699,25 @@
 
 - (void)drawIconOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl {
 
-    if ([tabBarControl orientation] == PSMTabBarHorizontalOrientation) {
-        if (![cell shouldDrawCloseButton] || ([cell shouldDrawCloseButton] && ![cell closeButtonOver] && ![cell closeButtonPressed])) {
+    if (![cell shouldDrawCloseButton] || ([cell shouldDrawCloseButton] && ![cell closeButtonOver] && ![cell closeButtonPressed])) {
+        if ([tabBarControl orientation] == PSMTabBarHorizontalOrientation) {
             [cell _drawIconWithFrame:frame inTabBarControl:tabBarControl];
+        } else {
+            if (![cell shouldDrawObjectCounter] || ([cell shouldDrawObjectCounter] && ([cell closeButtonOver] || [cell closeButtonPressed])))
+                [cell _drawIconWithFrame:frame inTabBarControl:tabBarControl];
         }
-    } else {
-        if (![cell hasLargeImage])
-            [cell _drawIconWithFrame:frame inTabBarControl:tabBarControl];
     }
 }
 
 - (void)drawCloseButtonOfTabCell:(PSMTabBarCell *)cell withFrame:(NSRect)frame inTabBarControl:(PSMTabBarControl *)tabBarControl {
 
-    if ([tabBarControl orientation] == PSMTabBarHorizontalOrientation) {
-    
-        if (![cell hasIcon] || ([cell hasIcon] && [cell shouldDrawCloseButton] && ([cell closeButtonOver] || [cell closeButtonPressed])))
-    
-        [cell _drawCloseButtonWithFrame:frame inTabBarControl:tabBarControl];
-    } else {
-    
-        if (![cell shouldDrawObjectCounter] || ([cell shouldDrawObjectCounter] && ([cell closeButtonOver] || [cell closeButtonPressed])))
+    if (![cell hasIcon] || ([cell hasIcon] && [cell shouldDrawCloseButton] && ([cell closeButtonOver] || [cell closeButtonPressed]))) {
+        if ([tabBarControl orientation] == PSMTabBarHorizontalOrientation) {
             [cell _drawCloseButtonWithFrame:frame inTabBarControl:tabBarControl];
+        } else {
+            if (![cell shouldDrawObjectCounter] || ([cell shouldDrawObjectCounter] && ([cell closeButtonOver] || [cell closeButtonPressed])))
+                [cell _drawCloseButtonWithFrame:frame inTabBarControl:tabBarControl];
+        }
     }
 }
 
