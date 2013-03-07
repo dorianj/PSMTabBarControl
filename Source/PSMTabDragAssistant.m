@@ -474,7 +474,6 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 
 		if([[[self sourceTabBar] tabView] numberOfTabViewItems] == 1) {
 			[self draggingExitedTabBarControl:[self sourceTabBar]];
-			[[_draggedTab window] setAlphaValue:0.0];
 		}
 	}
 }
