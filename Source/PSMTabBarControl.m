@@ -247,6 +247,7 @@ static NSMutableDictionary *registeredStyleClasses;
 		[_addTabButton setButtonType:NSMomentaryChangeButton];
 		[_addTabButton setBordered:NO];
 		[_addTabButton setBezelStyle:NSShadowlessSquareBezelStyle];
+		[[_addTabButton cell] accessibilitySetOverrideValue:NSLocalizedString(@"Add Tab", nil) forAttribute:NSAccessibilityDescriptionAttribute];
 		[self addSubview:_addTabButton];
 
 		if(_showAddTabButton) {
