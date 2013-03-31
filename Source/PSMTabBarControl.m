@@ -1996,6 +1996,8 @@ static NSMutableDictionary *registeredStyleClasses;
 			[self setNeedsDisplay:YES];
 		}
 	}
+    
+    NSAccessibilityPostNotification(self, NSAccessibilityValueChangedNotification);
 
 	if([[self delegate] respondsToSelector:@selector(tabView:didSelectTabViewItem:)]) {
 		[[self delegate] performSelector:@selector(tabView:didSelectTabViewItem:) withObject:aTabView withObject:tabViewItem];
@@ -2288,16 +2290,47 @@ static NSMutableDictionary *registeredStyleClasses;
 	return NO;
 }
 
+- (NSArray*)accessibilityAttributeNames
+{
+    static NSArray *attributes = nil;
+    if (!attributes) {
+        NSSet *set = [NSSet setWithArray:[super accessibilityAttributeNames]];
+        set = [set setByAddingObjectsFromArray:[NSArray arrayWithObjects:
+                                                NSAccessibilityTabsAttribute,
+                                                NSAccessibilityValueAttribute,
+                                                nil]];
+        attributes = [[set allObjects] retain];
+    }
+    return attributes;
+}
+
 - (id)accessibilityAttributeValue:(NSString *)attribute {
-	id attributeValue = nil;
-	if([attribute isEqualToString: NSAccessibilityRoleAttribute]) {
-		attributeValue = NSAccessibilityGroupRole;
-	} else if([attribute isEqualToString: NSAccessibilityChildrenAttribute]) {
-		attributeValue = NSAccessibilityUnignoredChildren(_cells);
-	} else {
-		attributeValue = [super accessibilityAttributeValue:attribute];
-	}
-	return attributeValue;
+    id attributeValue = nil;
+    if ([attribute isEqualToString: NSAccessibilityRoleAttribute]) {
+        attributeValue = NSAccessibilityTabGroupRole;
+    } else if ([attribute isEqualToString: NSAccessibilityChildrenAttribute]) {
+        NSMutableArray *children = [NSMutableArray arrayWithArray:[_cells objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [self numberOfVisibleTabs])]]];
+        if(![_overflowPopUpButton isHidden])
+            [children addObject:_overflowPopUpButton];
+        if(![_addTabButton isHidden])
+            [children addObject:_addTabButton];
+        attributeValue = NSAccessibilityUnignoredChildren(children);
+    } else if ([attribute isEqualToString: NSAccessibilityTabsAttribute]) {
+        attributeValue = NSAccessibilityUnignoredChildren(_cells);
+    } else if ([attribute isEqualToString:NSAccessibilityValueAttribute]) {
+        NSTabViewItem *tabViewItem = [tabView selectedTabViewItem];
+        for (NSActionCell *cell in _cells) {
+            if ([cell representedObject] == tabViewItem)
+                attributeValue = cell;
+        }
+        if (!attributeValue)
+        {
+            NSLog(@"WARNING: seems no tab cell is currently selected");
+        }
+    } else {
+        attributeValue = [super accessibilityAttributeValue:attribute];
+    }
+    return attributeValue;
 }
 
 - (id)accessibilityHitTest:(NSPoint)point {
