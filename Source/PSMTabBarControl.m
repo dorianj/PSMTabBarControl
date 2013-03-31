@@ -222,6 +222,7 @@ static NSMutableDictionary *registeredStyleClasses;
 	_overflowPopUpButton = [[PSMOverflowPopUpButton alloc] initWithFrame:overflowButtonRect pullsDown:YES];
 	[_overflowPopUpButton setAutoresizingMask:NSViewNotSizable | NSViewMinXMargin];
 	[_overflowPopUpButton setHidden:YES];
+    [[_overflowPopUpButton cell] accessibilitySetOverrideValue:NSLocalizedString(@"More tabs", nil) forAttribute:NSAccessibilityDescriptionAttribute];
 	[self addSubview:_overflowPopUpButton];
 	[self _positionOverflowMenu];
 
