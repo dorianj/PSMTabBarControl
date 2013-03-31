@@ -740,8 +740,17 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 		} else {
 			attributeValue = [self stringValue];
 		}
-	} else if([attribute isEqualToString: NSAccessibilityFocusedAttribute]) {
-		attributeValue = [NSNumber numberWithBool:([self tabState] == 2)];
+	} else if([attribute isEqualToString: NSAccessibilityValueAttribute]) {
+		attributeValue = [NSNumber numberWithBool:([self tabState] & PSMTab_SelectedMask)];
+    } else if ([attribute isEqualToString:NSAccessibilityPositionAttribute] || [attribute isEqualToString:NSAccessibilitySizeAttribute]) {
+        NSRect rect = [self frame];
+        rect = [[self controlView] convertRect:rect toView:nil];
+        rect = [[[self controlView] window] convertRectToScreen:rect];
+        if ([attribute isEqualToString:NSAccessibilityPositionAttribute])
+            attributeValue = [NSValue valueWithPoint:rect.origin];
+        else
+            attributeValue = [NSValue valueWithSize:rect.size];
+
 	} else {
 		attributeValue = [super accessibilityAttributeValue:attribute];
 	}
