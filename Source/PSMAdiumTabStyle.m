@@ -311,7 +311,7 @@
                 
     NSSize iconSize = [icon size];
     
-    NSSize scaledIconSize = [cell scaleImageWithSize:iconSize toFitInSize:NSMakeSize(iconSize.width, drawingRect.size.height) scalingType:NSImageScaleProportionallyDown];
+    NSSize scaledIconSize = [cell scaleImageWithSize:iconSize toFitInSize:NSMakeSize(kPSMTabBarIconWidth, iconSize.height) scalingType:NSImageScaleProportionallyDown];
 
     NSRect result;
     if (orientation == PSMTabBarHorizontalOrientation) {
