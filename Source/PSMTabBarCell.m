@@ -745,7 +745,9 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
     } else if ([attribute isEqualToString:NSAccessibilityPositionAttribute] || [attribute isEqualToString:NSAccessibilitySizeAttribute]) {
         NSRect rect = [self frame];
         rect = [[self controlView] convertRect:rect toView:nil];
-        rect = [[[self controlView] window] convertRectToScreen:rect];
+        NSRect frame = [[[self controlView] window]  frame];
+        rect.origin.x += frame.origin.x;
+        rect.origin.y += frame.origin.y;
         if ([attribute isEqualToString:NSAccessibilityPositionAttribute])
             attributeValue = [NSValue valueWithPoint:rect.origin];
         else
@@ -1285,3 +1287,4 @@ static inline NSSize scaleProportionally(NSSize imageSize, NSSize canvasSize, BO
 }
 
 @end
+
