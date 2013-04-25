@@ -197,6 +197,39 @@
 #pragma mark -
 #pragma mark Determining Cell Size
 
+- (CGFloat)desiredWidthOfTabCell:(PSMTabBarCell *)cell {
+    CGFloat resultWidth = 0.0;
+
+    // left margin
+    resultWidth = MARGIN_X;
+
+    // icon or close button?
+    if ([cell hasIcon]) {
+        resultWidth += kPSMTabBarIconWidth + kPSMTabBarCellPadding;
+    } else if ([cell shouldDrawCloseButton]) {
+        NSImage *image = [cell closeButtonImageOfType:PSMCloseButtonImageTypeStandard];
+        resultWidth += [image size].width + kPSMTabBarCellPadding;
+    }
+
+    // the label
+    resultWidth += [[cell attributedStringValue] size].width;
+
+    // object counter?
+    if ([cell count] > 0) {
+        resultWidth += [cell objectCounterSize].width + kPSMTabBarCellPadding;
+    }
+
+    // indicator?
+    if ([[cell indicator] isHidden] == NO) {
+        resultWidth += kPSMTabBarCellPadding + kPSMTabBarIndicatorWidth;
+    }
+
+    // right margin
+    resultWidth += MARGIN_X;
+
+    return ceil(resultWidth);
+}
+
 - (CGFloat)heightOfTabCellsForTabBarControl:(PSMTabBarControl *)tabBarControl {
     PSMTabBarOrientation orientation = [tabBarControl orientation];
 	return((orientation == PSMTabBarHorizontalOrientation) ? kPSMTabBarControlHeight : kPSMTabBarControlSourceListHeight);

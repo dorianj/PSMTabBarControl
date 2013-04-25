@@ -353,7 +353,7 @@
 - (CGFloat)minimumWidthOfCell {
 
     id < PSMTabStyle > style = [[self controlView] style];
-    if ([style respondsToSelector:@selector(minimumWidthOfTabCell)]) {
+    if ([style respondsToSelector:@selector(minimumWidthOfTabCell:)]) {
         return [style minimumWidthOfTabCell:self];
     } else {
         return [self _minimumWidthOfCell];
@@ -363,7 +363,7 @@
 - (CGFloat)desiredWidthOfCell {
 
     id < PSMTabStyle > style = [[self controlView] style];
-    if ([style respondsToSelector:@selector(desiredWidthOfTabCell)]) {
+    if ([style respondsToSelector:@selector(desiredWidthOfTabCell:)]) {
         return [style desiredWidthOfTabCell:self];
     } else {    
         return [self _desiredWidthOfCell];
