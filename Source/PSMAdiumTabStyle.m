@@ -13,6 +13,7 @@
 // #define Adium_CellPadding 2
 #define Adium_MARGIN_X 4
 #define kPSMAdiumCounterPadding 3.0
+#define kPSMAdiumImageWidth 20.0
 
 @interface PSMTabBarCell(SharedPrivates)
 
@@ -350,8 +351,8 @@
         
     NSRect largeImageRect = [cell largeImageRectForBounds:theRect];
     if (!NSEqualRects(largeImageRect, NSZeroRect)) {
-        constrainedDrawingRect.origin.x += NSWidth(largeImageRect) + kPSMTabBarCellPadding;
-        constrainedDrawingRect.size.width -= NSWidth(largeImageRect) + kPSMTabBarCellPadding;
+        constrainedDrawingRect.origin.x += kPSMAdiumImageWidth + kPSMTabBarCellPadding;
+        constrainedDrawingRect.size.width -= kPSMAdiumImageWidth + kPSMTabBarCellPadding;
     }
 
     if (orientation == PSMTabBarHorizontalOrientation) {
@@ -456,8 +457,8 @@
                                          constrainedDrawingRect.origin.y - ((constrainedDrawingRect.size.height - scaledImageSize.height) / 2),
                                          scaledImageSize.width, scaledImageSize.height);
 
-    if(scaledImageSize.width < kPSMTabBarIconWidth) {
-        result.origin.x += (kPSMTabBarIconWidth - scaledImageSize.width) / 2.0;
+    if(scaledImageSize.width < kPSMAdiumImageWidth) {
+        result.origin.x += (kPSMTabBarCellPadding + kPSMAdiumImageWidth - scaledImageSize.width) / 2.0;
     }
     if(scaledImageSize.height < constrainedDrawingRect.size.height) {
         result.origin.y += (constrainedDrawingRect.size.height - scaledImageSize.height) / 2.0;
