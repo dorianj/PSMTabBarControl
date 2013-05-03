@@ -493,15 +493,21 @@
 			[NSBezierPath fillRect:rect];
 		}
 		break;
-
-	case PSMTabBarVerticalOrientation:
-		//This is the Mail.app source list background color... which differs from the iTunes one.
-		[[NSColor colorWithCalibratedRed:.9059
-		  green:.9294
-		  blue:.9647
-		  alpha:1.0] set];
+		
+	case PSMTabBarVerticalOrientation :
+	{
+		NSColor *color = [NSColor colorWithCatalogName:@"System" colorName:@"_sourceListBackgroundColor"];
+		if (!color) {
+			//This is the Mail.app source list background color... which differs from the iTunes one.
+			color = [NSColor colorWithCalibratedRed:.9059
+											  green:.9294
+											   blue:.9647
+											  alpha:1.0];
+		}
+		[color set];
 		NSRectFill(rect);
 		break;
+	}
 	}
 
 	//Draw the border and shadow around the tab bar itself
