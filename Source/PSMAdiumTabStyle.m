@@ -13,6 +13,7 @@
 // #define Adium_CellPadding 2
 #define Adium_MARGIN_X 4
 #define kPSMAdiumCounterPadding 3.0
+#define kPSMAdiumImageWidth 20.0
 
 @interface PSMTabBarCell(SharedPrivates)
 
@@ -197,6 +198,39 @@
 #pragma mark -
 #pragma mark Determining Cell Size
 
+- (CGFloat)desiredWidthOfTabCell:(PSMTabBarCell *)cell {
+    CGFloat resultWidth = 0.0;
+
+    // left margin
+    resultWidth = MARGIN_X;
+
+    // icon or close button?
+    if ([cell hasIcon]) {
+        resultWidth += kPSMTabBarIconWidth + kPSMTabBarCellPadding;
+    } else if ([cell shouldDrawCloseButton]) {
+        NSImage *image = [cell closeButtonImageOfType:PSMCloseButtonImageTypeStandard];
+        resultWidth += [image size].width + kPSMTabBarCellPadding;
+    }
+
+    // the label
+    resultWidth += [[cell attributedStringValue] size].width;
+
+    // object counter?
+    if ([cell count] > 0) {
+        resultWidth += [cell objectCounterSize].width + kPSMTabBarCellPadding;
+    }
+
+    // indicator?
+    if ([[cell indicator] isHidden] == NO) {
+        resultWidth += kPSMTabBarCellPadding + kPSMTabBarIndicatorWidth;
+    }
+
+    // right margin
+    resultWidth += MARGIN_X;
+
+    return ceil(resultWidth);
+}
+
 - (CGFloat)heightOfTabCellsForTabBarControl:(PSMTabBarControl *)tabBarControl {
     PSMTabBarOrientation orientation = [tabBarControl orientation];
 	return((orientation == PSMTabBarHorizontalOrientation) ? kPSMTabBarControlHeight : kPSMTabBarControlSourceListHeight);
@@ -278,7 +312,7 @@
                 
     NSSize iconSize = [icon size];
     
-    NSSize scaledIconSize = [cell scaleImageWithSize:iconSize toFitInSize:NSMakeSize(iconSize.width, drawingRect.size.height) scalingType:NSImageScaleProportionallyDown];
+    NSSize scaledIconSize = [cell scaleImageWithSize:iconSize toFitInSize:NSMakeSize(kPSMTabBarIconWidth, iconSize.height) scalingType:NSImageScaleProportionallyDown];
 
     NSRect result;
     if (orientation == PSMTabBarHorizontalOrientation) {
@@ -317,8 +351,8 @@
         
     NSRect largeImageRect = [cell largeImageRectForBounds:theRect];
     if (!NSEqualRects(largeImageRect, NSZeroRect)) {
-        constrainedDrawingRect.origin.x += NSWidth(largeImageRect) + kPSMTabBarCellPadding;
-        constrainedDrawingRect.size.width -= NSWidth(largeImageRect) + kPSMTabBarCellPadding;
+        constrainedDrawingRect.origin.x += kPSMAdiumImageWidth + kPSMTabBarCellPadding;
+        constrainedDrawingRect.size.width -= kPSMAdiumImageWidth + kPSMTabBarCellPadding;
     }
 
     if (orientation == PSMTabBarHorizontalOrientation) {
@@ -423,8 +457,8 @@
                                          constrainedDrawingRect.origin.y - ((constrainedDrawingRect.size.height - scaledImageSize.height) / 2),
                                          scaledImageSize.width, scaledImageSize.height);
 
-    if(scaledImageSize.width < kPSMTabBarIconWidth) {
-        result.origin.x += (kPSMTabBarIconWidth - scaledImageSize.width) / 2.0;
+    if(scaledImageSize.width < kPSMAdiumImageWidth) {
+        result.origin.x += (kPSMTabBarCellPadding + kPSMAdiumImageWidth - scaledImageSize.width) / 2.0;
     }
     if(scaledImageSize.height < constrainedDrawingRect.size.height) {
         result.origin.y += (constrainedDrawingRect.size.height - scaledImageSize.height) / 2.0;
@@ -459,15 +493,21 @@
 			[NSBezierPath fillRect:rect];
 		}
 		break;
-
-	case PSMTabBarVerticalOrientation:
-		//This is the Mail.app source list background color... which differs from the iTunes one.
-		[[NSColor colorWithCalibratedRed:.9059
-		  green:.9294
-		  blue:.9647
-		  alpha:1.0] set];
+		
+	case PSMTabBarVerticalOrientation :
+	{
+		NSColor *color = [NSColor colorWithCatalogName:@"System" colorName:@"_sourceListBackgroundColor"];
+		if (!color) {
+			//This is the Mail.app source list background color... which differs from the iTunes one.
+			color = [NSColor colorWithCalibratedRed:.9059
+											  green:.9294
+											   blue:.9647
+											  alpha:1.0];
+		}
+		[color set];
 		NSRectFill(rect);
 		break;
+	}
 	}
 
 	//Draw the border and shadow around the tab bar itself
