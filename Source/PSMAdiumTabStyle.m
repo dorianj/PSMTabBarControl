@@ -343,6 +343,11 @@
 
 - (NSRect)titleRectForBounds:(NSRect)theRect ofTabCell:(PSMTabBarCell *)cell {
 
+    //Don't bother calculating anything if we don't have a string
+    NSAttributedString *attrString = [cell attributedStringValue];
+    if ([attrString length] == 0)
+        return NSZeroRect;
+    
     PSMTabBarControl *tabBarControl = [cell controlView];
     PSMTabBarOrientation orientation = [tabBarControl orientation];
         
@@ -361,37 +366,35 @@
         constrainedDrawingRect.size.width -= kPSMAdiumImageWidth + kPSMTabBarCellPadding;
     }
 
+    NSRect closeButtonRect = [cell closeButtonRectForBounds:theRect];
+    NSRect counterBadgeRect = [cell objectCounterRectForBounds:theRect];
+    NSRect iconRect = [cell iconRectForBounds:theRect];
+    CGFloat maxIconOrClose = MAX(NSWidth(closeButtonRect),NSWidth(iconRect));
     if (orientation == PSMTabBarHorizontalOrientation) {
 
-        NSRect closeButtonRect = [cell closeButtonRectForBounds:theRect];
-        NSRect iconRect = [cell iconRectForBounds:theRect];
-    
         if (!NSEqualRects(closeButtonRect, NSZeroRect) || !NSEqualRects(iconRect, NSZeroRect)) {
-            constrainedDrawingRect.origin.x += MAX(NSWidth(closeButtonRect),NSWidth(iconRect)) + kPSMTabBarCellPadding;
-            constrainedDrawingRect.size.width -= MAX(NSWidth(closeButtonRect),NSWidth(iconRect)) + kPSMTabBarCellPadding;
+            constrainedDrawingRect.origin.x += maxIconOrClose + kPSMTabBarCellPadding;
+            constrainedDrawingRect.size.width -= maxIconOrClose + kPSMTabBarCellPadding;
         }
         
-        NSRect counterBadgeRect = [cell objectCounterRectForBounds:theRect];
         if (!NSEqualRects(counterBadgeRect, NSZeroRect)) {
             constrainedDrawingRect.size.width -= NSWidth(counterBadgeRect) + kPSMTabBarCellPadding;
         }
     } else {
     
-        NSRect closeButtonRect = [cell closeButtonRectForBounds:theRect];
-        NSRect counterBadgeRect = [cell objectCounterRectForBounds:theRect];
-
         if (!NSEqualRects(closeButtonRect, NSZeroRect) || !NSEqualRects(counterBadgeRect, NSZeroRect)) {
-            constrainedDrawingRect.size.width -= MAX(NSWidth(closeButtonRect),NSWidth(counterBadgeRect)) + kPSMTabBarCellPadding;
-        }    
+            constrainedDrawingRect.size.width -= MAX(maxIconOrClose,NSWidth(counterBadgeRect)) + kPSMTabBarCellPadding;
+        }
     }
 
+    //Don't show a title if there's only enough space for a character
     if (constrainedDrawingRect.size.width <= 2)
         return NSZeroRect;
     
-    NSAttributedString *attrString = [cell attributedStringValue];
-    if ([attrString length] == 0)
-        return NSZeroRect;
-        
+    //Make sure there's enough padding between the icon/close button and the text
+    if (NSMaxX(constrainedDrawingRect)-MAX(NSMinX(iconRect), NSMinX(closeButtonRect)) <= 2)
+        constrainedDrawingRect.size.width--;
+    
     NSSize stringSize = [attrString size];
     
     NSRect result = NSMakeRect(constrainedDrawingRect.origin.x, drawingRect.origin.y+ceil((drawingRect.size.height-stringSize.height)/2), constrainedDrawingRect.size.width, stringSize.height);
