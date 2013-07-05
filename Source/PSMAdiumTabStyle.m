@@ -457,7 +457,7 @@
     if (!image)
         return NSZeroRect;
     
-    NSSize scaledImageSize = [cell scaleImageWithSize:[image size] toFitInSize:NSMakeSize(constrainedDrawingRect.size.width, constrainedDrawingRect.size.height) scalingType:NSImageScaleProportionallyUpOrDown];
+    NSSize scaledImageSize = [cell scaleImageWithSize:[image size] toFitInSize:NSMakeSize(MIN(constrainedDrawingRect.size.width, kPSMAdiumImageWidth), constrainedDrawingRect.size.height) scalingType:NSImageScaleProportionallyUpOrDown];
     
     NSRect result = NSMakeRect(constrainedDrawingRect.origin.x,
                                          constrainedDrawingRect.origin.y - ((constrainedDrawingRect.size.height - scaledImageSize.height) / 2),
@@ -467,7 +467,7 @@
         result.origin.x += (kPSMTabBarCellPadding + kPSMAdiumImageWidth - scaledImageSize.width) / 2.0;
     }
     if(scaledImageSize.height < constrainedDrawingRect.size.height) {
-        result.origin.y += (constrainedDrawingRect.size.height - scaledImageSize.height) / 2.0;
+        result.origin.y += (constrainedDrawingRect.size.height - scaledImageSize.height);
     }
         
     return result;    
