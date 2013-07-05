@@ -318,7 +318,13 @@
     if (orientation == PSMTabBarHorizontalOrientation) {
         result = NSMakeRect(drawingRect.origin.x, drawingRect.origin.y, scaledIconSize.width, scaledIconSize.height);
     } else {
-        result = NSMakeRect(NSMaxX(drawingRect)-scaledIconSize.width, drawingRect.origin.y, scaledIconSize.width, scaledIconSize.height);
+        NSRect constrainedDrawingRect = drawingRect;
+        
+        NSRect indicatorRect = [cell indicatorRectForBounds:theRect];
+        if (!NSEqualRects(indicatorRect, NSZeroRect))
+            constrainedDrawingRect.size.width -= NSWidth(indicatorRect) + kPSMTabBarCellPadding;
+        
+        result = NSMakeRect(NSMaxX(constrainedDrawingRect)-scaledIconSize.width, drawingRect.origin.y, scaledIconSize.width, scaledIconSize.height);
     }
     
     // center in available space (in case icon image is smaller than kPSMTabBarIconWidth)
