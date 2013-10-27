@@ -165,7 +165,12 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 	if([tabBarControl isFlipped]) {
 		cellFrame.origin.y += cellFrame.size.height;
 	}
-	[cell setHighlighted:NO];
+
+	//clear all highlights
+	[[tabBarControl cells] enumerateObjectsUsingBlock:^(id cell, NSUInteger idx, BOOL *stop) {
+		[cell setHighlighted:NO];
+	}];
+
 	NSSize offset = NSZeroSize;
 	[pboard declareTypes:[NSArray arrayWithObjects:@"PSMTabBarControlItemPBType", nil] owner: nil];
 	[pboard setString:[[NSNumber numberWithInteger:[[tabBarControl cells] indexOfObject:cell]] stringValue] forType:@"PSMTabBarControlItemPBType"];
